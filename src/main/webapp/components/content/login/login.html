@@ -4,9 +4,9 @@
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
+						<form  ng-submit="ctrl.login()">
+							<input type="text" placeholder="Email Address" ng-model="ctrl.member.email"/>
+							<input type="password" placeholder="Password" ng-model="ctrl.member.pass"/>
 							<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in

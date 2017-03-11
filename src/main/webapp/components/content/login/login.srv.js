@@ -2,7 +2,7 @@
 angular.module('loginModule')
 .factory('loginService', ['ajaxService',function(ajaxService) {
 		var loginService = {
-			getProductByCategory : getProductByCategory
+			login : login
 			//  getAllProduct : getAllProduct,
 			//  createProduct : createProduct,
 			//  updateProduct : updateProduct,
@@ -10,13 +10,18 @@ angular.module('loginModule')
 			};
 	return loginService;
 	
-	function getProductByCategory(categoryId){
-		console.log('test in 2222 cateId: '+ categoryId);
-		var url = "products/categoryId/" + categoryId;
+	function login(member){
+		console.log('test in login srv: ');
+		console.log(member);
 		
-		return ajaxService.get(url,null,{}).then(function(data){
+		var url = "members/login";
+		
+		return ajaxService.post(url,member,null,{});
+		
+	/*	return ajaxService.post(url,member,null,{}).then(function(data){
 			return data.data;
 		});
+*/
 	}
       
  }]);

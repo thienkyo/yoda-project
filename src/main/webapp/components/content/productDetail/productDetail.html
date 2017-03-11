@@ -6,7 +6,7 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img ng-src="images/shop/{{prodDtlCtrl.product.image}}" alt="" />
+								<img ng-src="images/shop/{{ctrl.product.image}}" alt="" />
 							</div>
 			
 						</div>
@@ -14,12 +14,12 @@
 						<!--/product-information-->
 							<div class="product-information">
 								<!--  <img src="images/product-details/new.jpg" class="newarrival" alt="" /> -->
-								<h2>{{prodDtlCtrl.product.prodName}}</h2>
-								<p>Web ID: {{prodDtlCtrl.product.prodId}}</p>
+								<h2>{{ctrl.product.prodName}}</h2>
+								<p>Web ID: {{ctrl.product.prodId}}</p>
 								<img src="images/product-details/rating.png" alt="" />
 								<p></p>
 								<span>
-									<span>{{prodDtlCtrl.product.price}} đ</span>
+									<span>{{ctrl.product.price}} đ</span>
 									<label>Quantity:</label>
 									<input type="text" value="1" />
 									<button type="button" class="btn btn-fefault cart">
@@ -27,7 +27,7 @@
 										Add to cart
 									</button>
 								</span>
-								<p><b>Availability:</b> {{prodDtlCtrl.product.quantity}}</p>
+								<p><b>Availability:</b> {{ctrl.product.quantity}}</p>
 							<!-- 	<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a> -->
 							</div><!--/product-information-->
 						</div>
