@@ -1,14 +1,13 @@
 'use strict';
-angular.module('homeModule').controller('homeController', ['$scope','homeService','ajaxService',
-	function($scope, homeService, ajaxService) {
-		var ctrl = this;
-		//ctrl.first6products = null;
+angular.module('homeModule').controller('homeController', ['$scope','homeService',
+	function($scope, homeService) {
+		var self = this;
 		console.log('homeController');
 		
 		homeService.getFirst6Product()
 			.then(function (response) {
 				$scope.first6products = response;
-		        console.log($scope.first6products);
+		        //console.log($scope.first6products);
 			});
 /*	
 		homeService.getFirst6Product2()

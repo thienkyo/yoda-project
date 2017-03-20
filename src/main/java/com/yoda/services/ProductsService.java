@@ -10,7 +10,7 @@ import com.yoda.models.Categories;
 import com.yoda.models.Products;
 
 @Transactional
-public interface ProductsRespository extends CrudRepository<Products, Integer>{
+public interface ProductsService extends CrudRepository<Products, Integer>{
 
 	public Products findByProdId(int prodId);
 	public List<Products> findByStatusOrderByModDateDesc(int status);

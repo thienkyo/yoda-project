@@ -14,7 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Members {
 	
 	@Id
@@ -28,7 +33,7 @@ public class Members {
 	@Column(nullable=false,length = 100, unique=true)
 	private String email;
 	
-	@Column(nullable=false,length = 3000)
+	@Column(nullable=false,length = 700)
 	private String pass;
 	
 	@Column(nullable=true,length = 12)
@@ -46,7 +51,7 @@ public class Members {
 	@Column(nullable=true,length = 80)
 	private String street;
 	
-	@Column(nullable=true,length = 100)
+	@Column(nullable=true,length = 255)
 	private String address;
 	
 	@Column(nullable=true,length = 20)
@@ -59,6 +64,8 @@ public class Members {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modDate;
 	
+	//@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Orders> orders;
 

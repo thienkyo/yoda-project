@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yoda.models.Categories;
-import com.yoda.services.CategoriesRepository;
+import com.yoda.services.CategoriesService;
 
 @RestController
 @RequestMapping("/categories")
 public class CategoriesController {
 	@Autowired
-    private CategoriesRepository cateRepo;
+    private CategoriesService cateRepo;
 	
 	@RequestMapping("/{status}")
     public List<Categories> getCategories(@PathVariable int status) {//@RequestParam(value = "status") 

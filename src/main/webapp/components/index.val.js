@@ -17,11 +17,9 @@ function MemberDO () {
 	this.address  = '';
 	this.postCode = '';
 	this.status   = 1;
+	this.modDate = (new Date()).getTime();
 	
-	this.fullName = function() {
-		return this.firstName + " " + this.lastName;
-    }
-	this.clear = function() { 
+		this.clear = function() { 
 		this.memberId = 0;
 		this.fullName = '';
 		this.email = '';
@@ -34,5 +32,6 @@ function MemberDO () {
 		this.address  = '';
 		this.postCode = '';
 		this.status   = 1;
+		this.modDate ='';
 	   }
 }

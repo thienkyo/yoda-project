@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoda.models.Categories;
 import com.yoda.models.Products;
-import com.yoda.services.ProductsRespository;;
+import com.yoda.services.ProductsService;;
 
 @RestController
 @RequestMapping("/products")
 public class ProductsController {
 	@Autowired
-    private ProductsRespository prodRepo;
+    private ProductsService prodRepo;
 	
 	@RequestMapping("/{status}")
     public List<Products> getProductByStatus(@PathVariable int status) {//@RequestParam(value = "status") 

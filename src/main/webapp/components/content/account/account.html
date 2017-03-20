@@ -1,0 +1,62 @@
+<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h2>Thông tin cá nhân</h2>
+			</div>
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="chose_area">
+						<div class="user_option">
+							<div class="form-one">
+								<form>
+									<input type="text" placeholder="Email*" value="{{ctrl.me.email}}">
+									<input type="text" placeholder="Tên" value="{{ctrl.me.fullName}}">
+								</form>
+							</div>
+							<div class="form-two">
+								<form>
+									<input type="text" placeholder="Số điện thoại*" value="{{ctrl.me.phone}}">
+									<input type="text" placeholder="Thành phố " value="{{ctrl.me.city}}">
+								</form>
+							</div>
+						</div>
+					    <textarea rows="4" cols="50" placeholder="Địa chỉ shipping...">{{ctrl.me.address}}</textarea>
+
+						<a class="btn btn-default check_out" href="">save</a>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="total_area" style="padding-left:0px;">
+						
+						<ul>
+							<li class="row" style="padding: 10px 0px 10px 0px;margin-top: 0px;background: #F0F0E9;">
+								<div class="col-xs-3">Ngày</div>
+								<div class="col-xs-3">Mã đơn</div>
+								<div class="col-xs-3">Tổng tiền</div>
+								<div class="col-xs-3">status</div>
+							</li>
+							<li class="row" style="padding: 10px 0px 10px 0px;">
+								<div class="col-xs-3"> 13-02-2017</div>
+								<div class="col-xs-3"> 0023</div>
+								<div class="col-xs-3"> 5.000.000 d</div>
+								<div class="col-xs-3"> shipped</div>
+							</li>
+							<li class="row" style="padding: 10px 0px 10px 0px;">
+								<div class="col-xs-3"> 13-02-2017</div>
+								<div class="col-xs-3"> 0023</div>
+								<div class="col-xs-3"> 15.000.000 d</div>
+								<div class="col-xs-3"> pending</div>
+							</li>
+							<li class="row" style="padding: 10px 0px 10px 0px;">
+								<div class="col-xs-3"> 13-02-2017</div>
+								<div class="col-xs-3"> 0023</div>
+								<div class="col-xs-3"> 15.000.000 d</div>
+								<div class="col-xs-3"> done</div>
+							</li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!--/#do_action-->

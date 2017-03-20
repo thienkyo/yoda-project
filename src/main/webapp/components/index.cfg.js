@@ -24,17 +24,24 @@ angular.module('app')
             controller: 'productDetailController',
             controllerAs:'ctrl'
         })
+        .when('/cart',{
+            templateUrl: 'components/content/cart/cart.html',
+            controller: 'cartController',
+            controllerAs:'ctrl'
+        })
         .when('/login', {
 			templateUrl: 'components/content/login/login.html',
 			controller: 'loginController',
 			controllerAs:'ctrl'
 		})
-		.when('/subpage', {
-			templateUrl: 'subpage.html',
-			controller: 'subpageController'
+		.when('/account', {
+			templateUrl: 'components/content/account/account.html',
+			controller: 'accountController',
+			controllerAs:'ctrl'
 		})
         .otherwise(
             { redirectTo: '/'}
         );
-    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+  //  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    $httpProvider.interceptors.push('APIInterceptor');
 });

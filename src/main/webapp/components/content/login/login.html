@@ -1,18 +1,23 @@
 <section id="form"><!--form-->
-		<div class="container">
+		<div class="container" >
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
 						<form  ng-submit="ctrl.login()">
 							<input type="text" placeholder="Email Address" ng-model="ctrl.member.email"/>
-							<input type="password" placeholder="Password" ng-model="ctrl.member.pass"/>
+							<input type="password" placeholder="Password" ng-model="ctrl.pass"/>
 							<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in
 							</span>
 							<button type="submit" class="btn btn-default">Login</button>
 						</form>
+						<div class="alert alert-danger" role="alert" ng-show="ctrl.loginError">
+						  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						  <span class="sr-only">Error:</span>
+						  {{ctrl.loginError}}
+						</div>
 					</div><!--/login form-->
 				</div>
 				<div class="col-sm-1">
@@ -20,13 +25,18 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name"/>
-							<input type="email" placeholder="Email Address"/>
-							<input type="password" placeholder="Password"/>
-							<button type="submit" class="btn btn-default">Signup</button>
+						<h2>New User Sign up!</h2>
+						<form ng-submit="ctrl.signup()">
+							<input type="text" placeholder="Name" ng-model="ctrl.newMember.fullName"/>
+							<input type="email" placeholder="Email Address" ng-model="ctrl.newMember.email"/>
+							<input type="password" placeholder="Password" ng-model="ctrl.newMember.pass"/>
+							<button type="submit" class="btn btn-default">Sign up</button>
 						</form>
+						<div class="alert alert-danger" role="alert" ng-show="ctrl.signUpError">
+						  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+						  <span class="sr-only">Error:</span>
+						  {{ctrl.signUpError}}
+						</div>
 					</div><!--/sign up form-->
 				</div>
 			</div>

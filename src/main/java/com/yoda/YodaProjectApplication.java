@@ -4,20 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
-//@EnableAutoConfiguration
-/*@SpringBootApplication(scanBasePackages = { "com.services" })
-public class YodaProjectApplication {
+import com.yoda.filter.JwtFilter;
 
-	public static void main(String[] args) {
-		SpringApplication.run(YodaProjectApplication.class, args);
-	}
-}*/
-
-@Configuration
+/*
+ @Configuration
 @EnableAutoConfiguration
 @SpringBootApplication(scanBasePackages = { "com.yoda.services","com.yoda.models","com.yoda.controller","com.yoda"})
 public class YodaProjectApplication extends SpringBootServletInitializer {
@@ -26,6 +21,35 @@ public class YodaProjectApplication extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(YodaProjectApplication.class);
     }
+    
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(YodaProjectApplication.class, args);
+    }
+    
+}
+ * */
+
+@Configuration
+@EnableAutoConfiguration
+@SpringBootApplication(scanBasePackages = { "com.yoda.services","com.yoda.models","com.yoda.controller","com.yoda"})
+public class YodaProjectApplication extends SpringBootServletInitializer {
+
+	@Bean
+    public FilterRegistrationBean jwtFilter() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new JwtFilter());
+        registrationBean.addUrlPatterns("/authenticated/*");
+
+        return registrationBean;
+    }
+
+	
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(YodaProjectApplication.class);
+    }
+    
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(YodaProjectApplication.class, args);

@@ -8,6 +8,7 @@ angular.module('networkServices',[])
 		var config = {
 				headers:{
 					'Accept': 'application/json',
+					'Content-Type': 'application/json' ,
 					'requestType':'angularJS',
 					'Cache-Control': 'no-cach, no-store, must-revalidate',
 					'Pragame':'no-catch',
@@ -39,6 +40,9 @@ angular.module('networkServices',[])
 			config.params["timeStamp"] = (new Date()).getTime();
 			config.headers.action = action || '';
 			url = urlbase + url;
-			return $http.post(url,data,config)
+			//console.log(url);
+			//console.log(data);
+			//console.log(config);
+			return $http.post(url,data,config);
 		}
 }]);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,7 @@
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
 	<link href="css/loading-bar.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -25,29 +26,30 @@
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 
-<body>
-	<div ng-include="'components/header/header.html'" ng-controller="headerController"></div>
-
+<body   ng-cloak>
+	<div ng-include="'components/header/header.html'" ng-controller="headerController as ctrl"></div>
 
 	<div ng-view></div>
 
-
-  	<div ng-include="'components/footer/footer.html'" ng-controller="footerController"></div>
+  	<div ng-include="'components/footer/footer.html'" ng-controller="footerController as ctrl"></div>
 
 	<script type='text/javascript' src="js/jquery.js"></script>
 	
 
-	<script type='text/javascript' src="js/angular-1.4.9/angular.js"></script>
-	<script type='text/javascript' src="js/angular-1.4.9/angular-resource.js"></script>
-	<script type='text/javascript' src="js/angular-1.4.9/angular-route.js"></script>
-	<script type='text/javascript' src="js/angular-1.4.9/angular-cookies.js"></script>
-	<script type='text/javascript' src="js/angular-1.4.9/angular-animate.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular.min.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular-resource.min.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular-route.min.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular-cookies.min.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular-animate.min.js"></script>
+	<script type='text/javascript' src="js/angular-1.4.9/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+	<script src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
 	<script type='text/javascript' src="js/loading-bar.js"></script>
-
-	
 	
 	<script type='text/javascript' src="components/index.mdl.js"></script>
 	<script type='text/javascript' src="components/index.cfg.js"></script>
+	<script type='text/javascript' src="components/index.inter.js"></script>
+	<script type='text/javascript' src="components/index.srv.js"></script>
 	<script type='text/javascript' src="components/index.ctrl.js"></script>
 	<script type='text/javascript' src="components/index.val.js"></script>
 	
@@ -68,9 +70,17 @@
 	<script type='text/javascript' src="components/content/productDetail/productDetail.srv.js"></script>
 	<script type='text/javascript' src="components/content/productDetail/productDetail.ctrl.js"></script>
 	
+	<script type='text/javascript' src="components/content/cart/cart.mdl.js"></script>
+	<script type='text/javascript' src="components/content/cart/cart.srv.js"></script>
+	<script type='text/javascript' src="components/content/cart/cart.ctrl.js"></script>
+	
 	<script type='text/javascript' src="components/content/login/login.mdl.js"></script>
 	<script type='text/javascript' src="components/content/login/login.srv.js"></script>
 	<script type='text/javascript' src="components/content/login/login.ctrl.js"></script>
+	
+	<script type='text/javascript' src="components/content/account/account.mdl.js"></script>
+	<script type='text/javascript' src="components/content/account/account.srv.js"></script>
+	<script type='text/javascript' src="components/content/account/account.ctrl.js"></script>
 
 	<script type='text/javascript' src="js/bootstrap.min.js"></script>
 	<script type='text/javascript' src="js/jquery.scrollUp.min.js"></script>

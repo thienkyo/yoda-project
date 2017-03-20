@@ -8,5 +8,9 @@ angular.module('app', [
 		'chieffancypants.loadingBar',
 		'homeModule',
 		'productDetailModule',
-		'loginModule'
+		'loginModule',
+		'accountModule',
+		'cartModule',
+		'angular-storage',
+		'ngMaterial'
 ]);
