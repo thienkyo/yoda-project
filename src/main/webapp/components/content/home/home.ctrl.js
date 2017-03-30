@@ -1,6 +1,6 @@
 'use strict';
-angular.module('homeModule').controller('homeController', ['$scope','homeService',
-	function($scope, homeService) {
+angular.module('homeModule').controller('homeController', ['$scope','homeService','cartService',
+	function($scope, homeService,cartService) {
 		var self = this;
 		console.log('homeController');
 		
@@ -9,6 +9,11 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 				$scope.first6products = response;
 		        //console.log($scope.first6products);
 			});
+		
+		self.addToCart = function(prod){
+			cartService.addToCart(prod,1);
+			self.alertProdId = prod.prodId;
+		}
 /*	
 		homeService.getFirst6Product2()
 		.then(function (response) {

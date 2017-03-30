@@ -1,11 +1,9 @@
 <section id="cart_items">
 		<div class="container">
-			<div class="breadcrumbs">
-				<ol class="breadcrumb">
-				  <li><a href="#">Home</a></li>
-				  <li class="active">Shopping Cart</li>
-				</ol>
+			<div class="step-one">
+				<h2 class="heading">Bước 1: kiểm tra giỏ hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 2: địa chỉ &nbsp;&nbsp;->&nbsp;&nbsp; Bước 3: đặt hàng (yêu cầu đăng nhập)</h2>
 			</div>
+		
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -19,84 +17,80 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr ng-repeat="item in ctrl.currentCart track by $index">
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img ng-src="images/shop/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
+								<h4><a href="">{{item.prod.prodName}}</a></h4>
 								<p>Web ID: 1089772</p>
 							</td>
 							<td class="cart_price">
-								<p>$59</p>
-							</td>
+								<p>{{item.prod.price | number:0}} đ</p>
+							</td> <!-- value="{{item.quantity}}" -->
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
+									<input class="cart_quantity_input" type="number" name="quantity" 
+										ng-model="item.quantity"  
+										ng-change="ctrl.updateTotal()"
+										autocomplete="off" style="width:40px;" 
+										min="1" max="9" />
 								</div>
 							</td>
 							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
+								<p class="cart_total_price">{{item.prod.price * item.quantity | number:0}} đ</p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/two.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" style="margin-right: 10px;" ng-click="ctrl.removeItem($index)"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
 						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
+							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
+								<textarea name="message"  placeholder="ghi địa chỉ chính xác để nhận hàng nhanh chóng." rows="4" style="margin-top: 20px;" ng-cloak>{{ctrl.currentMember.address}}</textarea>
+								<a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a>
+								
 							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Web ID: 1089772</p>
+							<td colspan="1" style="padding-top: 20px; vertical-align: top;">
+								<select>
+										<option>-- Country --</option>
+										<option>United States</option>
+										<option>Bangladesh</option>
+										<option>UK</option>
+										<option>India</option>
+										<option>Pakistan</option>
+										<option>Ucrane</option>
+										<option>Canada</option>
+										<option>Dubai</option>
+									</select>
 							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+							<td colspan="3">
+								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;">
+									<tr>
+										<td>Cart Sub Total</td>
+										<td>{{ctrl.subTotal | number:0}} đ</td>
+									</tr>
+									
+									<tr class="shipping-cost">
+										<td>Shipping Cost</td>
+										<td>0 đ</td>										
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span>$61</span></td>
+									</tr>
+								</table>
 							</td>
 						</tr>
+						
 					</tbody>
 				</table>
+				<div class="alert alert-danger" role="alert" ng-show="ctrl.isShow" 
+					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
+				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				  <span class="sr-only">Error:</span>
+					 Cần đăng nhập để đặt hàng
+				</div>
 			</div>
+
 		</div>
 	</section> <!--/#cart_items-->

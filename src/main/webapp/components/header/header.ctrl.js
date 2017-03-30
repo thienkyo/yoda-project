@@ -1,13 +1,19 @@
-angular.module('app').controller('headerController', ['$http','$rootScope','$scope','$location','memberService',
-	function($http,$rootScope,$scope,$location,memberService) {
+angular.module('app').controller('headerController', ['$http','$rootScope','$location','memberService','cartStoreService',
+	function($http,$rootScope,$location,memberService,cartStoreService) {
 	console.log('header ctrl');
 	var self=this;
+	self.cart=[];
 	self.currentMember = memberService.getCurrentMember();
-	//console.log(self.currentMember);
+	//self.itemQuantity = 0;
+	
+	self.currentCart = cartStoreService.getCurrentCart();
+	console.log(self.currentCart);
+	self.itemQuantity = cartStoreService.getQuantity();
+	
 	self.logout = function() {
-		//self.email = '';
 		//self.token = null;
 		self.currentMember = memberService.setCurrentMember(null);
+		//self.currentCart = cartStoreService.clearCart();
 		console.log('header logout clicked');
 		$location.path('#/');
         //$rootScope.authenticated = false;
@@ -17,10 +23,24 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$sco
 	$rootScope.$on('authorized', function() {
 		self.currentMember = memberService.getCurrentMember();
     });
+	
     $rootScope.$on('unauthorized', function() {
     	console.log('in headerctrl unauthorized event');
         self.currentMember = memberService.setCurrentMember(null);
         $location.path('#/');
     });
+    
+    $rootScope.$on('addToCart', function() {
+		//self.itemQuantity = self.itemQuantity + 1;
+    	self.itemQuantity = cartStoreService.getQuantity();
+		self.currentCart = cartStoreService.getCurrentCart();
+		console.log('rootScope.on addToCart');
+		console.log(self.currentCart);
+    });
+    
+    $rootScope.$on('removeItemCart', function() {
+    	self.itemQuantity = cartStoreService.getQuantity();
+    });
+    
 
 }]);

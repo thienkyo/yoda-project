@@ -1,5 +1,6 @@
 package com.yoda.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yoda.DAO.MembersDAO;
+import com.yoda.UtilityConstant;
 import com.yoda.models.MemberRole;
 import com.yoda.models.Members;
+import com.yoda.models.ShipCost;
 import com.yoda.services.MemberRoleService;
 import com.yoda.services.MemberService;
 
@@ -30,8 +32,9 @@ public class MemberController {
 	
 		
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-    public LoginResponse login(@RequestBody final MemberLogin login) throws ServletException {
-        if (login.email == null || memService.findByEmailAndPassAndStatus(login.email, login.pass, 1) == null) {
+    public LoginResponse login(@RequestBody final MemberLogin login) throws ServletException, UnsupportedEncodingException {
+		Members mem =memService.findByEmailAndPassAndStatus(login.email, login.pass, 1);
+        if (login.email == null || mem == null) {
             throw new ServletException("Invalid login");
         }
         
@@ -41,9 +44,13 @@ public class MemberController {
         for(MemberRole r : mr ){
         	rolelist.add(r.getRole());
         }
-        return new LoginResponse(Jwts.builder().setSubject(login.email)
-            .claim("roles", rolelist).setIssuedAt(new Date())
-            .signWith(SignatureAlgorithm.HS256, "secretkey").compact());
+        return new LoginResponse(Jwts.builder()
+        		.setSubject(login.email)
+        		.claim("roles", rolelist)
+        		.claim("shipAddress", mem.getAddress())
+        		.setIssuedAt(new Date())
+        		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
+        		.compact(), rolelist, mem.getAddress());
     }
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -52,9 +59,11 @@ public class MemberController {
 		if (memService.findByEmail(member.getEmail()) != null) {
             throw new ServletException("emailexists");
         }
-		
+		 
 		member.setModDate(new Date());
-		Members returnMem = memService.save(member); 
+		//member.setShipCost(new ShipCost(1));
+		Members returnMem = memService.save(member);
+		memberRoleService.save(new MemberRole(member.getEmail(), UtilityConstant.MEMBER_ROLE));
 		return new AddResponse(returnMem.getEmail());      
     }
 
@@ -66,9 +75,13 @@ public class MemberController {
 
     @SuppressWarnings("unused")
     private static class LoginResponse {
-        public String token;
-        public LoginResponse(final String token) {
+    	public String token;
+        public List<String> rolelist;
+        public String address;
+        public LoginResponse(final String token, List<String> rolelist, String address) {
             this.token = token;
+            this.rolelist = rolelist;
+            this.address = address; 
         }
     }
     

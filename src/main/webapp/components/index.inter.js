@@ -3,7 +3,7 @@ angular.module('app')
 	var service = this;
     service.request = function(config) {
         var currentMember = memberService.getCurrentMember();
-        var	authen_token = currentMember ? currentMember.authen_token : null;
+        var	authen_token = currentMember ? currentMember.token : null;
         if (authen_token) {
             config.headers.authorization = authen_token;
         }

@@ -10,11 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -64,13 +65,17 @@ public class Members {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modDate;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shipCostId")
+	private ShipCost shipCost;
+	
 	//@JsonBackReference
 	@JsonIgnore
 	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Orders> orders;
 
 	public Members(String fullName, String email, String pass, String phone, String country, String city,
-			String district, String street, String address, String postCode, int status, Date modDate) {
+			String district, String street, String address, String postCode, int status, ShipCost shipCost, Date modDate) {
 		super();
 		this.fullName = fullName;
 		this.email = email;
@@ -83,6 +88,7 @@ public class Members {
 		this.address = address;
 		this.postCode = postCode;
 		this.status = status;
+		this.shipCost = shipCost;
 		this.modDate = modDate;
 	}
 	
@@ -193,6 +199,14 @@ public class Members {
 	public void setModDate(Date modDate) {
 		this.modDate = modDate;
 	}
+	
+	public ShipCost getShipCost() {
+		return shipCost;
+	}
+
+	public void setShipCost(ShipCost shipCost) {
+		this.shipCost = shipCost;
+	}
 
 	public List<Orders> getOrders() {
 		return orders;
@@ -207,6 +221,6 @@ public class Members {
 		return "Members [memberId=" + memberId + ", fullName=" + fullName + ", email=" + email + ", pass=" + pass
 				+ ", phone=" + phone + ", country=" + country + ", city=" + city + ", district=" + district
 				+ ", street=" + street + ", address=" + address + ", postCode=" + postCode + ", status=" + status
-				+ ", modDate=" + modDate + "]";
+				+ ", modDate=" + modDate + ", shipCost=" + shipCost + ", orders=" + orders + "]";
 	}
 }

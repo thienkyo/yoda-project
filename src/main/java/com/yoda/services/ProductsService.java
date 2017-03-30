@@ -16,4 +16,5 @@ public interface ProductsService extends CrudRepository<Products, Integer>{
 	public List<Products> findByStatusOrderByModDateDesc(int status);
 	public List<Products> findByCategoryAndStatus(Categories category, int status);
 	public List<Products> findFirst6ByStatusOrderByModDateDesc(int status);
+	public List<Products> findByProdIdInAndStatus(List<Integer> prodIds, int status);
 }

@@ -1,9 +1,15 @@
 'use strict';
 
 angular
-		.module('app') // load the student module
-		.value('MemberDO', MemberDO); // add a value to the student module
-		
+		.module('app') 
+		.value('MemberDO', MemberDO)
+		.value('ItemDO',ItemDO); 
+
+function ItemDO () {
+	this.prodID = 0;
+	this.quantity = 1;
+}
+
 function MemberDO () {
 	this.memberId = 0;
 	this.fullName = '';

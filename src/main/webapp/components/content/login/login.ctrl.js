@@ -6,23 +6,31 @@ angular.module('loginModule')
 	
 	console.log('login controller');
 	var self = this;
+	
+	
+	
+	
 	self.newMember = new MemberDO();
-    self.member = {};
+  //  self.member = {};
+    self.credential ={};
 	self.login = function() {
 		console.log('loginctrl.login');
             //self.error = null;
-		console.log(self.member.email);
-		if(self.member.email && self.pass){
-            loginService.login({email:self.member.email,pass:btoa(self.pass)}).then(function(token) {	
-            	console.log(token);
-            	self.member.authen_token =  'sheep ' + token;
-            	var arr = token.split('.');
-            	var decodedString = atob(arr[1]);
+		//console.log(self.member.email);
+		if(self.credential.email && self.credential.pass){
+            loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(userData) {	
+            	console.log(userData);
+            	
+            	userData.token =  'sheep ' + userData.token;
+            /*	var arr = token.split('.');
+            	var decodedString = decodeURIComponent(atob(arr[1]));
                 console.log(decodedString);
-                var a = angular.fromJson(decodedString);
-               // console.log(a);
+                var a = angular.fromJson(decodeURIComponent(decodedString));
+                console.log(a);
                 self.member.roles = a.roles;
-                memberService.setCurrentMember(self.member);
+                self.member.shipAddress = a.shipAddress;
+             */   
+                memberService.setCurrentMember(userData);
                 $rootScope.$broadcast('authorized');
                 $location.path('#/');
             },
@@ -39,13 +47,14 @@ angular.module('loginModule')
 	
 	
 	self.signup = function(){
-		if(self.newMember.email && self.newMember.fullName && self.newMember.pass){
-			self.reset();
+		console.log(self.newMember);
+		if(self.newMember.email && self.newMember.fullName && self.newMember.pass && self.newMember.phone){
+			
 			self.newMember.pass = btoa(self.newMember.pass);
 			loginService.signup(self.newMember).then(function(replyStr) {	
 				//$location.path('#/authenticated/me');
 				console.log(replyStr);
-				
+				self.reset();
 				self.showAlert();
             },
             function(error){
@@ -56,7 +65,7 @@ angular.module('loginModule')
             });
 		}else{
 			console.log('not add');
-			self.signUpError = 'Cả 3 không để trống';
+			self.signUpError = 'Cả 4 không để trống';
 		}
 	};
 	
@@ -83,6 +92,7 @@ angular.module('loginModule')
 		self.newMember.email = '';
 		self.newMember.fullName = '';  
 		self.newMember.pass = '';
+		self.newMember.phone ='';
 	}
 
 }]);

@@ -73,15 +73,20 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-										<img ng-src="images/shop/{{prod.image}}" alt="" />
-										<h2>{{prod.price}} đ</h2>
+										<a href="#/productDetail/{{prod.prodId}}" ><img ng-src="images/shop/{{prod.image}}" alt="" /></a>
+										<h2>{{prod.price | number:0}} đ</h2>
 										<a href="#/productDetail/{{prod.prodId}}" > <p>{{prod.prodName}}</p> </a>
+									</div>
+									<div class="alert alert-success" role="alert" ng-show="ctrl.alertProdId == prod.prodId" style="position: absolute;top: 0; left: 0;">
+										  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+										  <span class="sr-only">success:</span>
+									  		Đã thêm vào giỏ hàng
 									</div>
 							    </div>
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
-										<li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a></li>
+										<li><a><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+										<li><a class="btn btn-default add-to-cart" ng-click="ctrl.addToCart(prod)"><i class="fa fa-shopping-cart"></i>Add to cart</a></li>
 									</ul>
 								</div>
 							</div>

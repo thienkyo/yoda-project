@@ -1,12 +1,17 @@
 <section>
-		<div class="container">
+		<div class="container" ng-cloak>
 			<div class="row">
 				
 				<div class="col-sm-12 padding-right">
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
-							<div class="view-product">
+							<div class="view-product" ng-cloak>
 								<img ng-src="images/shop/{{ctrl.product.image}}" alt="" />
+								<div class="alert alert-success" ng-show="ctrl.alertProdId" role="alert"  style="position: absolute;top: 0; left: 0;">
+									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									  <span class="sr-only">success:</span>
+								  		Đã thêm vào giỏ hàng
+								</div>
 							</div>
 			
 						</div>
@@ -19,10 +24,15 @@
 								<img src="images/product-details/rating.png" alt="" />
 								<p></p>
 								<span>
-									<span>{{ctrl.product.price}} đ</span>
+									<span>{{ctrl.product.price | number:0}} đ</span>
 									<label>Quantity:</label>
-									<input type="text" value="1" />
-									<button type="button" class="btn btn-fefault cart">
+									
+									<input  type="number" value="1"
+										ng-model="ctrl.qty"  
+										autocomplete="off" style="width:40px;" 
+										min="1" max="9" />
+									
+									<button type="button" class="btn btn-fefault cart" ng-click="ctrl.addToCart(ctrl.product)">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
 									</button>

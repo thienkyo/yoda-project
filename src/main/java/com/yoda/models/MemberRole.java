@@ -19,19 +19,23 @@ public class MemberRole {
 	@Column(nullable=false,length = 30, unique=false)
 	private String role;
 
-	
 	public MemberRole() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	public MemberRole(String email, String role) {
+		super();
+		this.email = email;
+		this.role = role;
+	}
+/*
 	public MemberRole(int id, String email, String role) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.role = role;
 	}
-
+*/
 	public int getId() {
 		return id;
 	}

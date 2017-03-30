@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,6 +53,9 @@ public class Products {
 	
 	@Column(nullable=true, columnDefinition = "INT(3) UNSIGNED")
 	private int discount;
+	
+	@Column(nullable=true, columnDefinition = "DOUBLE(2,1) default 1.0")
+	private double weight;
 	
 	@JsonManagedReference
 	@ManyToOne
