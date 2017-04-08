@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yoda.UtilityConstant;
 import com.yoda.models.Categories;
 import com.yoda.models.Members;
 import com.yoda.models.Products;
@@ -28,7 +29,7 @@ public class ProductsController {
 	
 	@RequestMapping("first6")
     public List<Products> getFisrt6Product() {//@RequestParam(value = "status") 
-        return prodRepo.findFirst6ByStatusOrderByModDateDesc(2);
+        return prodRepo.findFirst6ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
     }
 	
 	
@@ -45,13 +46,13 @@ public class ProductsController {
 	@RequestMapping(value = "categoryId/{id}", method = RequestMethod.GET)
     public List<Products> hello(@PathVariable int id) {
 		Categories cate = new Categories(id);
-        return prodRepo.findByCategoryAndStatus(cate, 2);
+        return prodRepo.findByCategoryAndStatus(cate, UtilityConstant.ACTIVE_STATUS);
     }
 	
 	
 	@RequestMapping(value = "getProductForCart", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Products> getProductForCart(@RequestBody final List<Integer> prodIds) {
-        return prodRepo.findByProdIdInAndStatus(prodIds, 2);
+        return prodRepo.findByProdIdInAndStatus(prodIds, UtilityConstant.ACTIVE_STATUS);
     }
 }

@@ -4,16 +4,12 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
 	var self=this;
 	self.cart=[];
 	self.currentMember = memberService.getCurrentMember();
-	//self.itemQuantity = 0;
 	
 	self.currentCart = cartStoreService.getCurrentCart();
-	console.log(self.currentCart);
 	self.itemQuantity = cartStoreService.getQuantity();
 	
 	self.logout = function() {
-		//self.token = null;
 		self.currentMember = memberService.setCurrentMember(null);
-		//self.currentCart = cartStoreService.clearCart();
 		console.log('header logout clicked');
 		$location.path('#/');
         //$rootScope.authenticated = false;

@@ -10,7 +10,6 @@ angular.module('app')
 	return memberService;
 	
 	function setCurrentMember(member){
-		console.log('memberservice');
 		currentMember = member;
         store.set('member', member);
         return currentMember;
@@ -45,21 +44,25 @@ angular.module('app')
 	return cartStoreService;
 	
 	function setCurrentCart(cart){
-		console.log('cartStoreService');
 		currentCart = cart;
         store.set('cart', cart);
         return currentCart;
 	}
 	
 	function getCurrentCart(){
-	//	if (!currentCart) {
-            currentCart = store.get('cart');
-    //    }
+		if (store.get('cart')) {
+			currentCart = store.get('cart')
+        }else{
+        	store.set('cart', currentCart);
+        }
         return currentCart;
 	}
 	
 	function getQuantity(){
-		return getCurrentCart().length;
+		if(getCurrentCart()){
+			return getCurrentCart().length;
+		}
+		return 0;
 	}
 	
 	function clearCart(){

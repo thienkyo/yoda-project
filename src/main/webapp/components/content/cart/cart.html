@@ -19,11 +19,11 @@
 					<tbody>
 						<tr ng-repeat="item in ctrl.currentCart track by $index">
 							<td class="cart_product">
-								<a href=""><img ng-src="images/shop/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
+								<a href="#/productDetail/{{item.prod.prodId}}"><img ng-src="images/shop/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
 							</td>
-							<td class="cart_description">
-								<h4><a href="">{{item.prod.prodName}}</a></h4>
-								<p>Web ID: 1089772</p>
+							<td class="cart_description" style="padding-left: 40px;">
+								<h4><a href="#/productDetail/{{item.prod.prodId}}">{{item.prod.prodName}}</a></h4>
+								<p>Web ID: {{item.prod.prodId}}</p>
 							</td>
 							<td class="cart_price">
 								<p>{{item.prod.price | number:0}} đ</p>
@@ -44,24 +44,19 @@
 								<a class="cart_quantity_delete" style="margin-right: 10px;" ng-click="ctrl.removeItem($index)"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="border-bottom: 0px;">
 							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
-								<textarea name="message"  placeholder="ghi địa chỉ chính xác để nhận hàng nhanh chóng." rows="4" style="margin-top: 20px;" ng-cloak>{{ctrl.currentMember.address}}</textarea>
-								<a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a>
+								<textarea name="message"  placeholder="ghi địa chỉ chính xác để nhận hàng nhanh chóng." 
+										  rows="4" style="margin-top: 0px;" ng-model="ctrl.me.address" ng-cloak ></textarea>
+								<!--   <a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a> -->
 								
 							</td>
-							<td colspan="1" style="padding-top: 20px; vertical-align: top;">
-								<select>
-										<option>-- Country --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
+							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
+								<select  ng-model="ctrl.me.shipCostId" 
+										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
+										 ng-change="ctrl.updateShippingFee()" 
+										 style="width: 250px;height: 40px;">
+							    </select>
 							</td>
 							<td colspan="3">
 								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;">
@@ -72,14 +67,20 @@
 									
 									<tr class="shipping-cost">
 										<td>Shipping Cost</td>
-										<td>0 đ</td>										
+										<td>{{ctrl.order.shipCostFee | number:0}} đ</td>										
 									</tr>
 									<tr>
 										<td>Total</td>
-										<td><span>$61</span></td>
+										<td><span>{{ctrl.total | number:0}} đ</span></td>
 									</tr>
 								</table>
 							</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
+								<a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()" >Đặt hàng</a>
+							</td>
+							
 						</tr>
 						
 					</tbody>
@@ -89,6 +90,12 @@
 				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				  <span class="sr-only">Error:</span>
 					 Cần đăng nhập để đặt hàng
+				</div>
+				<div class="alert alert-success" role="alert" ng-show="ctrl.order_return_status"
+					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
+					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					  <span class="sr-only">success:</span>
+				  		đặt hàng thành công
 				</div>
 			</div>
 

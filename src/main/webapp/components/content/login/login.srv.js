@@ -17,7 +17,7 @@ angular.module('loginModule')
 		//return ajaxService.post(url,credentials,null,{});
 		
 		return ajaxService.post(url,credentials,null,{}).then(function(response){
-			return response.data;
+			return response.data.token;
 		});
 	}
 	

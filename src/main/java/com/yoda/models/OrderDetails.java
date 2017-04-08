@@ -1,6 +1,8 @@
 package com.yoda.models;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class OrderDetails {
@@ -17,30 +24,42 @@ public class OrderDetails {
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int orderDetailId;
 
-	@ManyToOne
-    @JoinColumn(name = "orderId")
-	private Orders order;
+	//@JsonIgnore
+	//@ManyToOne
+    //@JoinColumn(name = "orderId",referencedColumnName = "orderId")
+	//@MapsId
+	//private Orders order;
 	
-	@ManyToOne
+	@OneToOne
     @JoinColumn(name = "prodId")
 	private Products product;
 	
 	@Column(nullable=false, columnDefinition = "INT(8) UNSIGNED")
 	private int priceAtThatTime;
 	
-	@Column(nullable=false, columnDefinition = "INT(4) UNSIGNED default '0'")
+	@Column(nullable=false, columnDefinition = "INT(4) UNSIGNED default 0 ")
 	private int quantity;
 	
-	@Column(nullable=false, columnDefinition = "INT(4) UNSIGNED default '0'")
+	@Column(nullable=true, columnDefinition = "DOUBLE(2,1) default 1.0 ")
+	private double weight;
+	
+	@Column(nullable=false, columnDefinition = "INT(4) UNSIGNED default  0 ")
 	private int discountAtThatTime;
+	
+	@Column(nullable=false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modDate;
 
-	public OrderDetails(Orders order, Products product, int priceAtThatTime, int quantity, int discountAtThatTime) {
+	
+	public OrderDetails(int orderDetailId, Products product, int priceAtThatTime,
+			int quantity, int discountAtThatTime, Date modDate) {
 		super();
-		this.order = order;
+		this.orderDetailId = orderDetailId;
 		this.product = product;
 		this.priceAtThatTime = priceAtThatTime;
 		this.quantity = quantity;
 		this.discountAtThatTime = discountAtThatTime;
+		this.modDate = modDate;
 	}
 
 	public OrderDetails() {
@@ -54,7 +73,7 @@ public class OrderDetails {
 	public void setOrderDetailId(int orderDetailId) {
 		this.orderDetailId = orderDetailId;
 	}
-
+/*
 	public Orders getOrder() {
 		return order;
 	}
@@ -62,7 +81,7 @@ public class OrderDetails {
 	public void setOrder(Orders order) {
 		this.order = order;
 	}
-
+*/
 	public Products getProduct() {
 		return product;
 	}
@@ -87,6 +106,14 @@ public class OrderDetails {
 		this.quantity = quantity;
 	}
 
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
 	public int getDiscountAtThatTime() {
 		return discountAtThatTime;
 	}
@@ -95,11 +122,19 @@ public class OrderDetails {
 		this.discountAtThatTime = discountAtThatTime;
 	}
 
+	public Date getModDate() {
+		return modDate;
+	}
+
+	public void setModDate(Date modDate) {
+		this.modDate = modDate;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderDetails [orderDetailId=" + orderDetailId + ", order=" + order + ", product=" + product
-				+ ", priceAtThatTime=" + priceAtThatTime + ", quantity=" + quantity + ", discountAtThatTime="
-				+ discountAtThatTime + "]";
+		return "OrderDetails [orderDetailId=" + orderDetailId 
+				+ ", product=" + product + ", priceAtThatTime=" + priceAtThatTime + ", quantity=" + quantity
+				+ ", discountAtThatTime=" + discountAtThatTime + ", modDate=" + modDate + "]";
 	}
 	
 	

@@ -5,7 +5,8 @@ angular.module('cartModule')
 			getFirst6Product : getFirst6Product,
 			getProductForCart : getProductForCart,
 			addToCart : addToCart,
-			placeOrder : placeOrder 
+			placeOrder : placeOrder,
+			getShipCost : getShipCost
 		};
 	return cartService;
 	
@@ -54,8 +55,21 @@ angular.module('cartModule')
 		$rootScope.$broadcast('addToCart');
    }
    
-   function placeOrder(cart){
+   function placeOrder(order){
 	   console.log('cart service placeOrder');
-	   console.log(cartStoreService.getCurrentCart());
+	   console.log(order);
+	   var url = "authenticated/saveOrder";
+	   return ajaxService.post(url,order,{}).then(function(response){
+			return response.data;
+	   });
    }
+   
+   function getShipCost(){
+	   console.log('cart service: getshipCost');
+		var url = "shipcost";
+		return ajaxService.get(url,null,{}).then(function(response){
+			return response.data;
+		});
+   }
+   
  }]);

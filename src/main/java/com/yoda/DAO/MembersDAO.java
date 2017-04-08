@@ -1,12 +1,14 @@
 package com.yoda.DAO;
 
 import java.util.Date;
+import java.util.List;
 
 import com.yoda.models.Members;
+import com.yoda.models.Orders;
 
 
 public class MembersDAO {
-	//private int memberId;
+	private int memberId;
 	private String fullName;
 	private String email;
 	//private String pass;
@@ -17,7 +19,9 @@ public class MembersDAO {
 	private String street;
 	private String address;
 	private String postCode;
+	private int shipCostId;
 	private int status;
+	private List<Orders> orders;
 	private Date modDate;
 	
 	public MembersDAO(String fullName, String email, String phone, String country, String city, String district,
@@ -38,6 +42,7 @@ public class MembersDAO {
 	
 	public MembersDAO(Members mem) {
 		super();
+		this.memberId = mem.getMemberId();
 		this.fullName = mem.getFullName();
 		this.email = mem.getEmail();
 		this.phone = mem.getPhone();
@@ -47,13 +52,23 @@ public class MembersDAO {
 		this.street = mem.getStreet();
 		this.address = mem.getAddress();
 		this.postCode = mem.getPostCode();
+		this.shipCostId = mem.getShipCost().getShipCostId();
 		this.status = mem.getStatus();
+		this.orders = mem.getOrders();
 		this.modDate = mem.getModDate();
 	}
 
 	public MembersDAO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getFullName() {
@@ -136,6 +151,22 @@ public class MembersDAO {
 		this.status = status;
 	}
 
+	public int getShipCostId() {
+		return shipCostId;
+	}
+
+	public void setShipCostId(int shipCostId) {
+		this.shipCostId = shipCostId;
+	}
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
+
 	public Date getModDate() {
 		return modDate;
 	}
@@ -146,8 +177,9 @@ public class MembersDAO {
 
 	@Override
 	public String toString() {
-		return "MembersDAO [fullName=" + fullName + ", email=" + email + ", phone=" + phone + ", country=" + country
-				+ ", city=" + city + ", district=" + district + ", street=" + street + ", address=" + address
-				+ ", postCode=" + postCode + ", status=" + status + ", modDate=" + modDate + "]";
+		return "MembersDAO [memberId=" + memberId + ", fullName=" + fullName + ", email=" + email + ", phone=" + phone
+				+ ", country=" + country + ", city=" + city + ", district=" + district + ", street=" + street
+				+ ", address=" + address + ", postCode=" + postCode + ", shipCostId=" + shipCostId + ", status="
+				+ status + ", orders=" + orders + ", modDate=" + modDate + "]";
 	}
 }

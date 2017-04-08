@@ -16,11 +16,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+/*
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "memberId")*/
 public class Members {
 	
 	@Id
@@ -65,14 +71,20 @@ public class Members {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modDate;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "shipCostId")
 	private ShipCost shipCost;
 	
 	//@JsonBackReference
 	@JsonIgnore
-	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "member",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "orderId")
 	private List<Orders> orders;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "memberId")
+	private List<MemberRole> role;
 
 	public Members(String fullName, String email, String pass, String phone, String country, String city,
 			String district, String street, String address, String postCode, int status, ShipCost shipCost, Date modDate) {
@@ -208,6 +220,14 @@ public class Members {
 		this.shipCost = shipCost;
 	}
 
+	public List<MemberRole> getRole() {
+		return role;
+	}
+
+	public void setRole(List<MemberRole> role) {
+		this.role = role;
+	}
+
 	public List<Orders> getOrders() {
 		return orders;
 	}
@@ -221,6 +241,6 @@ public class Members {
 		return "Members [memberId=" + memberId + ", fullName=" + fullName + ", email=" + email + ", pass=" + pass
 				+ ", phone=" + phone + ", country=" + country + ", city=" + city + ", district=" + district
 				+ ", street=" + street + ", address=" + address + ", postCode=" + postCode + ", status=" + status
-				+ ", modDate=" + modDate + ", shipCost=" + shipCost + ", orders=" + orders + "]";
+				+ ", modDate=" + modDate + ", shipCost=" + shipCost + ", orders=" + orders + ", role=" + role + "]";
 	}
 }

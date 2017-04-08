@@ -1,7 +1,7 @@
 angular.module('networkServices',[])
 	.factory('ajaxService',['$http','$cookies',function($http,$cookies){
 		
-		//var urlbase = "http://54.255.134.231:8080/yoda2/";
+		//var urlbase = "http://54.255.250.109:8080/yoda/";
 		var urlbase = "http://localhost:8080/";
 		var sessionid = $cookies.get('JSESSIONID');
 		
@@ -27,7 +27,6 @@ angular.module('networkServices',[])
 		return ajaxService;
 
 		function get(url,action,params){
-			//console.log('ajaxService: get');
 			close.params = params || {};
 			config.params["timeStamp"] = (new Date()).getTime();
 			config.headers.action = action || '';
@@ -40,9 +39,6 @@ angular.module('networkServices',[])
 			config.params["timeStamp"] = (new Date()).getTime();
 			config.headers.action = action || '';
 			url = urlbase + url;
-			//console.log(url);
-			//console.log(data);
-			//console.log(config);
 			return $http.post(url,data,config);
 		}
 }]);

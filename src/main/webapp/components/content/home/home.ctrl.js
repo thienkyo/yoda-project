@@ -7,7 +7,7 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 		homeService.getFirst6Product()
 			.then(function (response) {
 				$scope.first6products = response;
-		        //console.log($scope.first6products);
+		        console.log($scope.first6products);
 			});
 		
 		self.addToCart = function(prod){

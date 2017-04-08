@@ -8,29 +8,26 @@ angular.module('loginModule')
 	var self = this;
 	
 	
-	
-	
-	self.newMember = new MemberDO();
-  //  self.member = {};
+    self.member = {};
     self.credential ={};
 	self.login = function() {
 		console.log('loginctrl.login');
             //self.error = null;
 		//console.log(self.member.email);
 		if(self.credential.email && self.credential.pass){
-            loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(userData) {	
-            	console.log(userData);
+            loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(token) {	
+            	console.log(token);
             	
-            	userData.token =  'sheep ' + userData.token;
-            /*	var arr = token.split('.');
+            	self.member.token =  'sheep ' + token;
+            	var arr = token.split('.');
             	var decodedString = decodeURIComponent(atob(arr[1]));
                 console.log(decodedString);
                 var a = angular.fromJson(decodeURIComponent(decodedString));
                 console.log(a);
                 self.member.roles = a.roles;
-                self.member.shipAddress = a.shipAddress;
-             */   
-                memberService.setCurrentMember(userData);
+             //   self.member.shipAddress = a.shipAddress;
+               
+                memberService.setCurrentMember(self.member);
                 $rootScope.$broadcast('authorized');
                 $location.path('#/');
             },
@@ -47,6 +44,7 @@ angular.module('loginModule')
 	
 	
 	self.signup = function(){
+		self.newMember = new MemberDO();
 		console.log(self.newMember);
 		if(self.newMember.email && self.newMember.fullName && self.newMember.pass && self.newMember.phone){
 			

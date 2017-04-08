@@ -16,10 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
+/*@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "prodId")*/
 public class Products {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,18 +64,19 @@ public class Products {
 	@Column(nullable=true, columnDefinition = "DOUBLE(2,1) default 1.0")
 	private double weight;
 	
-	@JsonManagedReference
+//	@JsonManagedReference
 	@ManyToOne
     @JoinColumn(name = "categoryId")
 	private Categories category;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<OrderDetails> orderDetails;
+//	@JsonBackReference
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	private List<OrderDetails> orderDetails;
 
 	
 	public Products(String prodName, String description, String notification, int price, int quantity, String image,
-			int status) {
+			int status, double weight) {
 		super();
 		this.prodName = prodName;
 		this.description = description;
@@ -77,6 +85,7 @@ public class Products {
 		this.quantity = quantity;
 		this.image = image;
 		this.status = status;
+		this.weight = weight;
 	}
 
 	public Products() {
@@ -164,6 +173,14 @@ public class Products {
 		this.discount = discount;
 	}
 
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
 	public Categories getCategory() {
 		return category;
 	}
@@ -171,7 +188,7 @@ public class Products {
 	public void setCategory(Categories category) {
 		this.category = category;
 	}
-
+/*
 	public List<OrderDetails> getOrderDetails() {
 		return orderDetails;
 	}
@@ -179,7 +196,7 @@ public class Products {
 	public void setOrderDetails(List<OrderDetails> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-
+*/
 	@Override
 	public String toString() {
 		return "Products [prodID=" + prodId + ", prodName=" + prodName + ", description=" + description

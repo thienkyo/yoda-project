@@ -5,28 +5,32 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-5">
-					<div class="chose_area">
+					<div class="chose_area" style="margin-bottom: 0px;">
 						<div class="user_option">
 							<div class="form-one">
 								<form>
 									<input type="text" placeholder="Email*" value="{{ctrl.me.email}}">
-									<input type="text" placeholder="Tên" value="{{ctrl.me.fullName}}">
+									<input type="text" placeholder="Tên"  ng-model="ctrl.me.fullName">
 								</form>
 							</div>
 							<div class="form-two">
 								<form>
-									<input type="text" placeholder="Số điện thoại*" value="{{ctrl.me.phone}}">
-									<input type="text" placeholder="Thành phố " value="{{ctrl.me.city}}">
+									<input type="text" placeholder="Số điện thoại*" ng-model="ctrl.me.phone">
+									<select  ng-model="ctrl.me.shipCostId" 
+										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
+										 style="width: 100%;height: 40px;">
+							    	</select>
 								</form>
+								
 							</div>
 						</div>
-					    <textarea rows="4" cols="50" placeholder="Địa chỉ shipping...">{{ctrl.me.address}}</textarea>
+					    <textarea rows="4" cols="50" placeholder="Địa chỉ shipping..." ng-model="ctrl.me.address"></textarea>
 
-						<a class="btn btn-default check_out" href="">save</a>
+						<a class="btn btn-default check_out" href="" ng-click="ctrl.updateMe()">save</a>
 					</div>
 				</div>
 				<div class="col-sm-7">
-					<div class="total_area" style="padding-left:0px;">
+					<div class="total_area" style="padding-left:0px;margin-bottom: 0px;">
 						
 						<ul>
 							<li class="row" style="padding: 10px 0px 10px 0px;margin-top: 0px;background: #F0F0E9;">
@@ -35,28 +39,92 @@
 								<div class="col-xs-3">Tổng tiền</div>
 								<div class="col-xs-3">status</div>
 							</li>
-							<li class="row" style="padding: 10px 0px 10px 0px;">
-								<div class="col-xs-3"> 13-02-2017</div>
-								<div class="col-xs-3"> 0023</div>
-								<div class="col-xs-3"> 5.000.000 d</div>
-								<div class="col-xs-3"> shipped</div>
+							<li class="row"
+								ng-repeat="item in ctrl.orderList " 
+								style="padding: 10px 0px 10px 0px;">
+								<div class="col-xs-3"> {{item.modDate | date:"dd-MM-yyyy"}}</div>
+								<div class="col-xs-3"><a href="" ng-click="ctrl.showOrderDetail(item)"> {{("000"+item.orderId).slice(-4)}}</a></div>
+								<div class="col-xs-3"> {{item.total | number}} đ</div>
+								<div class="col-xs-3"> {{item.status}}</div>
 							</li>
-							<li class="row" style="padding: 10px 0px 10px 0px;">
-								<div class="col-xs-3"> 13-02-2017</div>
-								<div class="col-xs-3"> 0023</div>
-								<div class="col-xs-3"> 15.000.000 d</div>
-								<div class="col-xs-3"> pending</div>
-							</li>
-							<li class="row" style="padding: 10px 0px 10px 0px;">
-								<div class="col-xs-3"> 13-02-2017</div>
-								<div class="col-xs-3"> 0023</div>
-								<div class="col-xs-3"> 15.000.000 d</div>
-								<div class="col-xs-3"> done</div>
-							</li>
-							
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section><!--/#do_action-->
+</section><!--/#do_action-->
+<section id="cart_items" ng-show="ctrl.theOrder">
+		<div class="container">
+				
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Item</td>
+							<td class="description"></td>
+							<td class="price">Price</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in ctrl.theOrder.orderDetails ">
+							<td class="cart_product">
+								<a href="#/productDetail/{{item.product.prodId}}"><img ng-src="images/shop/{{item.product.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
+							</td>
+							<td class="cart_description" style="padding-left: 40px;">
+								<h4><a href="#/productDetail/{{item.product.prodId}}">{{item.product.prodName}}</a></h4>
+								<p>Web ID: {{item.product.prodId}}</p>
+							</td>
+							<td class="cart_price">
+								<p>{{item.priceAtThatTime | number:0}} đ</p>
+							</td> <!-- value="{{item.quantity}}" -->
+							<td class="cart_quantity">
+								<p>{{item.quantity}}</p>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">{{item.priceAtThatTime * item.quantity | number:0}} đ</p>
+							</td>
+							<td class="cart_delete">
+							</td>
+						</tr>
+						<tr style="border-bottom: 0px;">
+							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
+								<textarea name="message"  placeholder="ghi địa chỉ chính xác để nhận hàng nhanh chóng." 
+										  rows="4" style="margin-top: 0px;" ng-model="ctrl.me.address" ng-cloak ></textarea>
+								<!--   <a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a> -->
+								
+							</td>
+							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
+								
+							</td>
+							<td colspan="3">
+								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;">
+									<tr>
+										<td>Cart Sub Total</td>
+										<td>{{ctrl.theOrder.subTotal | number:0}} đ</td>
+									</tr>
+									
+									<tr class="shipping-cost">
+										<td>Shipping Cost</td>
+										<td>{{ctrl.theOrder.shipCostFee | number:0}} đ</td>										
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span>{{ctrl.theOrder.total | number:0}} đ</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				
+			</div>
+
+		</div>
+</section>
+	
+	
+	

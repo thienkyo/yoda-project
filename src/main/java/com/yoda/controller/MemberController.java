@@ -47,10 +47,10 @@ public class MemberController {
         return new LoginResponse(Jwts.builder()
         		.setSubject(login.email)
         		.claim("roles", rolelist)
-        		.claim("shipAddress", mem.getAddress())
+        		//.claim("shipAddress", mem.getAddress())
         		.setIssuedAt(new Date())
         		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
-        		.compact(), rolelist, mem.getAddress());
+        		.compact());
     }
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, 
@@ -61,7 +61,7 @@ public class MemberController {
         }
 		 
 		member.setModDate(new Date());
-		//member.setShipCost(new ShipCost(1));
+		member.setShipCost(new ShipCost(1));
 		Members returnMem = memService.save(member);
 		memberRoleService.save(new MemberRole(member.getEmail(), UtilityConstant.MEMBER_ROLE));
 		return new AddResponse(returnMem.getEmail());      
@@ -72,7 +72,15 @@ public class MemberController {
         public String email;
         public String pass;
     }
-
+    
+    @SuppressWarnings("unused")
+    private static class LoginResponse {
+    	public String token;
+        public LoginResponse(final String token) {
+            this.token = token;
+        }
+    }
+/*
     @SuppressWarnings("unused")
     private static class LoginResponse {
     	public String token;
@@ -83,7 +91,7 @@ public class MemberController {
             this.rolelist = rolelist;
             this.address = address; 
         }
-    }
+    }*/
     
     @SuppressWarnings("unused")
     private static class AddResponse {
