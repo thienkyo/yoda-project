@@ -10,12 +10,21 @@ angular.module('app')
         return config;
     };
     service.responseError = function(response) {
-    	console.log('response');
+    	console.log('intercepter');
+    	console.log(response);
     	//response.status = 401;
     	 if (response.status === 401) {
              $rootScope.$broadcast('unauthorized');
             // console.log('401');
          }
+    	 
+    	 if (response.status === 500) {
+    		 console.log('500');
+    		 if(response.data.exception == 'io.jsonwebtoken.ExpiredJwtException'){
+    			 $rootScope.$broadcast('ExpiredJwt');
+    		 }
+         }
+    	 
          return $q.reject(response);;
     };
     

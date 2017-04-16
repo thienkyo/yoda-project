@@ -12,5 +12,7 @@ angular.module('app', [
 		'accountModule',
 		'cartModule',
 		'angular-storage',
-		'ngMaterial'
+		'ngMaterial',
+		'productListModule',  //mgnt from here
+		'productUpsertModule'
 ]);

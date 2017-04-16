@@ -37,6 +37,7 @@ public class AuthenticationController {
 
 		return ((List<String>) claims.get("roles")).contains(role);
 	}
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "me", method = RequestMethod.GET)
 	public MembersDAO getMe(final HttpServletRequest request) throws ServletException {
@@ -85,5 +86,4 @@ public class AuthenticationController {
             this.replyStr = replyStr;
         }
     }
-	
 }

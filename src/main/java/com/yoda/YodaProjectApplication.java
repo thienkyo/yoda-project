@@ -10,25 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.yoda.filter.JwtFilter;
-
-/*
- @Configuration
-@EnableAutoConfiguration
-@SpringBootApplication(scanBasePackages = { "com.yoda.services","com.yoda.models","com.yoda.controller","com.yoda"})
-public class YodaProjectApplication extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(YodaProjectApplication.class);
-    }
-    
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(YodaProjectApplication.class, args);
-    }
-    
-}
- * */
+import com.yoda.filter.jwtFilterMgnt;;
 
 @Configuration
 @EnableAutoConfiguration
@@ -40,6 +22,15 @@ public class YodaProjectApplication extends SpringBootServletInitializer {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new JwtFilter());
         registrationBean.addUrlPatterns("/authenticated/*");
+
+        return registrationBean;
+    }
+	
+	@Bean
+    public FilterRegistrationBean jwtFilterMgnt() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new jwtFilterMgnt());
+        registrationBean.addUrlPatterns("/mgnt/*");
 
         return registrationBean;
     }

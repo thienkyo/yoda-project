@@ -39,6 +39,16 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
+		.when('/mgnt/productList',{
+            templateUrl: '/components/mgnt/product/list/productList.html',
+            controller: 'productListController',
+            controllerAs:'ctrl'
+        })
+        .when('/mgnt/productUpsert/:prodId',{
+            templateUrl: '/components/mgnt/product/upsert/productUpsert.html',
+            controller: 'productUpsertController',
+            controllerAs:'ctrl'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

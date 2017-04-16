@@ -44,11 +44,13 @@ public class MemberController {
         for(MemberRole r : mr ){
         	rolelist.add(r.getRole());
         }
+        
         return new LoginResponse(Jwts.builder()
         		.setSubject(login.email)
         		.claim("roles", rolelist)
         		//.claim("shipAddress", mem.getAddress())
         		.setIssuedAt(new Date())
+        		.setExpiration(new Date(System.currentTimeMillis()+5*60*1000))
         		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
         		.compact());
     }

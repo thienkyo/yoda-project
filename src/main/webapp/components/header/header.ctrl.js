@@ -8,8 +8,15 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
 	self.currentCart = cartStoreService.getCurrentCart();
 	self.itemQuantity = cartStoreService.getQuantity();
 	
+	self.isAdmin = false;
+	if(self.currentMember){
+		self.isAdmin = self.currentMember.roles.indexOf("ADMIN") != -1;
+	}
+	
+	
 	self.logout = function() {
 		self.currentMember = memberService.setCurrentMember(null);
+		self.isAdmin = false;
 		console.log('header logout clicked');
 		$location.path('#/');
         //$rootScope.authenticated = false;
@@ -18,6 +25,7 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
 	
 	$rootScope.$on('authorized', function() {
 		self.currentMember = memberService.getCurrentMember();
+		self.isAdmin = self.currentMember.roles.indexOf("ADMIN") != -1;
     });
 	
     $rootScope.$on('unauthorized', function() {
@@ -38,5 +46,10 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
     	self.itemQuantity = cartStoreService.getQuantity();
     });
     
+    $rootScope.$on('ExpiredJwt', function() {
+    	self.currentMember = memberService.setCurrentMember(null);
+		self.isAdmin = false;
+		$location.path('#/');
+    });
 
 }]);

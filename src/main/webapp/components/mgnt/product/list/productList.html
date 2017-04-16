@@ -1,0 +1,18 @@
+<section>
+	<div class="container" ng-cloak>
+		<h2>Product management add</h2>
+		<a href="#/mgnt/productUpsert/0">add</a>
+		<a href="#/">all</a>
+		
+        <div class="table-responsive">
+            <table ng-table="ctrl.tableParams" class="table table-bordered table-hover table-striped" show-filter="true">
+			    <tr ng-repeat="prod in $data">
+			        <td title="'id'" filter="{ prodId: 'number'}" sortable="'prodId'">{{prod.prodId}}</td>
+			        <td title="'name'" filter="{ prodName: 'text'}" sortable="'prodName'"><a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodName}}</a></td>
+			        <td title="'quantity'" filter="{ quantity : 'number'}" sortable="'quantity'">{{prod.quantity}}</td>
+			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'">{{prod.status}}</td>
+			    </tr>
+			</table>
+        </div>
+	</div>
+</section>

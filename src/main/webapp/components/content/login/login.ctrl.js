@@ -20,9 +20,11 @@ angular.module('loginModule')
             	
             	self.member.token =  'sheep ' + token;
             	var arr = token.split('.');
-            	var decodedString = decodeURIComponent(atob(arr[1]));
+            //	var decodedString = decodeURIComponent(atob(arr[1]));
+            	var decodedString = atob(arr[1]);
                 console.log(decodedString);
-                var a = angular.fromJson(decodeURIComponent(decodedString));
+            //  var a = angular.fromJson(decodeURIComponent(decodedString));
+                var a = angular.fromJson(decodedString);
                 console.log(a);
                 self.member.roles = a.roles;
              //   self.member.shipAddress = a.shipAddress;
