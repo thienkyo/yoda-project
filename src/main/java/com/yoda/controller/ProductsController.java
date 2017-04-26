@@ -23,7 +23,7 @@ public class ProductsController {
     private ProductsService prodRepo;
 	
 	@RequestMapping("{status}")
-    public List<Products> getProductByStatus(@PathVariable int status) {//@RequestParam(value = "status") 
+    public List<Products> getProductByStatus(@PathVariable final int status) {//@RequestParam(value = "status") 
         return prodRepo.findByStatusOrderByModDateDesc(status);
     }
 	
@@ -39,7 +39,7 @@ public class ProductsController {
     }
 	
 	@RequestMapping(value="id/{id}",method = RequestMethod.GET)
-    public Products getOneProduct(@PathVariable int id) {
+    public Products getOneProduct(@PathVariable final int id) {
 		return prodRepo.findByProdId(id);
     }
 

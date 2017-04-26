@@ -1,16 +1,40 @@
 <section>
 	<div class="container" ng-cloak>
-		<h2>Product management add</h2>
-		<a href="#/mgnt/productUpsert/0">add</a>
-		<a href="#/">all</a>
+		<h3>Product management </h3>
+		
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="col-sm-1">
+				<a href="#/mgnt/productUpsert/0" class="btn btn-default check_out" style="margin: 5px 0px 0px 0px;">add</a>
+			</div>
+			<div class="col-sm-1">
+				<select  ng-model="ctrl.amount"  ng-change="ctrl.getProductbyTerm()"
+					 ng-options="opt.value as opt.name for opt in ctrl.amountList"
+					 style="width: 100%;height: 40px;">
+		    	</select> 
+			</div>
+			<div class="col-sm-3">
+				<select  ng-model="ctrl.categoryId" ng-change="ctrl.getProductbyTerm()"
+					 ng-options="opt.categoryId as opt.categoryName for opt in ctrl.categories"
+					 style="width: 100%;height: 40px;">
+		    	</select> 	
+			</div>
+			<div class="col-sm-7"></div>
+		</div>
+		
 		
         <div class="table-responsive">
             <table ng-table="ctrl.tableParams" class="table table-bordered table-hover table-striped" show-filter="true">
 			    <tr ng-repeat="prod in $data">
-			        <td title="'id'" filter="{ prodId: 'number'}" sortable="'prodId'">{{prod.prodId}}</td>
-			        <td title="'name'" filter="{ prodName: 'text'}" sortable="'prodName'"><a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodName}}</a></td>
+			        <td title="'id'" filter="{ prodId: 'number'}" sortable="'prodId'" style="width:60px;text-align: center;">
+			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodId}}</a>
+			        </td>
+			        <td title="'name'" filter="{ prodName: 'text'}" sortable="'prodName'" style="width:300px;">
+			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodName}}</a>
+			        </td>
+			        <td title="'price'" filter="{ price : 'number'}" sortable="'price'" style="text-align: right;">{{prod.price | number:0}}</td>
 			        <td title="'quantity'" filter="{ quantity : 'number'}" sortable="'quantity'">{{prod.quantity}}</td>
-			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'">{{prod.status}}</td>
+			        <td title="'weight'" filter="{ weight : 'number'}" sortable="'weight'">{{prod.weight | number:1}}</td>
+			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'">{{prod.status == 0 ? 'inactive' : 'active' }}</td>
 			    </tr>
 			</table>
         </div>

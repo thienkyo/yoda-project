@@ -20,5 +20,8 @@ public interface ProductsService extends CrudRepository<Products, Integer>{
 	//mgnt
 	public List<Products> findFirst20ByOrderByProdIdDesc();
 	public List<Products> findFirst50ByOrderByModDateDesc();
-	public List<Products> findAllByOrderByModDateDesc(); 
+	public List<Products> findAllByOrderByModDateDesc();
+	public List<Products> findAllByOrderByProdIdDesc();
+	public List<Products> findFirst20ByCategoryOrderByProdIdDesc(Categories category);
+	public List<Products> findAllByCategoryOrderByProdIdDesc(Categories category);
 }

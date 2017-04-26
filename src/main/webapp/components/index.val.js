@@ -6,12 +6,19 @@ var OrderStatusArray=[
 	{name : 'xong', value:23 }
 ];
 
+var CommonStatusArray=[
+	{name : 'active', value:1 },
+	{name : 'inactive', value:0 }
+];
+
 angular
 		.module('app') 
 		.value('MemberDO', MemberDO)
 		.value('OrderDO',OrderDO)
 		.value('OrderDetailDO',OrderDetailDO)
-		.value('OrderStatusArray',OrderStatusArray); 
+		.value('OrderStatusArray',OrderStatusArray)
+		.value('CommonStatusArray',CommonStatusArray)
+		.value('ProductDO',ProductDO); 
 
 function OrderDO () {
 	this.orderId = 0;
@@ -64,6 +71,20 @@ function MemberDO () {
 		this.postCode = '';
 		this.status   = 1;
 		this.modDate ='';
-	   }
+		}
+}
+
+function ProductDO(){
+	this.prodId = 0;
+	this.description = '';
+	this.discount = 0;
+	this.mod_date = (new Date()).getTime();
+	this.notification = 'còn hàng';
+	this.price = 1000;
+	this.prodName = '';
+	this.quantity = 1;
+	this.status = 1;
+	this.weight = 0.1;
+	this.category={categoryId:1};
 }
 

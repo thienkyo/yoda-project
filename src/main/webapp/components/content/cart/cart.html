@@ -19,7 +19,7 @@
 					<tbody>
 						<tr ng-repeat="item in ctrl.currentCart track by $index">
 							<td class="cart_product">
-								<a href="#/productDetail/{{item.prod.prodId}}"><img ng-src="images/shop/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
+								<a href="#/productDetail/{{item.prod.prodId}}"><img ng-src="images/thumbnail/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
 							</td>
 							<td class="cart_description" style="padding-left: 40px;">
 								<h4><a href="#/productDetail/{{item.prod.prodId}}">{{item.prod.prodName}}</a></h4>

@@ -6,6 +6,7 @@ angular.module('app')
         var	authen_token = currentMember ? currentMember.token : null;
         if (authen_token) {
             config.headers.authorization = authen_token;
+            
         }
         return config;
     };

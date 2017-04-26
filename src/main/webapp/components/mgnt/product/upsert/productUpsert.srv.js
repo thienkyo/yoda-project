@@ -2,21 +2,31 @@
 angular.module('productUpsertModule')
 .factory('productUpsertService', ['ajaxService',function(ajaxService) {
 		var productUpsertService = {
-			upsert : upsert
+			upsert : upsert,
+			//getCategories : getCategories,
 		//	get50Products : get50Products,
 	//		getAllProduct : getAllProduct
 			//  createProduct : createProduct,
-			//  updateProduct : updateProduct,
+			upsert : upsert
 			//  deleteProduct : deleteProduct
 			};
 	return productUpsertService;
 	
-	function upsert(){
+	function upsert(product){
 		console.log('upsert');
-		var url = "mgnt/upsert";
+		var url = "mgnt/upsertProduct";
+		return ajaxService.post(url,product,{}).then(function(response){
+			return response.data;
+		});
+	}
+/*	
+	function getCategories(){
+		var url = "categories/1";
 		return ajaxService.get(url,null,{}).then(function(response){
 			return response.data;
 		});
 	}
+	*/
+	
       
  }]);

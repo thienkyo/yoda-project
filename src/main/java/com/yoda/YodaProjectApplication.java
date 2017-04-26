@@ -10,13 +10,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.yoda.filter.JwtFilter;
-import com.yoda.filter.jwtFilterMgnt;;
+import com.yoda.filter.jwtFilterMgnt;
+
 
 @Configuration
 @EnableAutoConfiguration
 @SpringBootApplication(scanBasePackages = { "com.yoda.services","com.yoda.models","com.yoda.controller","com.yoda"})
 public class YodaProjectApplication extends SpringBootServletInitializer {
 
+	
 	@Bean
     public FilterRegistrationBean jwtFilter() {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -45,5 +47,6 @@ public class YodaProjectApplication extends SpringBootServletInitializer {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(YodaProjectApplication.class, args);
     }
+  
     
 }

@@ -23,7 +23,7 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 			self.me = me;
 			console.log(me);
 			//self.shipCostId = me.shipCostId;
-			
+		
 			for(var i = 0; i < me.orders.length; i++){
 				var total = 0;
 				for(var k = 0; k < me.orders[i].orderDetails.length; k++){
