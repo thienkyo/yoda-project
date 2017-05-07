@@ -2,13 +2,8 @@
 angular.module('productUpsertModule')
 .factory('productUpsertService', ['ajaxService',function(ajaxService) {
 		var productUpsertService = {
-			upsert : upsert,
-			//getCategories : getCategories,
-		//	get50Products : get50Products,
-	//		getAllProduct : getAllProduct
-			//  createProduct : createProduct,
 			upsert : upsert
-			//  deleteProduct : deleteProduct
+		
 			};
 	return productUpsertService;
 	

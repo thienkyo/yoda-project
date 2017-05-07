@@ -59,8 +59,8 @@ public class Orders {
 	private Members member;
 	
 //	@JsonBackReference
-	//@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+//	@OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE , fetch=FetchType.LAZY,orphanRemoval=true)
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval=true, fetch=FetchType.LAZY)
 	@JoinColumn(name = "orderId")
 	private List<OrderDetails> orderDetails;
 

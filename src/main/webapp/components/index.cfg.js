@@ -39,6 +39,12 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
+		.when('/readme', {
+			templateUrl: 'components/content/readme/readme.html'
+		})
+		.when('/contact', {
+			templateUrl: 'components/content/contact/contact.html'
+		})
 		.when('/mgnt/productList',{
             templateUrl: 'components/mgnt/product/list/productList.html',
             controller: 'productListController',
@@ -47,6 +53,16 @@ angular.module('app')
         .when('/mgnt/productUpsert/:prodId',{
             templateUrl: 'components/mgnt/product/upsert/productUpsert.html',
             controller: 'productUpsertController',
+            controllerAs:'ctrl'
+        })
+        .when('/mgnt/orderList',{
+            templateUrl: 'components/mgnt/order/list/orderList.html',
+            controller: 'orderListController',
+            controllerAs:'ctrl'
+        })
+        .when('/mgnt/category',{
+            templateUrl: 'components/mgnt/category/category.html',
+            controller: 'categoryController',
             controllerAs:'ctrl'
         })
         .otherwise(

@@ -15,5 +15,7 @@ angular.module('app', [
 		'ngMaterial',
 		'productListModule',  //mgnt from here
 		'productUpsertModule',
-		'categoryModule'
+		'categoryModule',
+		'orderListModule',
+		'ui.tinymce'
 ]);

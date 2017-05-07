@@ -3,7 +3,9 @@ angular.module('categoryModule')
 .factory('categoryService', ['ajaxService',function(ajaxService) {
 		var categoryService = {
 				getAllCategories : getAllCategories,
-				getActiveCategories : getActiveCategories
+				getActiveCategories : getActiveCategories,
+				upsert : upsert,
+				deleteCategory : deleteCategory
 			};
 	return categoryService;
 	
@@ -17,6 +19,22 @@ angular.module('categoryModule')
 	function getActiveCategories(){
 		var url = "categories/1";
 		return ajaxService.get(url,null,{}).then(function(response){
+			return response.data;
+		});
+	}
+	
+	function upsert(cate){
+		console.log('upsert');
+		var url = "mgnt/upsertCategory";
+		return ajaxService.post(url,cate,{}).then(function(response){
+			return response.data;
+		});
+	}
+	
+	function deleteCategory(cate){
+		console.log('upsert');
+		var url = "mgnt/deleteCategory";
+		return ajaxService.post(url,cate,{}).then(function(response){
 			return response.data;
 		});
 	}

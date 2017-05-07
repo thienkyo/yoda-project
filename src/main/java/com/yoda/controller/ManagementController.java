@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoda.UtilityConstant;
 import com.yoda.models.Categories;
+import com.yoda.models.OrderDetails;
+import com.yoda.models.Orders;
 import com.yoda.models.Products;
 import com.yoda.services.CategoriesService;
+import com.yoda.services.OrdersService;
 import com.yoda.services.ProductsService;
 
 import io.jsonwebtoken.Claims;
@@ -27,8 +30,9 @@ import io.jsonwebtoken.Claims;
 public class ManagementController {
 	@Autowired private ProductsService productService;
 	@Autowired private CategoriesService cateService;
+	@Autowired private OrdersService orderService;
 	
-	/////////////product sectiob/////////////
+	/////////////product section/////////////
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get20Products", method = RequestMethod.GET)
 	public List<Products> get20Products(final HttpServletRequest request) throws ServletException {
@@ -74,13 +78,13 @@ public class ManagementController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "upsertProduct", method = RequestMethod.POST)
-	public AuthenticationResponse updateProducts(@RequestBody final Products product) throws ServletException {
+	public ManagementResponse updateProducts(@RequestBody final Products product) throws ServletException {
 		product.setModDate(new Date());
 		productService.save(product);
-		return new AuthenticationResponse("upsert_product_success");
+		return new ManagementResponse("upsert_product_success");
 	}
 	
-	//////////////category section
+	//////////////category section/////////////////
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "getAllCategories", method = RequestMethod.GET)
 	public List<Categories> getAllCategories(final HttpServletRequest request) throws ServletException {
@@ -92,10 +96,70 @@ public class ManagementController {
 		return cateList;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "upsertCategory", method = RequestMethod.POST)
+	public Categories upsertCategory(@RequestBody final Categories cate) throws ServletException {
+		//cate.setMod_date(new Date());
+		cateService.save(cate);
+		return cate;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "deleteCategory", method = RequestMethod.POST)
+	public ManagementResponse deleteCategory(@RequestBody final Categories cate) throws ServletException {
+		//cate.setMod_date(new Date());
+		cateService.delete(cate);;
+		return new ManagementResponse("delete_category_success");
+	}
+	
+	///////////////Orders section//////////////
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "getOrdersForMgnt/{amount}", method = RequestMethod.GET)
+	public List<Orders> getOrdersForMgnt(@PathVariable final int amount) throws ServletException {
+		List<Orders> orderList = new ArrayList<Orders>();
+		
+		if(amount==20){
+			orderList =  orderService.findFirst20ByOrderByOrderIdDesc();
+		}else{
+			orderList = orderService.findAllByOrderByOrderIdDesc();
+		}
+		
+		return orderList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "deleteOrder", method = RequestMethod.POST)
+	public ManagementResponse deleteOrder(@RequestBody final Orders order) throws ServletException {
+		//cate.setMod_date(new Date());
+		orderService.delete(order);
+		return new ManagementResponse("delete_order_success");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "updateOrderStatus/{orderId}/{status}", method = RequestMethod.GET)
+	public ManagementResponse updateOrderStatus(@PathVariable final int orderId, @PathVariable final int status) throws ServletException {
+		Orders order = orderService.findOne(orderId);
+		List<Products> products = new ArrayList<>();
+		for(OrderDetails od : order.getOrderDetails()){
+			Products prod = od.getProduct();
+			if(status == 21){
+				prod.setQuantity(prod.getQuantity() - od.getQuantity());
+			}else if(status == 20){
+				prod.setQuantity(prod.getQuantity() + od.getQuantity());
+			}
+			
+			products.add(prod);
+		}
+		productService.save(products);
+		order.setStatus(status);
+		orderService.save(order);
+		return new ManagementResponse("upsert_order_success");
+	}
+	
 	@SuppressWarnings("unused")
-    private static class AuthenticationResponse {
+    private static class ManagementResponse {
     	public String replyStr;
-        public AuthenticationResponse(final String replyStr) {
+        public ManagementResponse(final String replyStr) {
             this.replyStr = replyStr;
         }
     }

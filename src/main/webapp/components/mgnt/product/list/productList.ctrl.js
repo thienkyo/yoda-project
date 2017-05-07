@@ -7,10 +7,10 @@ angular.module('productListModule')
 	console.log('productListController');
 	var self = this;
 	
-	self.currentMember = memberService.getCurrentMember();
-	if(!self.currentMember || self.currentMember.roles.indexOf("ADMIN") == -1){
+	if(!memberService.isAdmin()){
 		$location.path('#/');
 	}
+	self.currentMember = memberService.getCurrentMember();
 	
 	self.categories =[];
 	var cateTemp = {categoryId:0,categoryName:'all'}

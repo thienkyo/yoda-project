@@ -18,7 +18,8 @@ angular
 		.value('OrderDetailDO',OrderDetailDO)
 		.value('OrderStatusArray',OrderStatusArray)
 		.value('CommonStatusArray',CommonStatusArray)
-		.value('ProductDO',ProductDO); 
+		.value('ProductDO',ProductDO)
+		.value('CategoryDO',CategoryDO);
 
 function OrderDO () {
 	this.orderId = 0;
@@ -86,5 +87,12 @@ function ProductDO(){
 	this.status = 1;
 	this.weight = 0.1;
 	this.category={categoryId:1};
+}
+
+function CategoryDO(){
+	this.categoryId = 0;
+	this.categoryName = 'cate name';
+	this.status = 1; 
+	this.mod_date = (new Date()).getTime();
 }
 

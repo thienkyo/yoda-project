@@ -1,5 +1,5 @@
-angular.module('app').controller('headerController', ['$http','$rootScope','$location','memberService','cartStoreService',
-	function($http,$rootScope,$location,memberService,cartStoreService) {
+angular.module('app').controller('headerController', ['$http','$rootScope','$location','memberService','cartStoreService','categoryService',
+	function($http,$rootScope,$location,memberService,cartStoreService,categoryService) {
 	console.log('header ctrl');
 	var self=this;
 	self.cart=[];
@@ -7,12 +7,11 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
 	
 	self.currentCart = cartStoreService.getCurrentCart();
 	self.itemQuantity = cartStoreService.getQuantity();
-	
-	self.isAdmin = false;
-	if(self.currentMember){
-		self.isAdmin = self.currentMember.roles.indexOf("ADMIN") != -1;
-	}
-	
+	self.isAdmin = memberService.isAdmin();
+	categoryService.getActiveCategories().then(function(data){
+		console.log(data);
+		self.cateList = data;
+	});
 	
 	self.logout = function() {
 		self.currentMember = memberService.setCurrentMember(null);

@@ -32,6 +32,10 @@ public class ProductsController {
         return prodRepo.findFirst6ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
     }
 	
+	@RequestMapping("first12")
+    public List<Products> getFisrt12Product() {//@RequestParam(value = "status") 
+        return prodRepo.findFirst12ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
+    }
 	
 	@RequestMapping("count")
     public String count() {//@RequestParam(value = "status") 

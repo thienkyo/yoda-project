@@ -5,7 +5,8 @@ angular.module('app')
 	var memberService = {
 		setCurrentMember : setCurrentMember,
 		getCurrentMember : getCurrentMember,
-		isLogin : isLogin
+		isLogin : isLogin,
+		isAdmin :isAdmin
 		};
 	return memberService;
 	
@@ -32,6 +33,15 @@ angular.module('app')
 		return false;
 	}
       
+	function isAdmin(){
+		if (!currentMember) {
+            currentMember = store.get('member');
+        }
+		if(currentMember && currentMember.roles.indexOf("ADMIN") != -1){
+			return true;
+		}
+		return false;
+	}
 }])
 .factory('cartStoreService',['store', function(store) {
 	var currentCart = [];

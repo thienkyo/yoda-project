@@ -6,7 +6,7 @@ angular.module('loginModule')
 	
 	console.log('login controller');
 	var self = this;
-	
+	self.newMember = new MemberDO();
 	
     self.member = {};
     self.credential ={};
@@ -46,7 +46,7 @@ angular.module('loginModule')
 	
 	
 	self.signup = function(){
-		self.newMember = new MemberDO();
+		
 		console.log(self.newMember);
 		if(self.newMember.email && self.newMember.fullName && self.newMember.pass && self.newMember.phone){
 			

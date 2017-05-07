@@ -24,12 +24,11 @@ public class OrderDetails {
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int orderDetailId;
 
-	//@JsonIgnore
-	//@ManyToOne
-    //@JoinColumn(name = "orderId",referencedColumnName = "orderId")
-	//@MapsId
-	//private Orders order;
-	
+/*	@JsonIgnore
+	@ManyToOne
+    @JoinColumn(name = "orderId",referencedColumnName = "orderId")
+	private Orders order;
+*/	
 	@OneToOne
     @JoinColumn(name = "prodId")
 	private Products product;

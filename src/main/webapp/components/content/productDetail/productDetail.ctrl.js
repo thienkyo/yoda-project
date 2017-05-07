@@ -1,13 +1,22 @@
 'use strict';
-angular.module('productDetailModule').controller('productDetailController',['$scope','$routeParams','productDetailService','cartService',
-	function($scope, $routeParams, productDetailService,cartService) {
+angular.module('productDetailModule')
+	.controller('productDetailController',['$scope','$routeParams','productDetailService','cartService','memberService','$sce',
+	function($scope, $routeParams, productDetailService,cartService,memberService,$sce) {
 	
 	var self = this;
 	self.qty = 1;
+	
+	self.isAdmin = memberService.isAdmin();
+	
 	productDetailService.getProductByProdId($routeParams.prodId)
 		.then(function (response) {
-			//console.log(response.data);
+			
+			console.log(response.description);
+			console.log(response);
 			self.product = response;
+		//	self.product.description=$sce.trustAsHtml('<span onmouseover="this.textContent=&quot;Explicitly trusted HTML bypasses ' +
+	    //    'sanitization.&quot;">Hover over this text.</span>');
+			self.product.description=$sce.trustAsHtml(self.product.description);
 	        self.test = response;
 	});
 	

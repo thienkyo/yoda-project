@@ -28,6 +28,9 @@
 			        <td title="'id'" filter="{ prodId: 'number'}" sortable="'prodId'" style="width:60px;text-align: center;">
 			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodId}}</a>
 			        </td>
+			        <td title="'image'" sortable="'image'"  style="width:90px;">
+			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" ><img ng-src="images/thumbnail/{{prod.image}}" style="width:80px;height: 80px;"/></a>
+			        </td>
 			        <td title="'name'" filter="{ prodName: 'text'}" sortable="'prodName'" style="width:300px;">
 			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodName}}</a>
 			        </td>
