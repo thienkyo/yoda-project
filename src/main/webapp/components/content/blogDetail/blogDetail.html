@@ -1,0 +1,46 @@
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>Ngẫu nhiên</h2>
+					<div class="shipping text-center" ng-repeat="prod in ctrl.randomProducts">
+						<a href="#/productDetail/{{prod.prodId}}" >
+						<p style="padding: 0px 10px 0px 10px;">{{prod.prodName}}</p>
+						<img ng-src="images/thumbnail/{{prod.image}}" alt="" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="blog-post-area">
+					<h2 class="title text-center">Latest From our Blog</h2>
+					
+					<div class="single-blog-post" >
+						<h3>{{ctrl.theBlog.articleName}} <a href="#/mgnt/blogUpsert/{{blog.articleId}}" ng-show="ctrl.isAdmin">[edit]</a></h3>
+						<div class="post-meta" style="margin-bottom: 10px;">
+							<ul>
+								<li><i class="fa fa-user"></i> {{ctrl.theBlog.author}}</li>
+								<li><i class="fa fa-clock-o"></i> {{ctrl.theBlog.modDate | date:"HH:MM:ss"}}</li>
+								<li><i class="fa fa-calendar"></i> {{ctrl.theBlog.modDate | date:"dd-MM-yyyy"}}</li>
+							</ul>
+							<span>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-half-o"></i>
+							</span>
+						</div>
+						<a href="ctrl.theBlog">
+							<img ng-src="images/article/{{ctrl.theBlog.image}}" alt="" style="margin-bottom: 10px;">
+						</a>
+						<div class="col-sm-12" ng-bind-html="ctrl.theBlog.content" style="padding: 10px 0px 0px 0px;"></div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

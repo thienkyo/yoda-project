@@ -52,7 +52,7 @@ public class UploadController {
       return new  ResponseEntity<>(filename,headers,HttpStatus.OK);
     } // method uploadFile
  */
-    
+ /*   
     @RequestMapping(value = "/uploadfile2", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
@@ -66,7 +66,7 @@ public class UploadController {
     	String directory = env.getProperty("yoda.uploadedFiles.productDetail");
     	return savefile(directory,uploadfile);
     }
-    
+ */   
     
     private ResponseEntity<String>savefile(String dir, MultipartFile uploadfile){
     	HttpHeaders headers = new HttpHeaders();

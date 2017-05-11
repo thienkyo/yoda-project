@@ -39,6 +39,16 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
+		.when('/blog', {
+			templateUrl: 'components/content/blog/blog.html',
+			controller: 'blogController',
+			controllerAs:'ctrl'
+		})
+		.when('/blogDetail/:blogId', {
+			templateUrl: 'components/content/blogDetail/blogDetail.html',
+			controller: 'blogDetailController',
+			controllerAs:'ctrl'
+		})
 		.when('/readme', {
 			templateUrl: 'components/content/readme/readme.html'
 		})
@@ -60,9 +70,24 @@ angular.module('app')
             controller: 'orderListController',
             controllerAs:'ctrl'
         })
+        .when('/mgnt/blogList',{
+            templateUrl: 'components/mgnt/blog/list/blogList.html',
+            controller: 'blogListController',
+            controllerAs:'ctrl'
+        })
+        .when('/mgnt/blogUpsert/:articleId',{
+            templateUrl: 'components/mgnt/blog/upsert/blogUpsert.html',
+            controller: 'blogUpsertController',
+            controllerAs:'ctrl'
+        })
         .when('/mgnt/category',{
             templateUrl: 'components/mgnt/category/category.html',
             controller: 'categoryController',
+            controllerAs:'ctrl'
+        })
+        .when('/mgnt/banner',{
+            templateUrl: 'components/mgnt/banner/banner.html',
+            controller: 'bannerController',
             controllerAs:'ctrl'
         })
         .otherwise(

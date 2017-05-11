@@ -1,6 +1,8 @@
 package com.yoda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,6 +48,11 @@ public class ProductsController {
     public Products getOneProduct(@PathVariable final int id) {
 		return prodRepo.findByProdId(id);
     }
+	
+	@RequestMapping(value="activeId/{id}",method = RequestMethod.GET)
+    public Products getOneActiveProduct(@PathVariable final int id) {
+		return prodRepo.findByProdIdAndStatus(id, UtilityConstant.ACTIVE_STATUS);
+    }
 
 	@RequestMapping(value = "categoryId/{id}", method = RequestMethod.GET)
     public List<Products> hello(@PathVariable int id) {
@@ -58,5 +65,21 @@ public class ProductsController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Products> getProductForCart(@RequestBody final List<Integer> prodIds) {
         return prodRepo.findByProdIdInAndStatus(prodIds, UtilityConstant.ACTIVE_STATUS);
+    }
+	
+	@RequestMapping(value = "getRandomProduct", method = RequestMethod.GET)
+    public List<Products> getRandomProduct() {
+		List<Products> productList = prodRepo.findByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS); 
+		Random ran = new Random();
+		List<Products> list = new ArrayList<>();
+		int x =0;
+		for(int i =0 ; i<6; i++){
+			x = ran.nextInt(productList.size());
+			if(!list.contains(productList.get(x))){
+				list.add(productList.get(x));
+			}
+		}
+		
+        return list;
     }
 }

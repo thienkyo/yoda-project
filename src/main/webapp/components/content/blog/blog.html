@@ -1,0 +1,54 @@
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>Ngẫu nhiên</h2>
+						<div class="shipping text-center" ng-repeat="prod in ctrl.randomProducts">
+						<a href="#/productDetail/{{prod.prodId}}" >
+							<p style="padding: 0px 10px 0px 10px;">{{prod.prodName}}</p>
+							<img ng-src="images/thumbnail/{{prod.image}}" alt="" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="blog-post-area">
+					<h2 class="title text-center">Latest From our Blog</h2>
+					
+					<div class="single-blog-post" ng-repeat="blog in ctrl.blogList">
+						<h3><a href="#/blogDetail/{{blog.articleId}}">{{blog.articleName}}</a> <a href="#/mgnt/blogUpsert/{{blog.articleId}}" ng-show="ctrl.isAdmin">[edit]</a></h3>
+						<div class="post-meta" style="margin-bottom: 10px;">
+							<ul>
+								<li><i class="fa fa-user"></i> {{blog.author}}</li>
+								<li><i class="fa fa-clock-o"></i> {{blog.modDate | date:"HH:mm:ss"}}</li>
+								<li><i class="fa fa-calendar"></i> {{blog.modDate | date:"dd-MM-yyyy"}}</li>
+							</ul>
+							<span>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-half-o"></i>
+							</span>
+						</div>
+						<a href="#/blogDetail/{{blog.articleId}}">
+							<img ng-src="images/article/{{blog.image}}" alt="" style="margin-bottom: 10px;">
+						</a>
+						<p>{{blog.description}}</p>
+						<a  class="btn btn-primary" href="#/blogDetail/{{blog.articleId}}" style="margin-top: 0px;margin-bottom: 20px;">Read More</a>
+					</div>
+					
+					<div class="pagination-area">
+						<ul class="pagination">
+							<li><a href="" class="active">1</a></li>
+							<li><a href="">2</a></li>
+							<li><a href="">3</a></li>
+							<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -13,6 +13,7 @@ import com.yoda.models.Products;
 public interface ProductsService extends CrudRepository<Products, Integer>{
 
 	public Products findByProdId(int prodId);
+	public Products findByProdIdAndStatus(int prodId, int status);
 	public List<Products> findByStatusOrderByModDateDesc(int status);
 	public List<Products> findByCategoryAndStatus(Categories category, int status);
 	public List<Products> findFirst6ByStatusOrderByModDateDesc(int status);

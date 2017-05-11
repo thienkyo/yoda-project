@@ -1,0 +1,19 @@
+package com.yoda.services;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.yoda.models.Article;
+
+@Transactional
+public interface ArticleService extends CrudRepository<Article, Integer>{
+	public List<Article> findAllByStatusOrderByArticleIdDesc(int status);
+	public Article findByArticleIdAndStatus(int articleId, int status);
+	///////////mngt///////////
+	public Article findByArticleId(int articleId);
+	public List<Article> findFirst20ByOrderByArticleIdDesc();
+	public List<Article> findAllByOrderByArticleIdDesc();
+}

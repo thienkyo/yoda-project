@@ -27,6 +27,7 @@ angular.module('loginModule')
                 var a = angular.fromJson(decodedString);
                 console.log(a);
                 self.member.roles = a.roles;
+                self.member.name = a.name;
              //   self.member.shipAddress = a.shipAddress;
                
                 memberService.setCurrentMember(self.member);

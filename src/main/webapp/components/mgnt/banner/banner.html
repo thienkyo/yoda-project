@@ -1,0 +1,62 @@
+<section>
+	<div class="container" ng-cloak>
+	
+		<div class="row" >
+			<div class="col-sm-1">
+				<input type="number"  ng-model="ctrl.theCategory.categoryId" disabled="disabled" placeholder="id" style="width:50px;"/>
+			</div>
+			<div class="col-sm-4">
+				<input type="text"  ng-model="ctrl.theCategory.categoryName" placeholder="name" style="width: 100%;"/>
+			</div>
+			<div class="col-sm-2">
+				<select  ng-model="ctrl.theCategory.status" 
+					 ng-options="opt.value as opt.name for opt in ctrl.statusList"
+					 style="width: 100%;height: 30px;">
+		    	</select> 
+			</div>
+			<div class="col-sm-3">
+				<a ng-click="ctrl.upsert(ctrl.theCategory)" href="" class="btn btn-default check_out" style="margin: 0px 0px 0px 0px;">submit</a>
+				
+				<a ng-click="ctrl.clear()" href="" class="btn btn-default check_out" style="margin: 0px 0px 0px 0px;">clear</a>
+			</div>
+			<div class="col-sm-2">
+				<div class="alert alert-success" role="alert" ng-show="ctrl.responseStr" 
+					 style="margin: 0px 0px 0px 0px;width: 120px;height: 0px;padding: 5px 0px 25px 10px;">
+					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					  <span class="sr-only"></span>
+						 thành công
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="ctrl.responseStrFail" 
+					 style="margin: 0px 0px 0px 0px;width: 120px;height: 0px;padding: 5px 0px 25px 10px;">
+					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					  <span class="sr-only"></span>
+						 có sản phẩm
+				</div>
+			</div>
+		</div>
+	
+		<h3>Banner management </h3>
+		
+        <div class="table-responsive">
+            <table ng-table="ctrl.tableParams" class="table table-bordered table-hover table-striped" show-filter="true">
+			    <tr ng-repeat="banner in $data">
+			        <td title="'id'" filter="{ 'bannerId': 'number'}" sortable="'bannerId'" style="width:100px;text-align: center;">
+			        	<a href="" ng-click="ctrl.updateBanner(banner)">{{banner.bannerId}}</a>
+			        </td>
+			        <td title="'image'" sortable="'image'"  style="width:150px;">
+			        	<a href="" ng-click="ctrl.updateBanner(banner)"><img ng-src="images/banner/{{banner.image}}" style="width:100%;"/></a>
+			        </td>
+			        <td title="'name'" filter="{ 'bannerName' : 'text'}" sortable="'bannerName'" style="text-align: right;">
+			        	<a href="" ng-click="ctrl.updateBanner(banner)">{{banner.bannerName}} </a>
+			        </td>
+			        <td title="'Date'" sortable="'modDate'" style="width:300px;">
+			        	{{banner.modDate | date:"dd-MM-yyyy HH:mm:ss"}}
+			        </td>
+			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'" >
+			        	{{banner.status == 0 ? 'inactive' : 'active' }}
+			        </td>
+			    </tr>
+			</table>
+        </div>
+	</div>
+</section>

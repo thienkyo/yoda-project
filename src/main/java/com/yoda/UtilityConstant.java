@@ -1,5 +1,17 @@
 package com.yoda;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+
 public class UtilityConstant {
 	final public static int AUTHENTICATION_TIMEOUT = 30;
 	final public static int ACTIVE_STATUS = 1;
@@ -11,4 +23,34 @@ public class UtilityConstant {
 	final public static int ORDER_STATUS_PAID = 21;
 	final public static int ORDER_STATUS_SHIPPED = 22;
 	final public static int ORDER_STATUS_DONE = 23;
+	
+	final public static ResponseEntity<String>savefile(String dir, MultipartFile uploadfile){
+    	HttpHeaders headers = new HttpHeaders();
+    	String filename="empty";
+    	String filepath = "";
+      try {
+    	String currentTime = new SimpleDateFormat("yyyyMMdd.HHmmss").format(new java.util.Date());  
+    	
+        // Get the filename and build the local file path
+         filename = currentTime+"-"+uploadfile.getOriginalFilename();
+      //  String directory = env.getProperty("yoda.uploadedFiles.thumbnail");
+        filepath = Paths.get(dir, filename).toString();
+        
+        // Save the file locally
+        BufferedOutputStream stream =
+            new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+        stream.write(uploadfile.getBytes());
+        stream.close();
+        
+        headers.add("newName", filename);
+        headers.add("imageDir", filepath);
+        headers.setContentType(MediaType.TEXT_PLAIN);
+      }
+      catch (Exception e) {
+        System.out.println(e.getMessage());
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
+      
+      return new  ResponseEntity<>(filename,headers,HttpStatus.OK);
+    }
 }

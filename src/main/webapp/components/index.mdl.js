@@ -13,9 +13,14 @@ angular.module('app', [
 		'cartModule',
 		'angular-storage',
 		'ngMaterial',
+		'blogModule',
+		'blogDetailModule',
 		'productListModule',  //mgnt from here
 		'productUpsertModule',
 		'categoryModule',
 		'orderListModule',
+		'blogListModule',
+		'blogUpsertModule',
+		'bannerModule',
 		'ui.tinymce'
 ]);

@@ -1,9 +1,9 @@
 'use strict';
 angular.module('productListModule')
-	.controller('productListController',['$rootScope','$routeParams','$location',
+	.controller('productListController',['$rootScope','$location',
 										 'memberService','productListService',
 										 'NgTableParams','categoryService',
-	function($rootScope, $routeParams,$location,memberService,productListService,NgTableParams,categoryService) {	
+	function($rootScope,$location,memberService,productListService,NgTableParams,categoryService) {	
 	console.log('productListController');
 	var self = this;
 	

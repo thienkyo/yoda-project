@@ -2,6 +2,7 @@ angular.module('networkServices',[])
 	.factory('ajaxService',['$http','$cookies',function($http,$cookies){
 		
 		//var urlbase = "http://54.255.250.109:8080/yoda/";
+		//var urlbase = "http://kyoshop.org/";
 		var urlbase = "http://localhost:8080/";
 		var sessionid = $cookies.get('JSESSIONID');
 		

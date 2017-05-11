@@ -12,7 +12,7 @@ angular.module('productDetailModule')
 	
 	function getProductByProdId(prodId){
 		console.log('productDetailService prodId: '+ prodId);
-		var url = "products/id/" + prodId;
+		var url = "products/activeId/" + prodId;
 		return ajaxService.get(url,null,{}).then(function(data){
 			return data.data;
 		});

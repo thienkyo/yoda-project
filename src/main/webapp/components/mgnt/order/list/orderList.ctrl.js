@@ -26,7 +26,7 @@ angular.module('orderListModule')
 	];
 	
 	self.amount = 20;
-	self.categoryId = 0;
+//	self.categoryId = 0;
 	
 	
 	orderListService.getOrdersForMgnt(self.amount).then(function (data) {

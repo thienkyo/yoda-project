@@ -48,6 +48,7 @@ public class MemberController {
         return new LoginResponse(Jwts.builder()
         		.setSubject(login.email)
         		.claim("roles", rolelist)
+        		.claim("name", mem.getFullName())
         		//.claim("shipAddress", mem.getAddress())
         		.setIssuedAt(new Date())
         		.setExpiration(new Date(System.currentTimeMillis()+ UtilityConstant.AUTHENTICATION_TIMEOUT*60*1000))

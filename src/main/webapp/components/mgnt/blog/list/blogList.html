@@ -1,0 +1,42 @@
+<section>
+	<div class="container" ng-cloak>
+		<h3>Blog management </h3>
+		
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="col-sm-1">
+				<a href="#/mgnt/blogUpsert/0" class="btn btn-default check_out" style="margin: 5px 0px 0px 0px;">add</a>
+			</div>
+			<div class="col-sm-2">
+				<select  ng-model="ctrl.amount"  ng-change="ctrl.getBlogByTerm()"
+					 ng-options="opt.value as opt.name for opt in ctrl.amountList"
+					 style="width: 100%;height: 40px;">
+		    	</select> 
+			</div>
+		</div>
+		
+		
+        <div class="table-responsive">
+            <table ng-table="ctrl.tableParams" class="table table-bordered table-hover table-striped" show-filter="true">
+			    <tr ng-repeat="article in $data">
+			        <td title="'id'" filter="{ 'articleId': 'number'}" sortable="'articleId'" style="width:100px;text-align: center;">
+			        	<a href="" >{{article.articleId}}</a>
+			        </td>
+			         <td title="'image'" sortable="'image'"  style="width:150px;">
+			        	<a href="#/mgnt/blogUpsert/{{article.articleId}}" ><img ng-src="images/article/{{article.image}}" style="width:100%;"/></a>
+			        </td>
+			        <td title="'name'" filter="{ 'articleName' : 'text'}" sortable="'articleName'" style="text-align: left;width:300px;">
+			        	<a href="#/mgnt/blogUpsert/{{article.articleId}}" >{{article.articleName }} </a>
+			        </td>
+			        <td title="'Date'" sortable="'modDate'" style="width:90px;">
+			        	{{article.modDate | date:"dd-MM-yyyy  HH:mm:ss"}}
+			        </td>
+			        
+			        <td title="'author'" filter="{ 'author' : 'text'}"  sortable="'author'">{{article.author}}</td>
+			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'">
+			        	{{article.status == 0 ? 'inactive' : 'active' }}
+			        </td>
+			    </tr>
+			</table>
+        </div>
+	</div>
+</section>

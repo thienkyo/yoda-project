@@ -10,9 +10,9 @@
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description"></td>
-							<td class="price">Price</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
+							<td class="price" style="text-align: right;padding-right: 80px;">Price</td>
+							<td class="quantity" style="text-align: left;">Quantity</td>
+							<td class="total" style="text-align: right;">Total</td>
 							<td></td>
 						</tr>
 					</thead>
@@ -21,14 +21,14 @@
 							<td class="cart_product">
 								<a href="#/productDetail/{{item.prod.prodId}}"><img ng-src="images/thumbnail/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
 							</td>
-							<td class="cart_description" style="padding-left: 40px;">
+							<td class="cart_description" style="padding-left: 40px;text-align: left;">
 								<h4><a href="#/productDetail/{{item.prod.prodId}}">{{item.prod.prodName}}</a></h4>
-								<p>Web ID: {{item.prod.prodId}}</p>
+								<p>Web ID: {{("000"+item.prod.prodId).slice(-4)}}</p>
 							</td>
-							<td class="cart_price">
+							<td class="cart_price" style="text-align: right;padding-right: 80px;">
 								<p>{{item.prod.price | number:0}} đ</p>
 							</td> <!-- value="{{item.quantity}}" -->
-							<td class="cart_quantity">
+							<td class="cart_quantity" style="text-align: right;">
 								<div class="cart_quantity_button">
 									<input class="cart_quantity_input" type="number" name="quantity" 
 										ng-model="item.quantity"  
@@ -37,7 +37,7 @@
 										min="1" max="9" />
 								</div>
 							</td>
-							<td class="cart_total">
+							<td class="cart_total" style="text-align: right;">
 								<p class="cart_total_price">{{item.prod.price * item.quantity | number:0}} đ</p>
 							</td>
 							<td class="cart_delete">
@@ -59,7 +59,7 @@
 							    </select>
 							</td>
 							<td colspan="3">
-								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;">
+								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;text-align: right;">
 									<tr>
 										<td>Cart Sub Total</td>
 										<td>{{ctrl.subTotal | number:0}} đ</td>
