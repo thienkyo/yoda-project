@@ -2,7 +2,6 @@
 angular.module('blogListModule')
 	.controller('blogListController',['$rootScope','$location','memberService','blogListService','NgTableParams',
 	function($rootScope,$location,memberService,blogListService,NgTableParams) {	
-	console.log('productListController');
 	var self = this;
 	
 	if(!memberService.isAdmin()){
@@ -19,14 +18,12 @@ angular.module('blogListModule')
 	
 	
 	blogListService.getBlogsForMgnt(self.amount).then(function (data) {
-		console.log(data);
 		self.blogList = data;
 		self.tableParams = new NgTableParams({}, { dataset: self.blogList});
 	});	
 	
 	self.getBlogByTerm = function(){
 		blogListService.getBlogsForMgnt(self.amount).then(function (data) {
-			console.log(data);
 			self.orderList = data;;
 			self.tableParams = new NgTableParams({}, { dataset: self.orderList});
 		});

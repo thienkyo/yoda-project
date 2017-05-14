@@ -7,7 +7,6 @@ angular.module('categoryModule')
 		self.theCategory = new CategoryDO;
 		self.cateList = [];
 		self.statusStyle = { "width": "120px" };
-		console.log('categoryController');
 		
 		if(!memberService.isAdmin()){
 			$location.path('#/');
@@ -15,7 +14,6 @@ angular.module('categoryModule')
 		self.currentMember = memberService.getCurrentMember();
 		
 		categoryService.getAllCategories().then(function (data) {
-			console.log(data);
 			self.cateList = data
 			self.tableParams = new NgTableParams({}, { dataset: self.cateList});
 		});
@@ -43,18 +41,14 @@ angular.module('categoryModule')
 			self.responseStrFail = false;
 			categoryService.deleteCategory(cate).then(function (data) {
 				self.responseStr = data;
-				console.log(data);
 				var index = self.cateList.indexOf(cate);
-				console.log(index);
 				self.cateList.splice(index,1);
 				self.tableParams = new NgTableParams({}, { dataset: self.cateList});
 				
 			},function(error){
-				console.log(error);
 				if(error.data.exception == 'org.springframework.dao.DataIntegrityViolationException'){
 					self.responseStrFail = error;
 				}
-				
 			});
 		}
 		

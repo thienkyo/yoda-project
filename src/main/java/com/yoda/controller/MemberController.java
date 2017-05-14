@@ -49,7 +49,6 @@ public class MemberController {
         		.setSubject(login.email)
         		.claim("roles", rolelist)
         		.claim("name", mem.getFullName())
-        		//.claim("shipAddress", mem.getAddress())
         		.setIssuedAt(new Date())
         		.setExpiration(new Date(System.currentTimeMillis()+ UtilityConstant.AUTHENTICATION_TIMEOUT*60*1000))
         		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
@@ -64,7 +63,7 @@ public class MemberController {
         }
 		 
 		member.setModDate(new Date());
-		member.setShipCost(new ShipCost(1));
+		member.setShipCost(new ShipCost(7));
 		Members returnMem = memService.save(member);
 		memberRoleService.save(new MemberRole(member.getEmail(), UtilityConstant.MEMBER_ROLE));
 		return new AddResponse(returnMem.getEmail());      

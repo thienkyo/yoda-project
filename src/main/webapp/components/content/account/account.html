@@ -25,8 +25,15 @@
 							</div>
 						</div>
 					    <textarea rows="4" cols="50" placeholder="Địa chỉ shipping..." ng-model="ctrl.me.address"></textarea>
-
-						<a class="btn btn-default check_out" href="" ng-click="ctrl.updateMe()">save</a>
+						
+						<a class="btn btn-default check_out" href="" ng-click="ctrl.updateMe()" style="margin-left: 0px;">save</a>
+						<div class="alert alert-success" role="alert" ng-show="ctrl.responseStr" 
+							 style="margin: 10px 0px 0px 0px;height: 0px;padding: 5px 0px 25px 10px;">
+							  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  <span class="sr-only"></span>
+								 thành công
+						</div>
+						
 					</div>
 				</div>
 				<div class="col-sm-7">
@@ -43,7 +50,7 @@
 								ng-repeat="item in ctrl.orderList | orderBy:'orderId':true" 
 								style="padding: 10px 0px 10px 0px;">
 								<div class="col-xs-3"> {{item.modDate | date:"dd-MM-yyyy"}}</div>
-								<div class="col-xs-3"><a href="" ng-click="ctrl.showOrderDetail(item)"> {{("000"+item.orderId).slice(-4)}}</a></div>
+								<div class="col-xs-3"><a href="" ng-click="ctrl.showOrderDetail(item)"> A{{("000"+item.orderId).slice(-4)}}</a></div>
 								<div class="col-xs-3"> {{item.total | number}} đ</div>
 								<div class="col-xs-3"> {{item.status}}</div>
 							</li>

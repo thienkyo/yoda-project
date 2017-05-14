@@ -38,18 +38,11 @@ form .progress {
 
 <section>
 	<div class="container" ng-cloak>
+	<h3>Article Insertion</h3>
 	 <div class="login-form">
 	 <form name="myForm" >
 	 	<div class="row">
 	 		<div class="col-sm-4">
-	 		
-	 			<div class="alert alert-success" role="alert" ng-show="ctrl.responseStr" 
-					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
-				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				  <span class="sr-only">Error:</span>
-					 Cập nhật thành công
-				</div>
-	 		
 	 			<img ng-src="images/article/{{ctrl.article.image}}" alt="" style="width: 100%;"/>
 	 		</div>
 	 		<div class="col-sm-4">
@@ -128,9 +121,15 @@ form .progress {
 			</div>
 			<div class="col-sm-4">
 				<a ng-click="ctrl.upsert()" href="" class="btn btn-default check_out" style="margin: 5px 0px 0px 0px;">submit</a>
-				<a href="#/mgnt/articleUpsert/0" class="btn btn-default check_out" style="margin: 5px 0px 0px 0px;">add</a>
+				<a ng-click="ctrl.clear()" href="" class="btn btn-default check_out" style="margin: 5px 0px 0px 10px;">clear</a>
 			</div>
 			<div class="col-sm-4">
+				<div class="alert alert-success" role="alert" ng-show="ctrl.responseStr" 
+					 style="margin: 0px 0px 0px 0px;width: 120px;height: 0px;padding: 5px 0px 30px 10px;">
+				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				  <span class="sr-only">Error:</span>
+					 thành công
+				</div>
 			</div>
 		</div>
 		

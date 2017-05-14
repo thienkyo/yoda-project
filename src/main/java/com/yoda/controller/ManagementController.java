@@ -87,6 +87,12 @@ public class ManagementController {
 		return new ManagementResponse("upsert_product_success");
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "getProductById/{prodId}", method = RequestMethod.GET)
+	public Products getProductById(@PathVariable final int prodId) throws ServletException {
+		return	productService.findByProdId(prodId);
+	}
+	
 ////////////////////////////category section//////////////////////////
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "getAllCategories", method = RequestMethod.GET)
@@ -186,31 +192,31 @@ public class ManagementController {
 		return	articleService.findByArticleId(articleId);
 	}
 ///////////////////////////////Upload section /////////////////////////
-	@RequestMapping(value = "/uploadfile2", method = RequestMethod.POST)
+	@RequestMapping(value = "uploadfile2", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
     	String directory = env.getProperty("yoda.uploadedFiles.thumbnail");
     	return UtilityConstant.savefile(directory,uploadfile);
     } // method uploadFile
     
-    @RequestMapping(value = "/uploadfile3", method = RequestMethod.POST)
+    @RequestMapping(value = "uploadfile3", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> uploadFileProductImage(@RequestParam("file") MultipartFile uploadfile) {
     	String directory = env.getProperty("yoda.uploadedFiles.productDetail");
     	return UtilityConstant.savefile(directory,uploadfile);
     }
 	
-	@RequestMapping(value = "/uploadfile4", method = RequestMethod.POST)
+	@RequestMapping(value = "uploadfile4", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> uploadFileArticleImage(@RequestParam("file") MultipartFile uploadfile) {
     	String directory = env.getProperty("yoda.uploadedFiles.article");
     	return UtilityConstant.savefile(directory,uploadfile);
     }
 	
-	@RequestMapping(value = "/uploadfile5", method = RequestMethod.POST)
+	@RequestMapping(value = "uploadfile5", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> uploadFileBannerImage(@RequestParam("file") MultipartFile uploadfile) {
-    	String directory = env.getProperty("yoda.uploadedFiles.Banner");
+    	String directory = env.getProperty("yoda.uploadedFiles.banner");
     	return UtilityConstant.savefile(directory,uploadfile);
     }
 /////////////////////////////Banner section/////////////////////////////

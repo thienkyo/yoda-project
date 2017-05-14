@@ -3,7 +3,6 @@ angular.module('blogDetailModule')
 .controller('blogDetailController', ['$scope','$routeParams','blogDetailService','$sce','memberService','productService',
 	function($scope,$routeParams, blogDetailService,$sce,memberService,productService) {
 		var self = this;
-		console.log('blogDetailController');
 		self.isAdmin = memberService.isAdmin();
 		
 		blogDetailService.getOneActiveBlog($routeParams.blogId)
@@ -14,7 +13,6 @@ angular.module('blogDetailModule')
 		
 		productService.getRandomProduct()
 		.then(function (data) {
-			console.log(data);
 			self.randomProducts = data;
 		});
 

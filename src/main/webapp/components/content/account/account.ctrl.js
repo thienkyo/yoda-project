@@ -4,7 +4,6 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 		var self = this;
 		self.me = {};
 		self.me.shipCostId = 0;
-		console.log(OrderStatusArray);
 /////get ship list		
 		var tempShipCost = {
 				distance: "",
@@ -18,12 +17,8 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 	        self.shipCostList.push(tempShipCost);
 		});
 		
-		console.log('accountController');
 		accountService.getMe().then(function(me){
 			self.me = me;
-			console.log(me);
-			//self.shipCostId = me.shipCostId;
-		
 			for(var i = 0; i < me.orders.length; i++){
 				var total = 0;
 				for(var k = 0; k < me.orders[i].orderDetails.length; k++){
@@ -31,7 +26,6 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 				}
 				total += me.orders[i].shipCostFee;
 				me.orders[i].total = total;
-				console.log(me.orders[i].status);
 				for(var k = 0; k < OrderStatusArray.length; k++){
 					if(OrderStatusArray[k].value == me.orders[i].status){
 						me.orders[i].status = OrderStatusArray[k].name;
@@ -41,8 +35,6 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 			}
 			self.orderList = me.orders;
 		},function(error){
-			console.log("accountController.error");
-			console.log(error);
 			$location.path("#/");
 		});
 		
@@ -54,12 +46,11 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 				}
 			}
 			accountService.updateMe(self.me).then(function (response) {
-		        console.log(response);
+				self.responseStr = response;
 			});
 		}
 		
 		self.showOrderDetail = function(order){
-			console.log(order);
 			self.theOrder = order;
 			self.theOrder.subTotal = 0;
 			for (var i = 0; i < self.theOrder.orderDetails.length; i++){

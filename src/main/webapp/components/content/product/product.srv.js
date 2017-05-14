@@ -2,16 +2,13 @@
 angular.module('productModule')
 .factory('productService', ['ajaxService',function(ajaxService) {
 		var productService = {
-			getProductByCategory : getProductByCategory,
-			  getRandomProduct : getRandomProduct,
-			//  createProduct : createProduct,
-			//  updateProduct : updateProduct,
-			//  deleteProduct : deleteProduct
+				getProductByCategory : getProductByCategory,
+				getRandomProduct : getRandomProduct,
+				getProductPage : getProductPage
 			};
 	return productService;
 	
 	function getProductByCategory(categoryId){
-		console.log('test in 2222 cateId: '+ categoryId);
 		var url = "products/categoryId/" + categoryId;
 		
 		return ajaxService.get(url,null,{}).then(function(data){
@@ -21,6 +18,13 @@ angular.module('productModule')
 	
 	function getRandomProduct(){
 		var url = "products/getRandomProduct";
+		return ajaxService.get(url,null,{}).then(function(data){
+			return data.data;
+		});
+	}
+	
+	function getProductPage(categoryId,page){
+		var url = "products/getProductPage/"+categoryId+"/"+page;
 		return ajaxService.get(url,null,{}).then(function(data){
 			return data.data;
 		});

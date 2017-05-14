@@ -7,7 +7,7 @@
 						<div class="shipping text-center" ng-repeat="prod in ctrl.randomProducts">
 						<a href="#/productDetail/{{prod.prodId}}" >
 							<p style="padding: 0px 10px 0px 10px;">{{prod.prodName}}</p>
-							<img ng-src="images/thumbnail/{{prod.image}}" alt="" />
+							<img ng-src="images/thumbnail/{{prod.image}}" alt="" style="width:100%;"/>
 						</a>
 					</div>
 				</div>
@@ -16,7 +16,7 @@
 				<div class="blog-post-area">
 					<h2 class="title text-center">Latest From our Blog</h2>
 					
-					<div class="single-blog-post" ng-repeat="blog in ctrl.blogList">
+					<div class="single-blog-post" ng-repeat="blog in ctrl.currentPage.content">
 						<h3><a href="#/blogDetail/{{blog.articleId}}">{{blog.articleName}}</a> <a href="#/mgnt/blogUpsert/{{blog.articleId}}" ng-show="ctrl.isAdmin">[edit]</a></h3>
 						<div class="post-meta" style="margin-bottom: 10px;">
 							<ul>
@@ -41,10 +41,9 @@
 					
 					<div class="pagination-area">
 						<ul class="pagination">
-							<li><a href="" class="active">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+							<li><a href="#/blog/{{ctrl.pagination.previousNumber}}">&laquo;</a></li>
+							<li ng-repeat="item in ctrl.pagination.list"><a class="{{item.status ? 'active' : ''}}" href="#/blog/{{item.number}}">{{item.number}}</a></li>
+							<li><a href="#/blog/{{ctrl.pagination.nextNumber}}">&raquo;</a></li>
 						</ul>
 					</div>
 				</div>

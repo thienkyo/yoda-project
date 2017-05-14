@@ -10,5 +10,5 @@ import com.yoda.models.Banner;
 
 @Transactional
 public interface BannerService extends CrudRepository<Banner, Integer>{
-	public List<Banner> findAllByStatusOrderByBannerIdDesc(int status);
+	public List<Banner> findAllByStatus(int status);
 }

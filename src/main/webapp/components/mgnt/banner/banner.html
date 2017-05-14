@@ -1,21 +1,90 @@
+<style>
+
+.thumb {
+    width: 100px;
+    height: 100px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+.bt {
+  background: #FE980F;
+  border: medium none;
+  border-radius: 0;
+  margin-left: -5px;
+  margin-top: -3px;
+  padding: 7px 17px;
+}
+</style>
 <section>
 	<div class="container" ng-cloak>
 	
+		<div class="row" style="margin-bottom: 20px;">
+		<form name="myForm" >
+	 		<div class="col-sm-4">
+	 			<img ng-src="images/banner/{{ctrl.theBanner.image}}" alt="" style="width: 100%;"/>
+	 		</div>
+	 		<div class="col-sm-4">
+	 			<span>image: {{ctrl.theBanner.image}}</span>
+			 	<p ng-show="ctrl.picFile.result">New image: {{ctrl.picFile.result}}</p>
+			      <input type="file" ngf-select ng-model="ctrl.picFile" name="file"    
+			             accept="image/*" ngf-max-size="2MB" 
+			             ngf-model-invalid="errorFile">
+			      
+			      <i ng-show="myForm.file.$error.maxSize">File too large 
+			          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+			      <img ng-show="myForm.file.$valid" ngf-thumbnail="ctrl.picFile" class="thumb"> 
+			      <button ng-click="ctrl.picFile = null" ng-show="ctrl.picFile">Remove</button>
+			     
+			      <button ng-disabled="!ctrl.picFile"  style="margin-top: 10px;"
+			      		ng-click="ctrl.uploadPic(ctrl.picFile,'mgnt/uploadfile5')">upload</button>
+			      <span class="progress" ng-show="ctrl.picFile.progress >= 0">
+			        <div style="width:{{ctrl.picFile.progress}}%"  
+			        		ng-bind="ctrl.picFile.progress + '%'"></div>
+			      </span>
+			      <span ng-show="ctrl.picFile.result">Upload Successful</span>
+			      <span class="err" ng-show="ctrl.errorMsg">{{ctrl.errorMsg}}</span>
+			      <p>size: 440x440</p>
+	 		</div>
+	 		<div class="col-sm-4">
+	 			<img ng-show="ctrl.picFile.result" ng-src="images/banner/{{ctrl.picFile.result}}" alt="" style="width: 100%;"/>
+	 		</div>
+	 	</form>	
+	 	</div>
+	
 		<div class="row" >
 			<div class="col-sm-1">
-				<input type="number"  ng-model="ctrl.theCategory.categoryId" disabled="disabled" placeholder="id" style="width:50px;"/>
+				<input type="number"  ng-model="ctrl.theBanner.bannerId" disabled="disabled" placeholder="id" style="width:50px;"/>
 			</div>
 			<div class="col-sm-4">
-				<input type="text"  ng-model="ctrl.theCategory.categoryName" placeholder="name" style="width: 100%;"/>
+				<input type="text"  ng-model="ctrl.theBanner.bannerName" placeholder="name" style="width: 100%;"/>
 			</div>
 			<div class="col-sm-2">
-				<select  ng-model="ctrl.theCategory.status" 
+				<select  ng-model="ctrl.theBanner.status" 
 					 ng-options="opt.value as opt.name for opt in ctrl.statusList"
 					 style="width: 100%;height: 30px;">
 		    	</select> 
 			</div>
 			<div class="col-sm-3">
-				<a ng-click="ctrl.upsert(ctrl.theCategory)" href="" class="btn btn-default check_out" style="margin: 0px 0px 0px 0px;">submit</a>
+				<a ng-click="ctrl.upsert(ctrl.theBanner)" href="" class="btn btn-default check_out" style="margin: 0px 0px 0px 0px;">submit</a>
 				
 				<a ng-click="ctrl.clear()" href="" class="btn btn-default check_out" style="margin: 0px 0px 0px 0px;">clear</a>
 			</div>
@@ -30,10 +99,19 @@
 					 style="margin: 0px 0px 0px 0px;width: 120px;height: 0px;padding: 5px 0px 25px 10px;">
 					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 					  <span class="sr-only"></span>
-						 có sản phẩm
+						 thất bại
 				</div>
 			</div>
 		</div>
+		
+		<div class="row" style="margin-top: 20px;">
+	    	<div class="col-sm-7">
+	    		<textarea name="message" rows="3"  ng-model="ctrl.theBanner.description" ng-cloak ></textarea>
+	    	</div>
+	    	<div class="col-sm-5">
+	    		<input type="text"  ng-model="ctrl.theBanner.link" placeholder="link" style="width: 100%;"/>
+	    	</div>
+	    </div>
 	
 		<h3>Banner management </h3>
 		
@@ -49,7 +127,10 @@
 			        <td title="'name'" filter="{ 'bannerName' : 'text'}" sortable="'bannerName'" style="text-align: right;">
 			        	<a href="" ng-click="ctrl.updateBanner(banner)">{{banner.bannerName}} </a>
 			        </td>
-			        <td title="'Date'" sortable="'modDate'" style="width:300px;">
+			        <td title="'link'" filter="{ 'link' : 'text'}" sortable="'link'" style="text-align: right;">
+			        	{{banner.link}}
+			        </td>
+			        <td title="'Date'" sortable="'modDate'" style="width:120px;">
 			        	{{banner.modDate | date:"dd-MM-yyyy HH:mm:ss"}}
 			        </td>
 			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'" >

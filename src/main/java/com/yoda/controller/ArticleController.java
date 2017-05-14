@@ -3,6 +3,10 @@ package com.yoda.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,5 +30,11 @@ public class ArticleController {
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
     public Article getOneActiveArticle(@PathVariable final int id) {
         return articleRepo.findByArticleIdAndStatus(id, UtilityConstant.ACTIVE_STATUS);
+    }
+	
+	@RequestMapping(value = "getArticlePage/{pageNumber}", method = RequestMethod.GET)
+	public Page<Article> getArticlePage(@PathVariable Integer pageNumber) {
+        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PAGE_SIZE, Sort.Direction.DESC, "articleId");
+        return articleRepo.findByStatus( UtilityConstant.ACTIVE_STATUS, request);
     }
 }

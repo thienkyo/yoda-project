@@ -2,7 +2,8 @@
 angular.module('bannerModule')
 .factory('bannerService', ['ajaxService',function(ajaxService) {
 	var bannerService = {
-			getBannerForMgnt : getBannerForMgnt
+			getBannerForMgnt : getBannerForMgnt,
+			upsert : upsert
 			};
 	return bannerService;
 
@@ -13,4 +14,11 @@ angular.module('bannerModule')
 		});
 	}   
     
+	function upsert(banner){
+		var url = "mgnt/upsertBanner";
+		return ajaxService.post(url,banner,{}).then(function(response){
+			return response.data;
+		});
+	}
+	
  }]);

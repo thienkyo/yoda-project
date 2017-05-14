@@ -3,15 +3,14 @@ angular.module('blogModule')
 .factory('blogService', ['ajaxService',function(ajaxService) {
 	var blogService = {
 			getActiveBlog : getActiveBlog,
-			getOneActiveBlog : getOneActiveBlog
-			//getFirst12Product : getFirst12Product
+			getOneActiveBlog : getOneActiveBlog,
+			getBlogPage : getBlogPage
 			};
 	return blogService;
 
    function getActiveBlog(){
 		var url = "blog";
 		return ajaxService.get(url,null,{}).then(function(response){
-			console.log(response);
 			return response.data;
 		});
 	}
@@ -20,6 +19,13 @@ angular.module('blogModule')
 		var url = "blog/"+id;
 		return ajaxService.get(url,null,{}).then(function(response){
 			return response.data;
+		});
+	}
+   
+   function getBlogPage(page){
+		var url = "blog/getArticlePage/"+page;
+		return ajaxService.get(url,null,{}).then(function(data){
+			return data.data;
 		});
 	}
 	    

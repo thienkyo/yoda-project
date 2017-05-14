@@ -4,7 +4,6 @@ angular.module('orderListModule')
 										 'memberService','orderListService',
 										 'NgTableParams','OrderStatusArray',
 	function($rootScope, $routeParams,$location,memberService,orderListService,NgTableParams,OrderStatusArray) {	
-//	console.log('orderListController');
 	var self = this;
 	self.orderList = [];
 	self.OrderStatusArray=OrderStatusArray;
@@ -26,38 +25,11 @@ angular.module('orderListModule')
 	];
 	
 	self.amount = 20;
-//	self.categoryId = 0;
-	
 	
 	orderListService.getOrdersForMgnt(self.amount).then(function (data) {
-		//console.log(data);
 		self.orderList = data;
-	/*  self.statusNumber.ordered = 0;
-		self.statusNumber.paid = 0;
-		self.statusNumber.shipped = 0;
-		self.statusNumber.done = 0;
-		
-		for(var i = 0; i < data.length; i++){
-			var total = 0;
-			for(var k = 0; k < data[i].orderDetails.length; k++){
-				total += data[i].orderDetails[k].priceAtThatTime*data[i].orderDetails[k].quantity;
-			}
-			total += data[i].shipCostFee;
-			data[i].total = total;
-			if(data[i].status == 20){
-				self.statusNumber.ordered += 1;
-			}
-			if(data[i].status == 21){
-				self.statusNumber.paid += 1;
-			}
-			if(data[i].status == 22){
-				self.statusNumber.shipped += 1;
-			}
-			if(data[i].status == 23){
-				self.statusNumber.done += 1;
-			}
-		}
-	*/	engineerOrderList();
+	
+		engineerOrderList();
 		self.tableParams = new NgTableParams({}, { dataset: self.orderList});
 	});
 	
@@ -123,10 +95,8 @@ angular.module('orderListModule')
 	}
 	
 	self.deleteOrder = function(order){
-		console.log(order);
 		orderListService.deleteOrder(order).then(function (data) {
 			self.responseStr = data;
-			console.log(self.responseStr);
 		});
 	}
 	
@@ -155,7 +125,6 @@ angular.module('orderListModule')
 			if(self.orderList[i].status == 23){
 				self.statusNumber.done += 1;
 			}
-		
 		}
 	}
 	

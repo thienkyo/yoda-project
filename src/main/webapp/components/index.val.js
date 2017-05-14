@@ -20,7 +20,10 @@ angular
 		.value('CommonStatusArray',CommonStatusArray)
 		.value('ProductDO',ProductDO)
 		.value('CategoryDO',CategoryDO)
-		.value('ArticleDO',ArticleDO);
+		.value('ArticleDO',ArticleDO)
+		.value('BannerDO',BannerDO)
+		.value('PaginationItemDO',PaginationItemDO)
+		.value('PaginationDO',PaginationDO);
 
 function OrderDO () {
 	this.orderId = 0;
@@ -106,4 +109,32 @@ function ArticleDO(){
 	this.image = '';
 	this.status = 1;
 	this.author = '';
+}
+
+function BannerDO(){
+	this.bannerId = 0;
+	this.categoryName = 'banner name';
+	this.status = 1; 
+	this.mod_date = (new Date()).getTime();
+	this.image='';
+	this.description='';
+	this.link='';
+}
+
+function PaginationItemDO() {
+	this.first = false;
+	this.last = false;
+	this.number = 0;
+	this.status = false;
+}
+
+function PaginationDO() {
+	this.currentNumber = 1;
+	this.previousNumber = 1;
+	this.nextNumber = 1;
+	this.cateId = 1;
+	this.list = [];
+	this.clear = function() { 
+		this.list = [];
+	}
 }

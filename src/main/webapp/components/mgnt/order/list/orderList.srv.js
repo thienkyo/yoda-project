@@ -31,7 +31,6 @@ angular.module('orderListModule')
 	}
 	
 	function deleteOrder(order){
-		console.log('upsert');
 		var url = "mgnt/deleteOrder";
 		return ajaxService.post(url,order,{}).then(function(response){
 			return response.data;

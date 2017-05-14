@@ -9,9 +9,7 @@ angular.module('blogUpsertModule')
 			CommonStatusArray,
 			ArticleDO,Upload,$timeout) {	
 		
-	console.log('blogUpsertController');
 	var self = this;
-	
 	self.statusList = CommonStatusArray;
 	
 	if(!memberService.isAdmin()){
@@ -22,7 +20,6 @@ angular.module('blogUpsertModule')
 	if($routeParams.articleId > 0){
 		blogUpsertService.getArticleById($routeParams.articleId)
 			.then(function (data) {
-				console.log(data);
 				self.article = data;
 		});
 
@@ -30,8 +27,12 @@ angular.module('blogUpsertModule')
 		self.article = new ArticleDO();
 	}
 	
+	self.clear = function(){
+		self.responseStr = false;
+		self.article = new ArticleDO();
+	}
+	
 	self.upsert = function(){
-		console.log(self.article);
 		if(self.picFile){
 			if(self.picFile.result){
 				self.article.image = self.picFile.result;
@@ -53,7 +54,6 @@ angular.module('blogUpsertModule')
 		    });
 
 		    file.upload.then(function (response) {
-		    	console.log(response);
 		      $timeout(function () {
 		        file.result = response.data;
 		      });

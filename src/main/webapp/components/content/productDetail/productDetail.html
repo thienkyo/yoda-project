@@ -19,10 +19,10 @@
 						<!--/product-information-->
 							<div class="product-information">
 								<!--  <img src="images/product-details/new.jpg" class="newarrival" alt="" /> -->
-								<h2>{{ctrl.product.prodName}}</h2>
-								<a href="#/mgnt/productUpsert/{{ctrl.product.prodId}}" ng-show="ctrl.isAdmin">[edit]</a>
-								<p>Web ID: {{ctrl.product.prodId}}</p>
-								<img src="images/product-details/rating.png" alt="" />
+								<h2>{{ctrl.product.prodName}} <a href="#/mgnt/productUpsert/{{ctrl.product.prodId}}" ng-show="ctrl.isAdmin">[edit]</a></h2>
+								
+								<p>Web ID: P{{("000"+ctrl.product.prodId).slice(-4)}}</p>
+								<img src="images/productDetail/rating.png" alt="" />
 								<p></p>
 								<span>
 									<span>{{ctrl.product.price | number:0}} đ</span>

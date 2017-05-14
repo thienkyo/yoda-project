@@ -24,6 +24,8 @@ public class UtilityConstant {
 	final public static int ORDER_STATUS_SHIPPED = 22;
 	final public static int ORDER_STATUS_DONE = 23;
 	
+	final public static int PAGE_SIZE = 3;
+	
 	final public static ResponseEntity<String>savefile(String dir, MultipartFile uploadfile){
     	HttpHeaders headers = new HttpHeaders();
     	String filename="empty";

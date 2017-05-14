@@ -9,19 +9,11 @@ angular.module('productUpsertModule')
 			productDetailService,CommonStatusArray,
 			ProductDO,Upload,$timeout,categoryService) {	
 		
-	console.log('productUpsertController');
 	var self = this;
-	
 	self.statusList = CommonStatusArray;
-/*	productUpsertService.getCategories()
-		.then(function (data) {
-				console.log(data);
-				self.categories = data;
-		});*/
 	
 	categoryService.getActiveCategories()
 	.then(function (data) {
-			console.log(data);
 			self.categories = data;
 	});
 	
@@ -32,9 +24,8 @@ angular.module('productUpsertModule')
 	}
 	
 	if($routeParams.prodId > 0){
-		productDetailService.getProductByProdId($routeParams.prodId)
+		productUpsertService.getProductById($routeParams.prodId)
 			.then(function (data) {
-				//console.log(data);
 				self.product = data;
 		});
 
@@ -43,12 +34,10 @@ angular.module('productUpsertModule')
 	}
 	
 	self.upsert = function(){
-		console.log(self.product);
 		if(self.picFile){
 			if(self.picFile.result){
 				self.product.image = self.picFile.result;
 			}
-			
 		}
 		
 		productUpsertService.upsert(self.product)
@@ -65,7 +54,6 @@ angular.module('productUpsertModule')
 		    });
 
 		    file.upload.then(function (response) {
-		    	console.log(response);
 		      $timeout(function () {
 		        file.result = response.data;
 		      });

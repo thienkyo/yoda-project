@@ -24,7 +24,6 @@ angular.module('categoryModule')
 	}
 	
 	function upsert(cate){
-		console.log('upsert');
 		var url = "mgnt/upsertCategory";
 		return ajaxService.post(url,cate,{}).then(function(response){
 			return response.data;
@@ -32,7 +31,6 @@ angular.module('categoryModule')
 	}
 	
 	function deleteCategory(cate){
-		console.log('upsert');
 		var url = "mgnt/deleteCategory";
 		return ajaxService.post(url,cate,{}).then(function(response){
 			return response.data;

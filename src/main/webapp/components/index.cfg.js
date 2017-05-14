@@ -14,7 +14,7 @@ angular.module('app')
             controller: 'homeController',
             controllerAs:'ctrl'
         })
-        .when('/category/:categoryId',{
+        .when('/category/:categoryId/:pageNumber',{
             templateUrl: 'components/content/product/product.html',
             controller: 'productController',
             controllerAs:'ctrl'
@@ -39,7 +39,7 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
-		.when('/blog', {
+		.when('/blog/:pageNumber', {
 			templateUrl: 'components/content/blog/blog.html',
 			controller: 'blogController',
 			controllerAs:'ctrl'
@@ -93,7 +93,6 @@ angular.module('app')
         .otherwise(
             { redirectTo: '/'}
         );
-  //  $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
     $httpProvider.interceptors.push('APIInterceptor');
 });

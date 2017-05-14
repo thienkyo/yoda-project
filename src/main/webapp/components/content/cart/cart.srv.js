@@ -2,25 +2,22 @@
 angular.module('cartModule')
 .factory('cartService', ['$rootScope','ajaxService','cartStoreService',function($rootScope,ajaxService,cartStoreService) {
 	var cartService = {
-			getFirst6Product : getFirst6Product,
+		//	getFirst6Product : getFirst6Product,
 			getProductForCart : getProductForCart,
 			addToCart : addToCart,
 			placeOrder : placeOrder,
 			getShipCost : getShipCost
 		};
 	return cartService;
-	
+/*	
    function getFirst6Product(){
-		console.log('service: getFirst6Product2');
 		var url = "products/first6";
 		return ajaxService.get(url,null,{}).then(function(data){
 			return data.data;
 		});
-   }
+   }*/
 	      
    function getProductForCart(prodIds){
-		console.log('cart service: getProductForCart');
-		console.log(prodIds);
 		var url = "products/getProductForCart";
 		return ajaxService.post(url,prodIds,{}).then(function(response){
 			return response.data;
@@ -28,15 +25,15 @@ angular.module('cartModule')
    }
   
    function addToCart(prod,qty){
-	   var currentItem={prod:prod,quantity:qty};
-		var currentCart=cartStoreService.getCurrentCart();
+	   prod.description = '';
+   	   var currentItem={prod:prod,quantity:qty};
+   	   var currentCart=cartStoreService.getCurrentCart();
 		
 		if(cartStoreService.getQuantity() == 0){
 			currentCart.push(currentItem);
 		}else{
 			var flag = false;
 			for (var i = 0; i < currentCart.length; i++){
-				console.log(currentCart[i]);
 			    if(currentCart[i].prod.prodId == prod.prodId){
 			    	currentCart[i].quantity = currentCart[i].quantity + 1;
 			    	flag = false;
@@ -49,15 +46,11 @@ angular.module('cartModule')
 				currentCart.push(currentItem);
 			}
 		}
-		
-		//console.log(prodId);
 		cartStoreService.setCurrentCart(currentCart);
 		$rootScope.$broadcast('addToCart');
    }
    
    function placeOrder(order){
-	   console.log('cart service placeOrder');
-	   console.log(order);
 	   var url = "authenticated/saveOrder";
 	   return ajaxService.post(url,order,{}).then(function(response){
 			return response.data;
@@ -65,7 +58,6 @@ angular.module('cartModule')
    }
    
    function getShipCost(){
-	   console.log('cart service: getshipCost');
 		var url = "shipcost";
 		return ajaxService.get(url,null,{}).then(function(response){
 			return response.data;

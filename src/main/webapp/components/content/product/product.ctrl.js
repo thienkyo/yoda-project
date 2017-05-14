@@ -1,43 +1,36 @@
 'use strict';
-angular.module('productModule').controller('productController',['$rootScope','$routeParams','productService','cartService',
-	function($rootScope, $routeParams, productService,cartService) {	
+angular.module('productModule')
+.controller('productController',['$rootScope','$routeParams','productService','cartService','paginationService',
+	function($rootScope, $routeParams, productService,cartService,paginationService) {	
 	var self = this;
-
+/*
 	productService.getProductByCategory($routeParams.categoryId)
 		.then(function (response) {
 	        self.products = response;
-	    });
+	    });*/
+	 self.pagination = {
+			 currentNumber : 1,
+			 previousNumber :  1,
+			 nextNumber :  1,
+			 cateId : 1,
+			 list : []
+	 };
+	
+	function item() {
+		this.first = false;
+		this.last = false;
+		this.number = 0;
+		this.status = false;
+	}
 
+	productService.getProductPage($routeParams.categoryId,$routeParams.pageNumber)
+	.then(function (response) {
+		self.currentPage = response;
+		self.pagination = paginationService.builder(response, $routeParams.categoryId);
+    });
+	
 	self.addToCart = function(prod){
 		cartService.addToCart(prod,1);
 		self.alertProdId = prod.prodId;
-	/*	
-		var currentItem={prod:prod,quantity:1};
-		var currentCart=cartStoreService.getCurrentCart();
-		
-		if(cartStoreService.getQuantity() == 0){
-			currentCart.push(currentItem);
-		}else{
-			var flag = false;
-			
-			for (var i = 0; i < currentCart.length; i++){
-				console.log(currentCart[i]);
-			    if(currentCart[i].prod.prodId == prod.prodId){
-			    	currentCart[i].quantity = currentCart[i].quantity + 1;
-			    	flag = false;
-			    	break;
-			    }else{
-			    	flag = true;
-			    }
-			}
-			if(flag){
-				currentCart.push(currentItem);
-			}
-		}
-		
-		//console.log(prodId);
-		cartStoreService.setCurrentCart(currentCart);
-		$rootScope.$broadcast('addToCart');
-		*/
 	}
 }]);

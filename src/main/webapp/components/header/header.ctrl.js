@@ -1,6 +1,7 @@
-angular.module('app').controller('headerController', ['$http','$rootScope','$location','memberService','cartStoreService','categoryService',
+angular.module('app')
+.controller('headerController', ['$http','$rootScope','$location','memberService',
+								 'cartStoreService','categoryService',
 	function($http,$rootScope,$location,memberService,cartStoreService,categoryService) {
-	console.log('header ctrl');
 	var self=this;
 	self.cart=[];
 	self.currentMember = memberService.getCurrentMember();
@@ -8,18 +9,15 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
 	self.currentCart = cartStoreService.getCurrentCart();
 	self.itemQuantity = cartStoreService.getQuantity();
 	self.isAdmin = memberService.isAdmin();
+	
 	categoryService.getActiveCategories().then(function(data){
-		console.log(data);
 		self.cateList = data;
 	});
 	
 	self.logout = function() {
 		self.currentMember = memberService.setCurrentMember(null);
 		self.isAdmin = false;
-		console.log('header logout clicked');
 		$location.path('#/');
-        //$rootScope.authenticated = false;
-       // $http.defaults.headers.common.Authorization = '';
     }
 	
 	$rootScope.$on('authorized', function() {
@@ -28,21 +26,21 @@ angular.module('app').controller('headerController', ['$http','$rootScope','$loc
     });
 	
     $rootScope.$on('unauthorized', function() {
-    	console.log('in headerctrl unauthorized event');
         self.currentMember = memberService.setCurrentMember(null);
         $location.path('#/');
     });
     
     $rootScope.$on('addToCart', function() {
-		//self.itemQuantity = self.itemQuantity + 1;
     	self.itemQuantity = cartStoreService.getQuantity();
 		self.currentCart = cartStoreService.getCurrentCart();
-		console.log('rootScope.on addToCart');
-		console.log(self.currentCart);
     });
     
     $rootScope.$on('removeItemCart', function() {
     	self.itemQuantity = cartStoreService.getQuantity();
+    });
+    
+    $rootScope.$on('clearCart', function() {
+    	self.itemQuantity = 0;
     });
     
     $rootScope.$on('ExpiredJwt', function() {

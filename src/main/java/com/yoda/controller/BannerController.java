@@ -18,6 +18,6 @@ public class BannerController {
 	
 	@RequestMapping("")
     public List<Banner> getActiveBanner() {
-        return bannerRepo.findAllByStatusOrderByBannerIdDesc(UtilityConstant.ACTIVE_STATUS);
+        return bannerRepo.findAllByStatus(UtilityConstant.ACTIVE_STATUS);
     }
 }
