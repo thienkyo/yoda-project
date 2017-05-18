@@ -14,7 +14,7 @@ angular.module('app')
             controller: 'homeController',
             controllerAs:'ctrl'
         })
-        .when('/category/:categoryId/:pageNumber',{
+        .when('/category/:categoryId',{
             templateUrl: 'components/content/product/product.html',
             controller: 'productController',
             controllerAs:'ctrl'
@@ -39,7 +39,7 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
-		.when('/blog/:pageNumber', {
+		.when('/blog', {
 			templateUrl: 'components/content/blog/blog.html',
 			controller: 'blogController',
 			controllerAs:'ctrl'

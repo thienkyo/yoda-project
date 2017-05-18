@@ -4,18 +4,22 @@
 				
 				<div class="col-sm-12 padding-right">
 					<div class="product-details"><!--product-details-->
-						<div class="col-sm-5">
+						<div class="col-sm-6">
 							<div class="view-product" ng-cloak>
 								<img ng-src="images/thumbnail/{{ctrl.product.image}}" alt="" style="height: 100%;"/>
-								<div class="alert alert-success" ng-show="ctrl.alertProdId" role="alert"  style="position: absolute;top: 0; left: 0;">
+								<div class="alert alert-success" role="alert" ng-show="ctrl.alertProdId && ctrl.product.quantity != 0" style="position: absolute;top: 0; left: 0;">
 									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									  <span class="sr-only">success:</span>
 								  		Đã thêm vào giỏ hàng
 								</div>
+								<div class="alert alert-danger" role="alert" ng-show="ctrl.alertProdId && ctrl.product.quantity == 0" style="position: absolute;top: 0; left: 0;">
+									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									  <span class="sr-only">error:</span>
+								  		Tạm hết hàng
+								</div>	
 							</div>
-			
 						</div>
-						<div class="col-sm-7">
+						<div class="col-sm-6">
 						<!--/product-information-->
 							<div class="product-information">
 								<!--  <img src="images/product-details/new.jpg" class="newarrival" alt="" /> -->
@@ -38,7 +42,7 @@
 										Add to cart
 									</button>
 								</span>
-								<p><b>Availability:</b> {{ctrl.product.quantity}}</p>
+								<p><b>Availability:</b> {{ctrl.product.quantity == 0 ? 'tạm hết hàng' : 'còn hang'}}</p>
 							<!-- 	<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a> -->
 							</div><!--/product-information-->
 						</div>

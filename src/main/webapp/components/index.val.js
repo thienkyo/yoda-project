@@ -132,7 +132,6 @@ function PaginationDO() {
 	this.currentNumber = 1;
 	this.previousNumber = 1;
 	this.nextNumber = 1;
-	this.cateId = 1;
 	this.list = [];
 	this.clear = function() { 
 		this.list = [];

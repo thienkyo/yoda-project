@@ -122,7 +122,7 @@ angular.module('app')
 		};
 	return paginationService;
 	
-	function builder(pageable, cateId){
+	function builder(pageable){
 		pagination.clear();
 	   for(var i=1 ; i <= pageable.totalPages ; i++){ 
 		   var temp = new PaginationItemDO();
@@ -134,8 +134,8 @@ angular.module('app')
 	   }
 	   pagination.currentNumber = parseInt(pageable.number) +1;
 	   pagination.nextNumber = parseInt(pagination.currentNumber) + 1;
-	   pagination.previousNumber = parseInt(pagination.currentNumber) - 1;
-	   pagination.cateId = cateId;
+	   pagination.previousNumber = pagination.currentNumber == 1 ? 1 : parseInt(pagination.currentNumber) - 1;
+	   
 	   return pagination;
 	}
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yoda.UtilityConstant;
 import com.yoda.models.Article;
+import com.yoda.models.Products;
 import com.yoda.services.ArticleService;
 
 @RestController
@@ -34,7 +35,12 @@ public class ArticleController {
 	
 	@RequestMapping(value = "getArticlePage/{pageNumber}", method = RequestMethod.GET)
 	public Page<Article> getArticlePage(@PathVariable Integer pageNumber) {
-        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PAGE_SIZE, Sort.Direction.DESC, "articleId");
-        return articleRepo.findByStatus( UtilityConstant.ACTIVE_STATUS, request);
+        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.BLOG_PAGE_SIZE, Sort.Direction.DESC, "articleId");
+        return articleRepo.findByStatus(UtilityConstant.ACTIVE_STATUS, request);
+    }
+	
+	@RequestMapping("homeArticle")
+    public List<Article> getHomeProduct() {//@RequestParam(value = "status") 
+        return articleRepo.findFirst4ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
     }
 }

@@ -1,8 +1,8 @@
 <style>
 
 .thumb {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     float: none;
     position: relative;
     top: 7px;
@@ -65,7 +65,7 @@ form .progress {
 			      </span>
 			      <span ng-show="ctrl.picFile.result">Upload Successful</span>
 			      <span class="err" ng-show="ctrl.errorMsg">{{ctrl.errorMsg}}</span>
-			      <span>size: 280x280</span>
+			      <span>size: 600x280</span>
 	 		</div>
 	 		<div class="col-sm-4">
 	 			<img ng-show="ctrl.picFile.result" ng-src="images/article/{{ctrl.picFile.result}}" alt="" style="width: 100%;"/>

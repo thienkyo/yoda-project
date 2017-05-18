@@ -3,9 +3,9 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 	function($scope, homeService,cartService) {
 		var self = this;
 		
-		homeService.getFirst12Product()
+		homeService.getHomeProduct()
 			.then(function (response) {
-				self.first12products = response;
+				self.homeProducts = response;
 			});
 		
 		homeService.getBanner()
@@ -13,8 +13,16 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 			self.banners = response;
 		});
 		
+		homeService.gethomeArticle()
+		.then(function (response) {
+			self.homeArticles = response;
+		});
+		
 		self.addToCart = function(prod){
-			cartService.addToCart(prod,1);
+			if(prod.quantity > 0){
+				cartService.addToCart(prod,1);
+			}
+			
 			self.alertProdId = prod.prodId;
 		}
 

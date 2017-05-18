@@ -4,7 +4,7 @@
 			<div class="col-sm-3">
 				<div class="left-sidebar">
 					<h2>Ngẫu nhiên</h2>
-						<div class="shipping text-center" ng-repeat="prod in ctrl.randomProducts">
+					<div class="shipping text-center" ng-repeat="prod in ctrl.randomProducts">
 						<a href="#/productDetail/{{prod.prodId}}" >
 							<p style="padding: 0px 10px 0px 10px;">{{prod.prodName}}</p>
 							<img ng-src="images/thumbnail/{{prod.image}}" alt="" style="width:100%;"/>
@@ -39,11 +39,11 @@
 						<a  class="btn btn-primary" href="#/blogDetail/{{blog.articleId}}" style="margin-top: 0px;margin-bottom: 20px;">Read More</a>
 					</div>
 					
-					<div class="pagination-area">
+					<div class="pagination-area" style="margin-top: 10px;">
 						<ul class="pagination">
-							<li><a href="#/blog/{{ctrl.pagination.previousNumber}}">&laquo;</a></li>
-							<li ng-repeat="item in ctrl.pagination.list"><a class="{{item.status ? 'active' : ''}}" href="#/blog/{{item.number}}">{{item.number}}</a></li>
-							<li><a href="#/blog/{{ctrl.pagination.nextNumber}}">&raquo;</a></li>
+							<li><a ng-click="ctrl.getTargetPage(ctrl.pagination.previousNumber)">&laquo;</a></li>
+							<li ng-repeat="item in ctrl.pagination.list"><a class="{{item.status ? 'active' : ''}}" ng-click="ctrl.getTargetPage(item.number)">{{item.number}}</a></li>
+							<li><a ng-click="ctrl.getTargetPage(ctrl.pagination.nextNumber)">&raquo;</a></li>
 						</ul>
 					</div>
 				</div>

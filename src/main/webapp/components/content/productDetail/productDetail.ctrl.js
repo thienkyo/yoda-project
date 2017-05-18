@@ -15,7 +15,9 @@ angular.module('productDetailModule')
 	});
 	
 	self.addToCart = function(prod){
-		cartService.addToCart(prod, self.qty);
+		if(prod.quantity > 0){
+			cartService.addToCart(prod, self.qty);
+		}
 		self.alertProdId = prod.prodId;
 	}
 

@@ -1,6 +1,6 @@
 'use strict';
-angular.module('accountModule').controller('accountController', ['$scope','$location','accountService','cartService','OrderStatusArray',
-	function($scope,$location, accountService,cartService,OrderStatusArray) {
+angular.module('accountModule').controller('accountController', ['$scope','$location','accountService','cartService','OrderStatusArray','paginationService',
+	function($scope,$location, accountService,cartService,OrderStatusArray,paginationService) {
 		var self = this;
 		self.me = {};
 		self.me.shipCostId = 0;
@@ -33,10 +33,34 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 					}
 				}
 			}
-			self.orderList = me.orders;
+			self.orderList = me.orders.reverse();
+			self.orderListPage = buildPageable(1);
+			self.pagination = paginationService.builder(self.orderListPage);
 		},function(error){
 			$location.path("#/");
 		});
+		
+		function buildPageable(targetPage){
+			var pageable ={};
+			var size = 4;
+			pageable.totalElements = self.orderList.length;
+			pageable.totalPages = Math.ceil(pageable.totalElements/size);
+			pageable.number = targetPage - 1;
+			pageable.content = [];
+			var start = size*(targetPage -1);
+			var end   = size*targetPage;
+			for(var i = start; i< end; i++){
+				if(self.orderList[i]){
+					pageable.content.push(self.orderList[i]);
+				}
+			}
+			return pageable;
+		}
+		
+		self.getTargetPage = function(targetpage){
+			self.orderListPage = buildPageable(targetpage);
+			self.pagination = paginationService.builder(self.orderListPage);
+		} 
 		
 		self.updateMe = function(){
 			for(var i = 0; i < self.shipCostList.length; i++){

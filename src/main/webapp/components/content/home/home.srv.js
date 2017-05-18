@@ -3,7 +3,8 @@ angular.module('homeModule')
 .factory('homeService', ['ajaxService',function(ajaxService) {
 	var homeService = {
 			getFirst6Product : getFirst6Product,
-			getFirst12Product : getFirst12Product,
+			getHomeProduct : getHomeProduct,
+			gethomeArticle : gethomeArticle,
 			getBanner : getBanner
 			};
 	return homeService;
@@ -15,8 +16,15 @@ angular.module('homeModule')
 		});
 	}
    
-   function getFirst12Product(){
-		var url = "products/first12";
+   function getHomeProduct(){
+		var url = "products/homeProduct";
+		return ajaxService.get(url,null,{}).then(function(data){
+			return data.data;
+		});
+	}
+   
+   function gethomeArticle(){
+		var url = "blog/homeArticle";
 		return ajaxService.get(url,null,{}).then(function(data){
 			return data.data;
 		});

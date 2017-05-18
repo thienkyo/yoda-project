@@ -38,9 +38,9 @@ public class ProductsController {
         return prodRepo.findFirst6ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
     }
 	
-	@RequestMapping("first12")
-    public List<Products> getFisrt12Product() {//@RequestParam(value = "status") 
-        return prodRepo.findFirst12ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
+	@RequestMapping("homeProduct")
+    public List<Products> getHomeProduct() {//@RequestParam(value = "status") 
+        return prodRepo.findFirst9ByStatusOrderByModDateDesc(UtilityConstant.ACTIVE_STATUS);
     }
 	
 	@RequestMapping("count")
@@ -88,7 +88,7 @@ public class ProductsController {
 	
 	@RequestMapping(value = "getProductPage/{cateId}/{pageNumber}", method = RequestMethod.GET)
 	public Page<Products> getProductPage(@PathVariable Integer cateId, @PathVariable Integer pageNumber) {
-        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PAGE_SIZE, Sort.Direction.DESC, "ProdId");
+        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PRODUCT_PAGE_SIZE, Sort.Direction.DESC, "ProdId");
         Categories cate = new Categories(cateId);
         return prodRepo.findByCategoryAndStatus(cate, UtilityConstant.ACTIVE_STATUS, request);
     }

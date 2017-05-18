@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UtilityConstant {
-	final public static int AUTHENTICATION_TIMEOUT = 30;
+	final public static int AUTHENTICATION_TIMEOUT = 60;
 	final public static int ACTIVE_STATUS = 1;
 	final public static int INACTIVE_STATUS = 0;
 	final public static String MEMBER_ROLE = "MEMBER";
@@ -24,7 +24,9 @@ public class UtilityConstant {
 	final public static int ORDER_STATUS_SHIPPED = 22;
 	final public static int ORDER_STATUS_DONE = 23;
 	
-	final public static int PAGE_SIZE = 3;
+	final public static int PRODUCT_PAGE_SIZE = 9;
+	final public static int BLOG_PAGE_SIZE = 4;
+	
 	
 	final public static ResponseEntity<String>savefile(String dir, MultipartFile uploadfile){
     	HttpHeaders headers = new HttpHeaders();

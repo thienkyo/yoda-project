@@ -5,12 +5,21 @@ angular.module('blogModule').controller('blogController', ['$routeParams','blogS
 		
 		self.isAdmin = memberService.isAdmin();
 		
-		blogService.getBlogPage($routeParams.pageNumber)
+		blogService.getBlogPage(1)
 		.then(function (response) {
 			self.currentPage = response;
-			self.pagination = paginationService.builder(response, 0);
+			self.pagination = paginationService.builder(response);
 	    });
 		
+		self.getTargetPage = function(pageNumber){
+			if(pageNumber != self.pagination.currentNumber && pageNumber <= self.pagination.list.length){
+				blogService.getBlogPage(pageNumber)
+				.then(function (response) {
+					self.currentPage = response;
+					self.pagination = paginationService.builder(response);
+			    });
+			}
+		}
 		
 		productService.getRandomProduct()
 		.then(function (data) {
