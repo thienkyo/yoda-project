@@ -17,11 +17,16 @@ angular.module('productUpsertModule')
 			self.categories = data;
 	});
 	
-	self.currentMember = memberService.getCurrentMember();
-	
+	if(!memberService.isAdmin()){
+		$location.path('#/');
+	}
+//	self.currentMember = memberService.getCurrentMember();
+/*	
 	if(!self.currentMember || self.currentMember.roles.indexOf("ADMIN") == -1){
 		$location.path('#/');
 	}
+*/	
+	
 	
 	if($routeParams.prodId > 0){
 		productUpsertService.getProductById($routeParams.prodId)
@@ -49,7 +54,7 @@ angular.module('productUpsertModule')
 	self.uploadPic = function(file,url) {
 		    file.upload = Upload.upload({
 		      url: url,
-		      data: {username: 'testkyo', file: file},
+		      data: {oldName: url == 'mgnt/uploadfile2' ? self.product.image : '', file: file},
 		      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'}
 		    });
 

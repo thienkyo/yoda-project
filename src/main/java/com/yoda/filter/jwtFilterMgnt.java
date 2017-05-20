@@ -38,7 +38,9 @@ public class jwtFilterMgnt extends GenericFilterBean{
             						.setSigningKey("secretkey".getBytes("UTF-8"))
             						.parseClaimsJws(token).getBody();
 
-            if(!((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+            if(!((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE) &&
+            		!((List<String>) claims.get("roles")).contains(UtilityConstant.MOD_ROLE) 		
+            ){
             	throw new ServletException("Unauthorized action");
             }
             

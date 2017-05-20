@@ -1,3 +1,31 @@
+<style>
+
+.search_class{
+	background: #F0F0E9;
+    border: medium none;
+    color: #B2B2B2;
+    font-family: 'roboto';
+    font-size: 12px;
+    font-weight: 300;
+    height: 40px;
+    outline: medium none;
+    padding-left: 0px;
+    width: 150px;
+    background-image: url(../images/home/searchicon.png);
+    background-repeat: no-repeat;
+    background-position: 160px;
+}
+
+.md-virtual-repeat-container.md-autocomplete-suggestions-container {
+    width:500px !important;
+}
+
+.autocompletedemoCustomTemplate .autocomplete-custom-template .result_left{
+	width: 200px;
+}
+
+</style>
+
 <header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -64,7 +92,7 @@
 							</button>
 						</div>
 						
-						<div class="mainmenu pull-left">
+						<div class="mainmenu pull-left" style="padding-top: 10px;">
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="#/" class="active">Home</a></li>
 								<li class="dropdown"><a href="#/">Shop<i class="fa fa-angle-down"></i></a>
@@ -85,13 +113,43 @@
 										<li><a href="#/mgnt/banner">banner</a></li>
                                     </ul>
                                 </li>
+                                
+                                <li ng-show="ctrl.isMod" class="dropdown"><a href="#/">admin<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+										<li><a href="#/mgnt/blogList">blog</a></li>
+                                    </ul>
+                                </li>
 								
 							</ul>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<md-autocomplete class="search_class"  flex=""
+					          ng-disabled="ctrl.isDisable"
+					          md-no-cache="ctrl.noCache"
+					          md-selected-item="ctrl.selectedItem"
+					          md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+					          md-search-text="ctrl.searchText"
+					          md-selected-item-change="ctrl.selectedItemChange(item)"
+					          md-items="item in ctrl.querySearch(ctrl.searchText)"
+					          md-item-text="item.name"
+					          md-min-length="2"
+					          placeholder="search">
+					          <md-item-template>
+					          	 <div class="row" >
+						          <div class="col-sm-2" >{{item.type == 1 ? 'shop' : 'blog'}}</div>
+						          <div class="col-sm-3" style="border-left: 10px;"><img ng-src=" {{item.type == 1 ? 'images/thumbnail/'+item.image : 'images/article/'+item.image}} " alt="" style="height:40px;"/></div>
+						          <div class="col-sm-7" style="border-right: 10px;">{{item.name}}</div>
+					       	    </div>
+					          
+					          </md-item-template>
+					          <md-not-found>
+					       	    không có kết quả cho "{{ctrl.searchText}}".
+					          </md-not-found>
+					       </md-autocomplete>
+							
+							
 						</div>
 					</div>
 				</div>

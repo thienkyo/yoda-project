@@ -28,14 +28,7 @@ public class MemberRole {
 		this.email = email;
 		this.role = role;
 	}
-/*
-	public MemberRole(int id, String email, String role) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.role = role;
-	}
-*/
+
 	public int getId() {
 		return id;
 	}

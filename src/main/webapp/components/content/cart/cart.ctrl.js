@@ -59,7 +59,7 @@ angular.module('cartModule')
 				self.subTotal += self.currentCart[i].prod.price*self.currentCart[i].quantity;
 			}
 			cartStoreService.setCurrentCart(self.currentCart);;
-			self.updateShippingFee ();
+			self.updateShippingFee();
 		}
 		
 		self.placeOrder = function(){
@@ -78,6 +78,8 @@ angular.module('cartModule')
 				}
 				self.order.orderDetails = OrderDetailList;
 				self.order.shippingAddress = self.me.address;
+				self.isShow = false;
+				self.isAddress = false;
 				if(self.me.address &&  self.order.shipCostId != 0){
 					cartService.placeOrder(self.order).then(function (response) {
 				        self.order_return_status = response;
@@ -86,6 +88,8 @@ angular.module('cartModule')
 				        self.currentCart = [];
 				        $rootScope.$broadcast('clearCart');
 					});
+				}else{
+					self.isAddress ='Cần nhập địa chỉ và chọn vùng.';
 				}
 				
 			}else{
@@ -107,7 +111,7 @@ angular.module('cartModule')
 			}
 			w = Math.round(w*100)/100;
 			self.order.shipCostFee = w*shipBaseFee;
-			self.order.shipCostFee = (self.order.shipCostFee < 20000) ?  25000 : self.order.shipCostFee ;
+			self.order.shipCostFee = (self.order.shipCostFee < 20000 && self.me.shipCostId != 7) ?  25000 : self.order.shipCostFee ;
 			self.total = self.order.shipCostFee + self.subTotal;
 		}
 		

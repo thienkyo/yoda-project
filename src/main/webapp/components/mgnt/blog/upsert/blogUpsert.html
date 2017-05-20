@@ -46,7 +46,7 @@ form .progress {
 	 			<img ng-src="images/article/{{ctrl.article.image}}" alt="" style="width: 100%;"/>
 	 		</div>
 	 		<div class="col-sm-4">
-	 			<span>image: {{ctrl.product.image}}</span>
+	 			<span>image: {{ctrl.article.image}}</span>
 			 	<p ng-show="ctrl.picFile.result">New image: {{ctrl.picFile.result}}</p>
 			      <input type="file" ngf-select ng-model="ctrl.picFile" name="file"    
 			             accept="image/*" ngf-max-size="2MB" 
@@ -58,7 +58,7 @@ form .progress {
 			      <button ng-click="ctrl.picFile = null" ng-show="ctrl.picFile">Remove</button>
 			     
 			      <button ng-disabled="!ctrl.picFile"  
-			      		ng-click="ctrl.uploadPic(ctrl.picFile,'mgnt/uploadfile4')">upload</button>
+			      		ng-click="ctrl.uploadPic(ctrl.picFile,'mgnt/uploadfile4',1)">upload</button>
 			      <span class="progress" ng-show="ctrl.picFile.progress >= 0">
 			        <div style="width:{{ctrl.picFile.progress}}%"  
 			        		ng-bind="ctrl.picFile.progress + '%'"></div>
@@ -152,7 +152,7 @@ form .progress {
 			      <button ng-click="ctrl.picProduct = null" ng-show="ctrl.picProduct">Remove</button>
 			     
 			      <button ng-disabled="!ctrl.picProduct"  
-			      		ng-click="ctrl.uploadPic(ctrl.picProduct,'mgnt/uploadfile4')">upload</button>
+			      		ng-click="ctrl.uploadPic(ctrl.picProduct,'mgnt/uploadfile4',2)">upload</button>
 			      <span class="progress" ng-show="ctrl.picProduct.progress >= 0">
 			        <div style="width:{{ctrl.picProduct.progress}}%"  
 			        		ng-bind="ctrl.picProduct.progress + '%'"></div>

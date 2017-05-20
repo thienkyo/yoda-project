@@ -3,12 +3,13 @@ INSERT INTO `categories` (`category_id`, `category_name`, `mod_date`, `status`) 
 (2, 'Smart Switch', '2017-02-24 22:42:00', 1);
 
 INSERT INTO `ship_cost` (`ship_cost_id`, `distance`, `price`, `region`) VALUES
-(1, 8, 15000, 'Q5 - Q6 - Q10 - Q11 - Q8 - Q1 và Q3 '),
-(2, 15, 20000, 'Q Bình Tân, Tân Phú, Tân Bình, Phú Nhuận, Bình Thạnh, Q1, Q4, Q7'),
-(3, 20, 30000, 'Q. Gò Vấp, Q9, Q Thủ Đức, Q2, Thanh Đa, Huyện Hóc Môn, Nhà Bè, Cần Giờ, Bình Chánh, Củ Chi'),
+(1, 8, 25000, 'Q5 - Q6 - Q10 - Q11 - Q8 - Q1 và Q3 '),
+(2, 15, 30000, 'Q Bình Tân, Tân Phú, Tân Bình, Phú Nhuận, Bình Thạnh, Q1, Q4, Q7'),
+(3, 20, 40000, 'Q. Gò Vấp, Q9, Q Thủ Đức, Q2, Thanh Đa, Huyện Hóc Môn, Nhà Bè, Cần Giờ, Bình Chánh, Củ Chi'),
 (4, 300, 60000, 'Miền Nam'),
 (5, 600, 70000, 'Miền Trung'),
-(6, 900, 100000, 'Miền Bắc');
+(6, 800, 100000, 'Miền Bắc'),
+(7, 0, 0, 'COD');
 
 INSERT INTO `members` (`address`, `city`, `country`, `district`, `email`, `full_name`, `mod_date`, `pass`, `phone`, `post_code`, `status`, `street`, `ship_cost_id`) VALUES
 ('91/5 trần chánh chiếu, phường 14, quận5, tp Hồ Chí Minh', NULL, NULL, NULL, 'thienkyo@gmail.com', 'thien le', '2017-03-09 04:06:00', 'MTIzNDU2bHR0', '0909957872', NULL, 1, NULL, 1),

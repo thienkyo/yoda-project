@@ -6,7 +6,8 @@ angular.module('app')
 		setCurrentMember : setCurrentMember,
 		getCurrentMember : getCurrentMember,
 		isLogin : isLogin,
-		isAdmin :isAdmin
+		isAdmin :isAdmin,
+		isMod : isMod
 		};
 	return memberService;
 	
@@ -36,6 +37,13 @@ angular.module('app')
 	
 	function isAdmin(){
 		if(isLogin() && currentMember.roles.indexOf("ADMIN") != -1){
+			return true;
+		}
+		return false;
+	}
+	
+	function isMod(){
+		if(isLogin() && currentMember.roles.indexOf("MOD") != -1){
 			return true;
 		}
 		return false;

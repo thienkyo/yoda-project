@@ -62,35 +62,46 @@ public class ManagementController {
 	@RequestMapping(value = "getProductsForMgnt/{cateId}/{amount}", method = RequestMethod.GET)
 	public List<Products> getProductsForMgnt(@PathVariable final int cateId,@PathVariable final int amount, final HttpServletRequest request) throws ServletException {
 		List<Products> productList = new ArrayList<Products>();
-		if(cateId==0){
-			if(amount==20){
-				productList =  productService.findFirst20ByOrderByProdIdDesc();
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			if(cateId==0){
+				if(amount==20){
+					productList =  productService.findFirst20ByOrderByProdIdDesc();
+				}else{
+					productList = (List<Products>) productService.findAll();
+				}
 			}else{
-				productList = (List<Products>) productService.findAll();
-			}
-		}else{
-			Categories cate = new Categories(cateId);
-			if(amount==20){
-				productList =  productService.findFirst20ByCategoryOrderByProdIdDesc(cate);
-			}else{
-				productList =  productService.findAllByCategoryOrderByProdIdDesc(cate);
+				Categories cate = new Categories(cateId);
+				if(amount==20){
+					productList =  productService.findFirst20ByCategoryOrderByProdIdDesc(cate);
+				}else{
+					productList =  productService.findAllByCategoryOrderByProdIdDesc(cate);
+				}
 			}
 		}
+		
 		return productList;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "upsertProduct", method = RequestMethod.POST)
-	public ManagementResponse updateProducts(@RequestBody final Products product) throws ServletException {
+	public ManagementResponse updateProducts(@RequestBody final Products product, final HttpServletRequest request) throws ServletException {
 		product.setModDate(new Date());
-		productService.save(product);
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			productService.save(product);
+		}
 		return new ManagementResponse("upsert_product_success");
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "getProductById/{prodId}", method = RequestMethod.GET)
-	public Products getProductById(@PathVariable final int prodId) throws ServletException {
-		return	productService.findByProdId(prodId);
+	public Products getProductById(@PathVariable final int prodId, final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			return	productService.findByProdId(prodId);
+		}
+		return	null;
 	}
 	
 ////////////////////////////category section//////////////////////////
@@ -107,61 +118,72 @@ public class ManagementController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "upsertCategory", method = RequestMethod.POST)
-	public Categories upsertCategory(@RequestBody final Categories cate) throws ServletException {
-		//cate.setMod_date(new Date());
-		cateService.save(cate);
+	public Categories upsertCategory(@RequestBody final Categories cate,final HttpServletRequest request) throws ServletException {
+		cate.setMod_date(new Date());
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			cateService.save(cate);
+		}
 		return cate;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "deleteCategory", method = RequestMethod.POST)
-	public ManagementResponse deleteCategory(@RequestBody final Categories cate) throws ServletException {
-		//cate.setMod_date(new Date());
-		cateService.delete(cate);;
+	public ManagementResponse deleteCategory(@RequestBody final Categories cate, final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			cateService.delete(cate);
+		}
 		return new ManagementResponse("delete_category_success");
 	}
 	
 /////////////////////////Orders section///////////////////////
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "getOrdersForMgnt/{amount}", method = RequestMethod.GET)
-	public List<Orders> getOrdersForMgnt(@PathVariable final int amount) throws ServletException {
+	public List<Orders> getOrdersForMgnt(@PathVariable final int amount, final HttpServletRequest request) throws ServletException {
 		List<Orders> orderList = new ArrayList<Orders>();
-		
-		if(amount==20){
-			orderList =  orderService.findFirst20ByOrderByOrderIdDesc();
-		}else{
-			orderList = orderService.findAllByOrderByOrderIdDesc();
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			if(amount==20){
+				orderList =  orderService.findFirst20ByOrderByOrderIdDesc();
+			}else{
+				orderList = orderService.findAllByOrderByOrderIdDesc();
+			}
 		}
-		
 		return orderList;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "deleteOrder", method = RequestMethod.POST)
-	public ManagementResponse deleteOrder(@RequestBody final Orders order) throws ServletException {
-		//cate.setMod_date(new Date());
-		orderService.delete(order);
+	public ManagementResponse deleteOrder(@RequestBody final Orders order, final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			orderService.delete(order);
+		}
 		return new ManagementResponse("delete_order_success");
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "updateOrderStatus/{orderId}/{status}", method = RequestMethod.GET)
-	public ManagementResponse updateOrderStatus(@PathVariable final int orderId, @PathVariable final int status) throws ServletException {
+	public ManagementResponse updateOrderStatus(@PathVariable final int orderId, @PathVariable final int status, final HttpServletRequest request) throws ServletException {
 		Orders order = orderService.findOne(orderId);
 		List<Products> products = new ArrayList<>();
-		for(OrderDetails od : order.getOrderDetails()){
-			Products prod = od.getProduct();
-			if(status == 21){
-				prod.setQuantity(prod.getQuantity() - od.getQuantity());
-			}else if(status == 20){
-				prod.setQuantity(prod.getQuantity() + od.getQuantity());
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			for(OrderDetails od : order.getOrderDetails()){
+				Products prod = od.getProduct();
+				if(status == 21){
+					prod.setQuantity(prod.getQuantity() - od.getQuantity());
+				}else if(status == 20){
+					prod.setQuantity(prod.getQuantity() + od.getQuantity());
+				}
+				
+				products.add(prod);
 			}
-			
-			products.add(prod);
+			productService.save(products);
+			order.setStatus(status);
+			orderService.save(order);
 		}
-		productService.save(products);
-		order.setStatus(status);
-		orderService.save(order);
 		return new ManagementResponse("upsert_order_success");
 	}
 	
@@ -192,45 +214,67 @@ public class ManagementController {
 		return	articleService.findByArticleId(articleId);
 	}
 ///////////////////////////////Upload section /////////////////////////
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "uploadfile2", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
-    	String directory = env.getProperty("yoda.uploadedFiles.thumbnail");
-    	return UtilityConstant.savefile(directory,uploadfile);
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile uploadfile, @RequestParam("oldName") String oldName, final HttpServletRequest request) {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			String directory = env.getProperty("yoda.uploadedFiles.thumbnail");
+	    	return UtilityConstant.savefile(directory,uploadfile,oldName);
+		}
+		return null;
     } // method uploadFile
     
+	@SuppressWarnings("unchecked")
     @RequestMapping(value = "uploadfile3", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> uploadFileProductImage(@RequestParam("file") MultipartFile uploadfile) {
-    	String directory = env.getProperty("yoda.uploadedFiles.productDetail");
-    	return UtilityConstant.savefile(directory,uploadfile);
+    public ResponseEntity<String> uploadFileProductImage(@RequestParam("file") MultipartFile uploadfile, @RequestParam("oldName") String oldName, final HttpServletRequest request) {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			String directory = env.getProperty("yoda.uploadedFiles.productDetail");
+	    	return UtilityConstant.savefile(directory,uploadfile,oldName);
+		}
+		return null;
     }
 	
-	@RequestMapping(value = "uploadfile4", method = RequestMethod.POST)
+	@RequestMapping(value = "uploadfile4", method = RequestMethod.POST)// artile upload
     @ResponseBody
-    public ResponseEntity<String> uploadFileArticleImage(@RequestParam("file") MultipartFile uploadfile) {
+    public ResponseEntity<String> uploadFileArticleImage(@RequestParam("file") MultipartFile uploadfile, @RequestParam("oldName") String oldName) {
     	String directory = env.getProperty("yoda.uploadedFiles.article");
-    	return UtilityConstant.savefile(directory,uploadfile);
+    	return UtilityConstant.savefile(directory,uploadfile,oldName);
     }
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "uploadfile5", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<String> uploadFileBannerImage(@RequestParam("file") MultipartFile uploadfile) {
-    	String directory = env.getProperty("yoda.uploadedFiles.banner");
-    	return UtilityConstant.savefile(directory,uploadfile);
+    public ResponseEntity<String> uploadFileBannerImage(@RequestParam("file") MultipartFile uploadfile, @RequestParam("oldName") String oldName, final HttpServletRequest request) {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			String directory = env.getProperty("yoda.uploadedFiles.banner");
+	    	return UtilityConstant.savefile(directory,uploadfile, oldName);
+		}
+		return null;
     }
 /////////////////////////////Banner section/////////////////////////////
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "getBannerForMgnt", method = RequestMethod.GET)
-	public List<Banner> getBanner() throws ServletException {
-		return (List<Banner>) bannerService.findAll();
+	public List<Banner> getBanner(final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			return (List<Banner>) bannerService.findAll();
+		}
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "upsertBanner", method = RequestMethod.POST)
-	public ManagementResponse updateBanner(@RequestBody final Banner banner) throws ServletException {
-		banner.setModDate(new Date());
-		bannerService.save(banner);
+	public ManagementResponse updateBanner(@RequestBody final Banner banner, final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			banner.setModDate(new Date());
+			bannerService.save(banner);
+		}
 		return new ManagementResponse("upsert_banner_success");
 	}
 	

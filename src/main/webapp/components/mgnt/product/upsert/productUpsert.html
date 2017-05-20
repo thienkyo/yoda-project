@@ -143,7 +143,8 @@ form .progress {
 		<div class="col-sm-5" >
 			<form name="myForm2" >
 			 	
-			      <input type="file" ngf-select ng-model="ctrl.picProduct" 
+			      <input type="file" 
+			      		 ngf-select ng-model="ctrl.picProduct" 
 			      		 name="file"    
 			             accept="image/*" ngf-max-size="2MB" 
 			             ngf-model-invalid="errorFile">
@@ -168,7 +169,6 @@ form .progress {
 			<p ng-show="ctrl.picProduct.result"> image: images/productDetail/{{ctrl.picProduct.result}}</p>
 		</div>
 	</div>
-	
 	
 	</div>
 	

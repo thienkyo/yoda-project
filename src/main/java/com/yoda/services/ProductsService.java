@@ -24,6 +24,7 @@ public interface ProductsService extends PagingAndSortingRepository<Products, In
 	public List<Products> findFirst9ByStatusOrderByModDateDesc(int status);
 	public List<Products> findByProdIdInAndStatus(List<Integer> prodIds, int status);
 	public Page<Products> findByCategoryAndStatus(Categories category, int status, Pageable pageRequest);
+	public List<Products> findByStatusAndProdNameContainingIgnoreCase(int status, String prodName);
 	
 	//mgnt
 	public List<Products> findFirst20ByOrderByProdIdDesc();

@@ -14,10 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UtilityConstant {
 	final public static int AUTHENTICATION_TIMEOUT = 60;
+	
 	final public static int ACTIVE_STATUS = 1;
 	final public static int INACTIVE_STATUS = 0;
+	
 	final public static String MEMBER_ROLE = "MEMBER";
 	final public static String ADMIN_ROLE = "ADMIN";
+	final public static String MOD_ROLE = "MOD";
 	
 	final public static int ORDER_STATUS_ORDERED = 20;
 	final public static int ORDER_STATUS_PAID = 21;
@@ -28,15 +31,30 @@ public class UtilityConstant {
 	final public static int BLOG_PAGE_SIZE = 4;
 	
 	
-	final public static ResponseEntity<String>savefile(String dir, MultipartFile uploadfile){
+	final public static ResponseEntity<String>savefile(String dir, MultipartFile uploadfile, String oldName){
     	HttpHeaders headers = new HttpHeaders();
+    	String oldFilepath = "";
     	String filename="empty";
     	String filepath = "";
       try {
     	String currentTime = new SimpleDateFormat("yyyyMMdd.HHmmss").format(new java.util.Date());  
-    	
         // Get the filename and build the local file path
          filename = currentTime+"-"+uploadfile.getOriginalFilename();
+         if(!oldName.isEmpty()){
+        	 oldFilepath = Paths.get(dir, oldName).toString();
+        	 try{
+    	        //Delete if tempFile exists
+    	        File fileTemp = new File(oldFilepath);
+    	          if (fileTemp.exists()){
+    	             fileTemp.delete();
+    	          }   
+    	      }catch(Exception e){
+    	         // if any error occurs
+    	         e.printStackTrace();
+    	      }
+         }
+         
+         
       //  String directory = env.getProperty("yoda.uploadedFiles.thumbnail");
         filepath = Paths.get(dir, filename).toString();
         

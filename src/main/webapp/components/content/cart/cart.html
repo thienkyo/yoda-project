@@ -57,6 +57,12 @@
 										 ng-change="ctrl.updateShippingFee()" 
 										 style="width: 250px;height: 40px;">
 							    </select>
+							    <div class="alert alert-success" role="alert" ng-show="ctrl.me.shipCostId == 7"
+									 style="margin: 5px 0px 0px 0px;height: 45px;width: 250px;">
+									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+									  <span class="sr-only">success:</span>
+								  		Phí ship COD sẽ được tính sau.
+								</div>
 							</td>
 							<td colspan="3">
 								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;text-align: right;">
@@ -90,6 +96,12 @@
 				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				  <span class="sr-only">Error:</span>
 					 Cần đăng nhập để đặt hàng
+				</div>
+				<div class="alert alert-danger" role="alert" ng-show="ctrl.isAddress" 
+					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
+				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				  <span class="sr-only">Error:</span>
+					 {{ctrl.isAddress}}
 				</div>
 				<div class="alert alert-success" role="alert" ng-show="ctrl.order_return_status"
 					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">

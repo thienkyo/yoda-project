@@ -18,7 +18,7 @@ angular.module('bannerModule')
 	self.uploadPic = function(file,url) {
 	    file.upload = Upload.upload({
 	      url: url,
-	      data: {username: 'testkyo', file: file},
+	      data: {oldName: self.theBanner.image, file: file},
 	      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'}
 	    });
 

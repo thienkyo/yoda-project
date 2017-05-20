@@ -91,6 +91,7 @@ function ProductDO(){
 	this.status = 1;
 	this.weight = 0.1;
 	this.category={categoryId:1};
+	this.image = '';
 }
 
 function CategoryDO(){

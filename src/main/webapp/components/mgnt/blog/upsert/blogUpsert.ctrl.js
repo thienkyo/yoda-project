@@ -12,10 +12,10 @@ angular.module('blogUpsertModule')
 	var self = this;
 	self.statusList = CommonStatusArray;
 	
-	if(!memberService.isAdmin()){
+	if(!memberService.isAdmin() && !memberService.isMod()){
 		$location.path('#/');
 	}
-	self.currentMember = memberService.getCurrentMember();
+	//self.currentMember = memberService.getCurrentMember();
 	
 	if($routeParams.articleId > 0){
 		blogUpsertService.getArticleById($routeParams.articleId)
@@ -46,10 +46,10 @@ angular.module('blogUpsertModule')
 		});
 	}
 	
-	self.uploadPic = function(file,url) {
+	self.uploadPic = function(file,url,a) {
 		    file.upload = Upload.upload({
 		      url: url,
-		      data: {username: 'testkyo', file: file},
+		      data: {oldName: a == 1 ? self.article.image : '', file: file},
 		      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'}
 		    });
 
