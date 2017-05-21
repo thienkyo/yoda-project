@@ -3,7 +3,7 @@ angular.module('blogListModule')
 	.controller('blogListController',['$rootScope','$location','memberService','blogListService','NgTableParams',
 	function($rootScope,$location,memberService,blogListService,NgTableParams) {	
 	var self = this;
-	
+	self.statusStyle = { "width": "100px" };
 	if(!memberService.isAdmin() && !memberService.isMod()){
 		$location.path('#/');
 	}
@@ -27,6 +27,18 @@ angular.module('blogListModule')
 			self.orderList = data;;
 			self.tableParams = new NgTableParams({}, { dataset: self.orderList});
 		});
+	}
+	
+	self.setStyle = function(status){
+		if(status==0){
+			self.statusStyle.color = "crimson";
+		}else if(status==1){
+			self.statusStyle.color = "blue";
+		}
+		else{
+			self.statusStyle = { "width": "100px" }
+		}
+		return self.statusStyle;
 	}
 	
 }]);

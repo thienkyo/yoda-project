@@ -32,7 +32,8 @@
 			        </td>
 			        
 			        <td title="'author'" filter="{ 'author' : 'text'}"  sortable="'author'">{{article.author}}</td>
-			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'">
+			        <td title="'view'" sortable="" style="width:60px;"><a href="#/blogDetail/{{article.articleId}}" >view</a></td>
+			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'" ng-style="ctrl.setStyle(article.status)">
 			        	{{article.status == 0 ? 'inactive' : 'active' }}
 			        </td>
 			    </tr>

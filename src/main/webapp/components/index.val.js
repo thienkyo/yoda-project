@@ -32,6 +32,7 @@ function OrderDO () {
 	this.discount = 0;
 	this.modDate = (new Date()).getTime();
 	this.shipCostFee = 0;
+	this.shipCostId = 7;
 	this.member = null;
 	this.orderDetails = [];
 }

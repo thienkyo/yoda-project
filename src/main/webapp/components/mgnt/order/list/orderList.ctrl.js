@@ -2,8 +2,8 @@
 angular.module('orderListModule')
 	.controller('orderListController',['$rootScope','$routeParams','$location',
 										 'memberService','orderListService',
-										 'NgTableParams','OrderStatusArray',
-	function($rootScope, $routeParams,$location,memberService,orderListService,NgTableParams,OrderStatusArray) {	
+										 'NgTableParams','OrderStatusArray','cartService',
+	function($rootScope, $routeParams,$location,memberService,orderListService,NgTableParams,OrderStatusArray,cartService) {	
 	var self = this;
 	self.orderList = [];
 	self.OrderStatusArray=OrderStatusArray;
@@ -17,14 +17,16 @@ angular.module('orderListModule')
 	if(!memberService.isAdmin()){
 		$location.path('#/');
 	}
-	self.currentMember = memberService.getCurrentMember();
+//	self.currentMember = memberService.getCurrentMember();
 	
 	self.amountList=[
 		{name : '20', value:20 },
 		{name : 'all', value:0 }
 	];
-	
 	self.amount = 20;
+	cartService.getShipCost().then(function (response) {
+        self.shipCostList = response;
+	});
 	
 	orderListService.getOrdersForMgnt(self.amount).then(function (data) {
 		self.orderList = data;
@@ -32,7 +34,7 @@ angular.module('orderListModule')
 		engineerOrderList();
 		self.tableParams = new NgTableParams({}, { dataset: self.orderList});
 	});
-	
+/*	
 	 function calculateTotal(order){
 		var total = 0;
 		for(var k = 0; k < order.orderDetails.length; k++){
@@ -41,7 +43,7 @@ angular.module('orderListModule')
 		total += order.shipCostFee;
 		return total;
 	}
-	 
+*/	 
 	self.getOrderStatusName = function(value){
 		for(var k = 0; k < OrderStatusArray.length; k++){
 			if(OrderStatusArray[k].value == value){
@@ -88,10 +90,11 @@ angular.module('orderListModule')
 		self.theOrder = order;
 		
 		self.theOrder.subTotal = 0;
+		self.weight = 0;
 		for (var i = 0; i < self.theOrder.orderDetails.length; i++){
+			self.weight += self.theOrder.orderDetails[i].weight*self.theOrder.orderDetails[i].quantity;
 			self.theOrder.subTotal += self.theOrder.orderDetails[i].priceAtThatTime*self.theOrder.orderDetails[i].quantity;
 		}
-		//self.theOrder.total = self.theOrder.subTotal + self.theOrder.shipCostFee; 
 	}
 	
 	self.deleteOrder = function(order){

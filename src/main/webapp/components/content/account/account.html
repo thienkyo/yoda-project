@@ -113,7 +113,11 @@
 								
 							</td>
 							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
-								
+								<select  ng-model="ctrl.theOrder.shipCostId" 
+										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
+										 ng-change="ctrl.updateShippingFee()" 
+										 style="width: 250px;height: 40px;">
+							    </select>
 							</td>
 							<td colspan="3">
 								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;text-align: right;">

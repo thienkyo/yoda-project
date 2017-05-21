@@ -13,7 +13,6 @@ angular.module('cartModule')
 		self.order = new OrderDO;
 		self.orderdetail = [];
 		self.order_one_time_trigger = true;
-	
 /////get ship list		
 		var tempShipCost = {
 				distance : "",
@@ -78,6 +77,7 @@ angular.module('cartModule')
 				}
 				self.order.orderDetails = OrderDetailList;
 				self.order.shippingAddress = self.me.address;
+				self.order.shipCostId = self.me.shipCostId;
 				self.isShow = false;
 				self.isAddress = false;
 				if(self.me.address &&  self.order.shipCostId != 0){
@@ -109,7 +109,6 @@ angular.module('cartModule')
 			for (var i = 0; i < self.currentCart.length; i++){
 				w += self.currentCart[i].prod.weight*self.currentCart[i].quantity;
 			}
-			w = Math.round(w*100)/100;
 			self.order.shipCostFee = w*shipBaseFee;
 			self.order.shipCostFee = (self.order.shipCostFee < 20000 && self.me.shipCostId != 7) ?  25000 : self.order.shipCostFee ;
 			self.total = self.order.shipCostFee + self.subTotal;

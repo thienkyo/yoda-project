@@ -37,7 +37,8 @@
 			        <td title="'price'" filter="{ price : 'number'}" sortable="'price'" style="text-align: right;">{{prod.price | number:0}}</td>
 			        <td title="'quantity'" filter="{ quantity : 'number'}" sortable="'quantity'">{{prod.quantity}}</td>
 			        <td title="'weight'" filter="{ weight : 'number'}" sortable="'weight'">{{prod.weight | number:1}}</td>
-			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'">{{prod.status == 0 ? 'inactive' : 'active' }}</td>
+			        <td title="'view'" sortable="" style="width:60px;"><a href="#/productDetail/{{prod.prodId}}" >view</a></td>
+			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'" ng-style="ctrl.setStyle(prod.status)">{{prod.status == 0 ? 'inactive' : 'active' }}</td>
 			    </tr>
 			</table>
         </div>

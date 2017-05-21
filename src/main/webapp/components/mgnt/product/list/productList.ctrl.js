@@ -5,7 +5,7 @@ angular.module('productListModule')
 										 'NgTableParams','categoryService',
 	function($rootScope,$location,memberService,productListService,NgTableParams,categoryService) {	
 	var self = this;
-	
+	self.statusStyle = { "width": "100px" };
 	if(!memberService.isAdmin()){
 		$location.path('#/');
 	}
@@ -39,5 +39,16 @@ angular.module('productListModule')
 		});
 	}
 	
+	self.setStyle = function(status){
+		if(status==0){
+			self.statusStyle.color = "crimson";
+		}else if(status==1){
+			self.statusStyle.color = "blue";
+		}
+		else{
+			self.statusStyle = { "width": "100px" }
+		}
+		return self.statusStyle;
+	}
 	
 }]);

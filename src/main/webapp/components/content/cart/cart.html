@@ -25,7 +25,7 @@
 								<h4><a href="#/productDetail/{{item.prod.prodId}}">{{item.prod.prodName}}</a></h4>
 								<p>Web ID: {{("000"+item.prod.prodId).slice(-4)}}</p>
 							</td>
-							<td class="cart_price" style="text-align: right;padding-right: 80px;">
+							<td class="cart_price" style="text-align: right; padding-right: 80px;">
 								<p>{{item.prod.price | number:0}} đ</p>
 							</td> <!-- value="{{item.quantity}}" -->
 							<td class="cart_quantity" style="text-align: right;">
@@ -70,7 +70,6 @@
 										<td>Cart Sub Total</td>
 										<td>{{ctrl.subTotal | number:0}} đ</td>
 									</tr>
-									
 									<tr class="shipping-cost">
 										<td>Shipping Cost</td>
 										<td>{{ctrl.order.shipCostFee | number:0}} đ</td>										

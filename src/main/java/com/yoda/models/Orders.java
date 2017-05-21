@@ -53,6 +53,9 @@ public class Orders {
 	@Column(nullable=false, columnDefinition = "INT(8) UNSIGNED")
 	private int shipCostFee;
 	
+	@Column(columnDefinition = "INT(3) UNSIGNED")
+	private int shipCostId;
+	
 //	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "memberId")
@@ -153,11 +156,19 @@ public class Orders {
 		this.orderDetails = orderDetails;
 	}
 
+	public int getShipCostId() {
+		return shipCostId;
+	}
+
+	public void setShipCostId(int shipCostId) {
+		this.shipCostId = shipCostId;
+	}
+
 	@Override
 	public String toString() {
 		return "Orders [orderId=" + orderId + ", shippingAddress=" + shippingAddress + ", description=" + description
 				+ ", status=" + status + ", discount=" + discount + ", modDate=" + modDate + ", shipCostFee="
-				+ shipCostFee +  ", orderDetails=" + orderDetails
+				+ shipCostFee + ", shipCostId=" + shipCostId + ", member=" + member + ", orderDetails=" + orderDetails
 				+ "]";
 	}
 

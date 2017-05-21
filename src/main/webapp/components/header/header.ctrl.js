@@ -23,7 +23,6 @@ angular.module('app')
     }
 	
 	self.querySearch = function(searchText){
-		console.log(searchText);
 		if(searchText){
 			var url = "search/"+searchText;
 			return ajaxService.get(url,null,{}).then(function(response){
