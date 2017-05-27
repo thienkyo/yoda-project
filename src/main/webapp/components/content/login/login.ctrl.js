@@ -11,7 +11,8 @@ angular.module('loginModule')
     
 	self.login = function() {
 		if(self.credential.email && self.credential.pass){
-            loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(token) {	
+           // loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(token) {
+			loginService.login2({loginStr: btoa(self.credential.email + '--' + btoa(self.credential.pass))}).then(function(token) {
             	self.member.token =  'sheep ' + token;
             	var arr = token.split('.');
             	var decodedString = atob(arr[1]);
@@ -24,7 +25,8 @@ angular.module('loginModule')
                 $location.path('#/');
             },
             function(error){
-            	self.loginError = error.data.message;
+            	//self.loginError = error.data.message;
+            	self.loginError = 'invalid login';
             });
 		}else{
 			self.loginError = 'email và pass không được để trống';

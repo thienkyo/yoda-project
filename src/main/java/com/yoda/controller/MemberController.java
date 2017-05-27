@@ -2,6 +2,7 @@ package com.yoda.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class MemberController {
 	@Autowired private MemberService memService;
 	@Autowired private MemberRoleService memberRoleService;
 	
-		
+/*		
 	@RequestMapping(value = "login", method = RequestMethod.POST)
     public LoginResponse login(@RequestBody final MemberLogin login) throws ServletException, UnsupportedEncodingException {
 		Members mem =memService.findByEmailAndPassAndStatus(login.email, login.pass, 1);
@@ -47,6 +48,33 @@ public class MemberController {
         
         return new LoginResponse(Jwts.builder()
         		.setSubject(login.email)
+        		.claim("roles", rolelist)
+        		.claim("name", mem.getFullName())
+        		.setIssuedAt(new Date())
+        		.setExpiration(new Date(System.currentTimeMillis()+ UtilityConstant.AUTHENTICATION_TIMEOUT*60*1000))
+        		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
+        		.compact());
+    }*/
+	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+    public LoginResponse login(@RequestBody final LoginRequest login) throws ServletException, UnsupportedEncodingException {
+		String decoded = new String(Base64.getDecoder().decode(login.loginStr));
+		String[] parts = decoded.split("--");
+		
+		Members mem =memService.findByEmailAndPassAndStatus(parts[0].toString(), parts[1].toString(), 1);
+        if (parts[0].isEmpty() || mem == null) {
+            throw new ServletException("Invalid login");
+        }
+        
+        List<MemberRole> mr = memberRoleService.findByEmail(parts[0]);
+        
+        List<String> rolelist = new ArrayList<String>(); 
+        for(MemberRole r : mr ){
+        	rolelist.add(r.getRole());
+        }
+        
+        return new LoginResponse(Jwts.builder()
+        		.setSubject(parts[0])
         		.claim("roles", rolelist)
         		.claim("name", mem.getFullName())
         		.setIssuedAt(new Date())
@@ -81,6 +109,11 @@ public class MemberController {
         public LoginResponse(final String token) {
             this.token = token;
         }
+    }
+    
+    @SuppressWarnings("unused")
+    private static class LoginRequest {
+    	public String loginStr;
     }
 /*
     @SuppressWarnings("unused")

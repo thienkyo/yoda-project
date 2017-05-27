@@ -22,5 +22,6 @@ angular.module('app', [
 		'blogListModule',
 		'blogUpsertModule',
 		'bannerModule',
-		'ui.tinymce'
+		'ui.tinymce',
+		'memberListModule'
 ]);

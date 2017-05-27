@@ -90,6 +90,11 @@ angular.module('app')
             controller: 'bannerController',
             controllerAs:'ctrl'
         })
+         .when('/mgnt/member',{
+            templateUrl: 'components/mgnt/member/list/memberList.html',
+            controller: 'memberListController',
+            controllerAs:'ctrl'
+        })
         .otherwise(
             { redirectTo: '/'}
         );

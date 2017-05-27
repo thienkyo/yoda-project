@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ public class ManagementController {
 	@Autowired private OrdersService orderService;
 	@Autowired private ArticleService articleService;
 	@Autowired private BannerService bannerService;
+	@Autowired private MemberService memberService;
 	@Autowired private Environment env;
 	
 //////////////////////////product section///////////////////////
@@ -278,6 +280,41 @@ public class ManagementController {
 		return new ManagementResponse("upsert_banner_success");
 	}
 	
+	
+//////////////////////////////Member section/////////////////////////////	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "getMemberForMgnt/{amount}", method = RequestMethod.GET)
+	public List<Members> getMemberForMgnt(@PathVariable final int amount, final HttpServletRequest request) throws ServletException {
+		List<Members> memberList = new ArrayList<Members>();
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			if(amount==20){
+				memberList =  memberService.findFirst20ByOrderByMemberIdDesc();
+			}else{
+				memberList = memberService.findAllByOrderByMemberIdDesc();
+			}
+		}
+		return memberList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "upsertMember", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, 
+	produces = MediaType.APPLICATION_JSON_VALUE)
+	public ManagementResponse updateMe(@RequestBody final Members member,final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			Members m = memberService.findByEmail(member.getEmail());
+			if (m == null) {
+	            throw new ServletException("email_not_exist");
+	        }
+			
+			m.setStatus(member.getStatus());
+			memberService.save(m);
+			return new ManagementResponse("update_member_success");
+		}else{
+			return new ManagementResponse("no_right_in_admin");
+		}
+	}
 /////////////////////////////////////////////////////////////////////////
 	
 	

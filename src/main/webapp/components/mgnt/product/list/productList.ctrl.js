@@ -9,7 +9,6 @@ angular.module('productListModule')
 	if(!memberService.isAdmin()){
 		$location.path('#/');
 	}
-//	self.currentMember = memberService.getCurrentMember();
 	
 	self.categories =[];
 	var cateTemp = {categoryId:0,categoryName:'all'}

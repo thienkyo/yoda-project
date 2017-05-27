@@ -12,7 +12,7 @@ angular.module('productUpsertModule')
 	var self = this;
 	self.statusList = CommonStatusArray;
 	
-	categoryService.getActiveCategories()
+	categoryService.getAllCategories()
 	.then(function (data) {
 			self.categories = data;
 	});
@@ -20,13 +20,6 @@ angular.module('productUpsertModule')
 	if(!memberService.isAdmin()){
 		$location.path('#/');
 	}
-//	self.currentMember = memberService.getCurrentMember();
-/*	
-	if(!self.currentMember || self.currentMember.roles.indexOf("ADMIN") == -1){
-		$location.path('#/');
-	}
-*/	
-	
 	
 	if($routeParams.prodId > 0){
 		productUpsertService.getProductById($routeParams.prodId)
@@ -39,6 +32,7 @@ angular.module('productUpsertModule')
 	}
 	
 	self.upsert = function(){
+		self.responseStr = false;
 		if(self.picFile){
 			if(self.picFile.result){
 				self.product.image = self.picFile.result;
