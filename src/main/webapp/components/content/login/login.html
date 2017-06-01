@@ -27,10 +27,10 @@
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Sign up!</h2>
 						<form ng-submit="ctrl.signup()">
-							<input type="text" placeholder="tên" ng-model="ctrl.newMember.fullName"/>
-							<input type="text" placeholder="số điện thoại" ng-model="ctrl.newMember.phone"/>
-							<input type="email" placeholder="email" ng-model="ctrl.newMember.email"/>
-							<input type="password" placeholder="password" ng-model="ctrl.newMember.pass"/>
+							<input type="text" placeholder="tên" ng-model="ctrl.newMember.fullName" maxlength="25"/>
+							<input type="text" placeholder="số điện thoại" ng-model="ctrl.newMember.phone" maxlength="12"/>
+							<input type="email" placeholder="email" ng-model="ctrl.newMember.email" maxlength="25"/>
+							<input type="password" placeholder="password" ng-model="ctrl.newMember.pass"  maxlength="15" size="15"/>
 							<button type="submit" class="btn btn-default">Sign up</button>
 						</form>
 						<div class="alert alert-danger" role="alert" ng-show="ctrl.signUpError" style="margin-top:10px">

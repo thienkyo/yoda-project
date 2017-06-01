@@ -11,8 +11,7 @@ angular.module('loginModule')
     
 	self.login = function() {
 		if(self.credential.email && self.credential.pass){
-           // loginService.login({email:self.credential.email,pass:btoa(self.credential.pass)}).then(function(token) {
-			loginService.login2({loginStr: btoa(self.credential.email + '--' + btoa(self.credential.pass))}).then(function(token) {
+			loginService.login2({loginStr: memberService.makeLoginStr(self.credential.email,btoa(self.credential.pass))}).then(function(token) {
             	self.member.token =  'sheep ' + token;
             	var arr = token.split('.');
             	var decodedString = atob(arr[1]);
@@ -33,11 +32,13 @@ angular.module('loginModule')
 		}     
     }
 	
-	
+	//console.log(memberService.makeSignupStr('thienkyo@gmail.com',btoa('123456ltt'),'member two','0909090990'));
 	self.signup = function(){
 		if(self.newMember.email && self.newMember.fullName && self.newMember.pass && self.newMember.phone){
-			self.newMember.pass = btoa(self.newMember.pass);
-			loginService.signup(self.newMember).then(function(replyStr) {	
+			//self.newMember.pass = btoa(self.thePass);
+			
+			//loginService.signup(self.newMember).then(function(replyStr) {
+			loginService.signup2({signupStr: memberService.makeLoginStr(self.newMember.email,btoa(self.newMember.pass)), fullName:self.newMember.fullName, phone:self.newMember.phone}).then(function(replyStr) {	
 				self.reset();
 				self.showAlert();
             },

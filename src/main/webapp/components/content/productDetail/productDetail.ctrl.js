@@ -1,7 +1,7 @@
 'use strict';
 angular.module('productDetailModule')
-	.controller('productDetailController',['$scope','$routeParams','productDetailService','cartService','memberService','$sce',
-	function($scope, $routeParams, productDetailService,cartService,memberService,$sce) {
+	.controller('productDetailController',['$rootScope','$routeParams','productDetailService','cartService','memberService','$sce',
+	function($rootScope, $routeParams, productDetailService,cartService,memberService,$sce) {
 	
 	var self = this;
 	self.qty = 1;
@@ -11,7 +11,8 @@ angular.module('productDetailModule')
 		.then(function (response) {
 			self.product = response;
 			self.product.description=$sce.trustAsHtml(self.product.description);
-	        self.test = response;
+	     //   self.test = response;
+	        $rootScope.$broadcast('productNameBC', self.product);//self.product.prodName
 	});
 	
 	self.addToCart = function(prod){

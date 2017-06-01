@@ -4,7 +4,8 @@ angular.module('loginModule')
 		var loginService = {
 			login : login,
 			login2 : login2,
-			signup : signup
+			signup : signup,
+			signup2 : signup2
 			};
 	return loginService;
 	
@@ -25,6 +26,14 @@ angular.module('loginModule')
 	function signup(newMember){
 		var url = "members/add";
 		return ajaxService.post(url,newMember,null,{}).then(function(response){
+			return response.data.replyStr;
+		});
+
+	}
+	
+	function signup2(signupRequest){
+		var url = "members/add";
+		return ajaxService.post(url,signupRequest,null,{}).then(function(response){
 			return response.data.replyStr;
 		});
 

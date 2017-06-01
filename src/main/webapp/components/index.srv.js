@@ -5,6 +5,8 @@ angular.module('app')
 	var memberService = {
 		setCurrentMember : setCurrentMember,
 		getCurrentMember : getCurrentMember,
+		makeLoginStr : makeLoginStr,
+	//	makeSignupStr : makeSignupStr,
 		isLogin : isLogin,
 		isAdmin :isAdmin,
 		isMod : isMod
@@ -48,6 +50,60 @@ angular.module('app')
 		}
 		return false;
 	}
+	
+	function makeLoginStr(email,pass){
+		var deli = 'd3m';
+		var result = randomString(getRandomArbitrary(10,20)) + deli;
+		
+		for(var i = 0; i < 2; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		result += email +deli;
+		
+		for(var i = 0; i < 10; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		
+		result += pass + deli;
+		for(var i = 0; i < 10; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		result += randomString(getRandomArbitrary(10,20));
+		console.log(result);
+		return btoa(result);
+	}
+	
+	function makeSignupStr(email,pass,fullName,phone){
+		var deli = 'o3k';
+		var result = randomString(getRandomArbitrary(10,20)) + deli;
+		
+		for(var i = 0; i < 2; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		result += email +deli;
+		
+		for(var i = 0; i < 10; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		
+		result += pass + deli;
+		for(var i = 0; i < 8; i++){
+			result += randomString(getRandomArbitrary(10,20)) +deli;
+		}
+		result += phone;
+		console.log(result);
+		return btoa(result) +deli+ fullName;
+	}
+	
+	function randomString(length, chars) {
+		var chars = '012456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var result = '';
+        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    }
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 
 }])
 .factory('cartStoreService',['store', function(store) {
