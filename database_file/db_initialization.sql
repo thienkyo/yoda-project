@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Categories
 (
   categoryID INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   categoryName VARCHAR(250) NOT NULL,
-  status INT(2);
+  status INT(2),
   mod_date TIMESTAMP
 );
 
@@ -64,4 +64,39 @@ CREATE TABLE IF NOT EXISTS OrderDetails
   FOREIGN KEY fk_prod(prodID) REFERENCES Products(prodID)
   ON UPDATE CASCADE
   ON DELETE RESTRICT
-)
+);
+
+CREATE TABLE IF NOT EXISTS `ShipCost` (
+ `ship_cost_id` INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ `distance` INT(3) NOT NULL,
+ `price` decimal(10,0) NOT NULL,
+ `region` varchar(1000) COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `MemberRole` (
+ `id` INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ `email` varchar(1000)  NOT NULL,
+ `role` varchar(1000) NOT NULL,
+ `member_id` INT(6)  NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `Banner` (
+ `banner_id` INT(4) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ `banner_name` VARCHAR(150) NOT NULL ,
+ `description` VARCHAR(1000) NOT NULL ,
+ `image` VARCHAR(100) NOT NULL ,
+ `link` VARCHAR(100) NOT NULL ,
+ `mod_date` DATE NOT NULL ,
+  `status` INT(1) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `Article` (
+ `article_id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ `article_name` VARCHAR(200) NOT NULL ,
+ `author` VARCHAR(30) NOT NULL ,
+ `content` TEXT NOT NULL ,
+ `description` VARCHAR(1000) NOT NULL ,
+ `image` VARCHAR(100) NOT NULL ,
+ `mod_date` TIMESTAMP NOT NULL ,
+ `status` INT(2) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_520_ci;
