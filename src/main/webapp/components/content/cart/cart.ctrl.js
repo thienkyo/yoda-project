@@ -2,7 +2,7 @@
 angular.module('cartModule')
 	.controller('cartController', ['$rootScope','cartService','cartStoreService',
 								   'memberService','accountService','OrderDO',
-								   'OrderDetailDO',
+								   'OrderDetailDO','MemberDO',
 	function($rootScope, cartService,cartStoreService,memberService,accountService,OrderDO,OrderDetailDO) {
 		var self = this;
 		self.isShow = false;
@@ -11,6 +11,7 @@ angular.module('cartModule')
 		self.subTotal = 0;
 		self.total = 0;
 		self.order = new OrderDO;
+		self.guest = new MemberDO;
 		self.orderdetail = [];
 		self.order_one_time_trigger = true;
 /////get ship list		
@@ -35,14 +36,17 @@ angular.module('cartModule')
 			self.updateTotal();
 		},
 		function(error){
-			self.isShow = true;
+			//self.isShow = true;
+			self.isShow = false;
+			self.me = self.guest;
+            self.order.member = self.guest;
 		});
 		
 		if(self.currentCart.length > 0){
 			for (var i = 0; i < self.currentCart.length; i++){
 				self.subTotal += self.currentCart[i].prod.price*self.currentCart[i].quantity;
 			}
-		}	
+		}
 		
 		self.removeItem = function(index){
 			self.currentCart.splice(index, 1);
@@ -63,7 +67,7 @@ angular.module('cartModule')
 		
 		self.placeOrder = function(){
 			self.isShow = !memberService.isLogin();
-			if(!self.isShow && self.order_one_time_trigger && self.currentCart.length > 0){
+			if(self.order_one_time_trigger && self.currentCart.length > 0){
 				var OrderDetailList = [];
 				
 				for (var i = 0; i < self.currentCart.length; i++){

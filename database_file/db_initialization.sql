@@ -2,8 +2,8 @@ use yodaDB;
 
 CREATE TABLE IF NOT EXISTS Members
 (
-  memberID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  fullName VARCHAR(250) NOT NULL,
+  member_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  full_name VARCHAR(250) NOT NULL,
   email VARCHAR(200),
   pass VARCHAR(3000),
   phone VARCHAR(20),
@@ -17,51 +17,51 @@ CREATE TABLE IF NOT EXISTS Members
 
 CREATE TABLE IF NOT EXISTS Categories
 (
-  categoryID INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  categoryName VARCHAR(250) NOT NULL,
+  category_id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  category_name VARCHAR(250) NOT NULL,
   status INT(2),
   mod_date TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS Products
 (
-    prodID INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    prodName VARCHAR(250) NOT NULL,
+    prod_id INT(6) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    prod_name VARCHAR(250) NOT NULL,
     description TEXT,
     notification VARCHAR(500),
     price DECIMAL(10,2),
     amount SMALLINT,
     image VARCHAR(200),
-    categoryID INT(3) UNSIGNED ,
+    category_id INT(3) UNSIGNED ,
     mod_date TIMESTAMP,
-    FOREIGN KEY fk_cat(categoryID) REFERENCES Categories(categoryID)
+    FOREIGN KEY fk_cat(category_id) REFERENCES Categories(category_id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS Orders
 (
-  orderID INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  memberID INT(6) UNSIGNED,
-  shippingAddress VARCHAR(2000),
+  order_id INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  member_id INT(6) UNSIGNED,
+  shipping_address VARCHAR(2000),
   des VARCHAR(2000),
   status VARCHAR(10),
   discount TINYINT,
   mod_date TIMESTAMP,
-  FOREIGN KEY fk_mem(memberID) REFERENCES Members(memberID)
+  FOREIGN KEY fk_mem(member_id) REFERENCES Members(member_id)
   ON UPDATE CASCADE
   ON DELETE RESTRICT
 );
 
-CREATE TABLE IF NOT EXISTS OrderDetails
+CREATE TABLE IF NOT EXISTS Order_details
 (
-  orderID INT(7) UNSIGNED ,
-  prodID INT(6) UNSIGNED,
+  order_id INT(7) UNSIGNED ,
+  prod_id INT(6) UNSIGNED,
   amount int(4),
-  priceAtThatTime DECIMAL(10,2),
+  price_at_that_time DECIMAL(10,2),
   mod_date TIMESTAMP,
-  FOREIGN KEY fk_order(orderID) REFERENCES Orders(orderID),
-  FOREIGN KEY fk_prod(prodID) REFERENCES Products(prodID)
+  FOREIGN KEY fk_order(order_id) REFERENCES Orders(order_id),
+  FOREIGN KEY fk_prod(prod_id) REFERENCES Products(prod_id)
   ON UPDATE CASCADE
   ON DELETE RESTRICT
 );

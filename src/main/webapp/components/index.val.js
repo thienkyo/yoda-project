@@ -61,6 +61,7 @@ function MemberDO () {
 	this.address  = '';
 	this.postCode = '';
 	this.status   = 1;
+	this.shipCostId=0;
 	this.modDate = (new Date()).getTime();
 	
 		this.clear = function() { 

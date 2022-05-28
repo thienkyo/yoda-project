@@ -88,7 +88,8 @@ public class ProductsController {
 	
 	@RequestMapping(value = "getProductPage/{cateId}/{pageNumber}", method = RequestMethod.GET)
 	public Page<Products> getProductPage(@PathVariable Integer cateId, @PathVariable Integer pageNumber) {
-        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PRODUCT_PAGE_SIZE, Sort.Direction.DESC, "ProdId");
+        //Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.PRODUCT_PAGE_SIZE, Sort.Direction.DESC, "ProdId");
+        Pageable request = PageRequest.of(pageNumber - 1, UtilityConstant.PRODUCT_PAGE_SIZE, Sort.Direction.DESC, "ProdId");
         Categories cate = new Categories(cateId);
         return prodRepo.findByCategoryAndStatus(cate, UtilityConstant.ACTIVE_STATUS, request);
     }

@@ -35,7 +35,8 @@ public class ArticleController {
 	
 	@RequestMapping(value = "getArticlePage/{pageNumber}", method = RequestMethod.GET)
 	public Page<Article> getArticlePage(@PathVariable Integer pageNumber) {
-        Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.BLOG_PAGE_SIZE, Sort.Direction.DESC, "articleId");
+        //Pageable request = new PageRequest(pageNumber - 1, UtilityConstant.BLOG_PAGE_SIZE, Sort.Direction.DESC, "articleId");
+        Pageable request = PageRequest.of(pageNumber - 1, UtilityConstant.BLOG_PAGE_SIZE, Sort.Direction.DESC, "articleId");
         return articleRepo.findByStatus(UtilityConstant.ACTIVE_STATUS, request);
     }
 	

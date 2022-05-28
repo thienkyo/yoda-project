@@ -168,7 +168,8 @@ public class ManagementController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "updateOrderStatus/{orderId}/{status}", method = RequestMethod.GET)
 	public ManagementResponse updateOrderStatus(@PathVariable final int orderId, @PathVariable final int status, final HttpServletRequest request) throws ServletException {
-		Orders order = orderService.findOne(orderId);
+	//	Orders order = orderService.findOne(orderId);
+		Orders order = orderService.findById(orderId).orElse(null);
 		List<Products> products = new ArrayList<>();
 		final Claims claims = (Claims) request.getAttribute("claims");
 		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
@@ -182,7 +183,8 @@ public class ManagementController {
 				
 				products.add(prod);
 			}
-			productService.save(products);
+		//	productService.save(products);
+			productService.saveAll(products);
 			order.setStatus(status);
 			orderService.save(order);
 		}
