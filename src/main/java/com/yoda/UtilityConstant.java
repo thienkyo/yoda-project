@@ -3,8 +3,14 @@ package com.yoda;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -75,4 +81,64 @@ public class UtilityConstant {
       
       return new  ResponseEntity<>(filename,headers,HttpStatus.OK);
     }
+
+	final public static ResponseEntity<String> saveMultipleFile(String dir, List<MultipartFile> uploadfiles, String oldNames, String phone, String orderId) {
+		HttpHeaders headers = new HttpHeaders();
+		String oldFilepath = "";
+		StringBuilder fileNameStr = new StringBuilder();
+
+		try {
+		//	fileNames = new ArrayList<>();
+			DateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss");
+			df.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+			//	String currentTime = df.format(new java.util.Date());
+
+
+			// read and write the file to the local folder
+			uploadfiles.stream().forEach(file -> {
+				byte[] bytes = new byte[0];
+				try {
+					bytes = file.getBytes();
+					String currentTime = df.format(new java.util.Date());
+					String filename = orderId+"_"+phone+"_"+currentTime+"_"+file.getOriginalFilename();
+					String filepath = Paths.get(dir, filename).toString();
+					Files.write(Paths.get(filepath), bytes);
+					if(fileNameStr.toString().isEmpty()){
+						fileNameStr.append(filename);
+					}else{
+						fileNameStr.append("|"+filename);
+					}
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
+
+			if (!oldNames.isEmpty()) {
+				// String[] parts = oldNames.split("|");
+				List<String> oldNameList = Arrays.asList(oldNames.split("\\|"));
+				for (String oldName: oldNameList ) {
+					oldFilepath = Paths.get(dir, oldName).toString();
+					try {
+						//Delete if tempFile exists
+						File fileTemp = new File(oldFilepath);
+						if (fileTemp.exists()) {
+							fileTemp.delete();
+						}
+					} catch (Exception e) {
+						// if any error occurs
+						e.printStackTrace();
+					}
+				}
+			}
+
+			headers.add("newName", fileNameStr.toString());
+			//headers.add("imageDir", filepath);
+			headers.setContentType(MediaType.TEXT_PLAIN);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>(fileNameStr.toString(), headers, HttpStatus.OK);
+	}
 }

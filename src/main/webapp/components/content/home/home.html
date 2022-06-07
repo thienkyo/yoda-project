@@ -4,13 +4,12 @@
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="1"></li>
-							<li data-target="#slider-carousel" data-slide-to="2"></li>
+							<li data-target="#slider-carousel" data-slide-to="{{$index}}" class="{{!$index ? 'active' : ''}}"
+								ng-repeat="banner in ctrl.banners"></li>
 						</ol>
 
 						<div class="carousel-inner">
-							<div class="item {{banner.bannerId == 1 ? 'active' : ''}}" ng-repeat="banner in ctrl.banners">
+							<div class="item {{!$index ? 'active' : ''}}" ng-repeat="banner in ctrl.banners">
 								<div class="col-sm-6">
 									<h1><span>KYO</span>-SHOP</h1>
 									<h2>{{banner.bannerName}}</h2>

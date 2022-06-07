@@ -6,7 +6,8 @@ angular.module('cartModule')
 			getProductForCart : getProductForCart,
 			addToCart : addToCart,
 			placeOrder : placeOrder,
-			getShipCost : getShipCost
+			getShipCost : getShipCost,
+			placeGuestOrder : placeGuestOrder
 		};
 	return cartService;
 /*	
@@ -56,6 +57,13 @@ angular.module('cartModule')
 			return response.data;
 	   });
    }
+
+   function placeGuestOrder(order){
+   	   var url = "guest/saveOrder";
+   	   return ajaxService.post(url,order,{}).then(function(response){
+   			return response.data;
+   	   });
+      }
    
    function getShipCost(){
 		var url = "shipcost";

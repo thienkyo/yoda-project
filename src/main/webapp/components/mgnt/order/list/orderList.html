@@ -33,17 +33,13 @@
 			        <td title="'id'" filter="{ 'orderId': 'number'}" sortable="'orderId'" style="width:100px;text-align: center;">
 			        	<a href="" ng-click="ctrl.showOrderDetail(order)">{{order.orderId}}</a>
 			        </td>
-			        
 			        <td title="'Date'" sortable="'modDate'" style="width:300px;">
 			        	<a href="" ng-click="ctrl.showOrderDetail(order)">{{order.modDate | date:"dd-MM-yyyy  HH:mm:ss"}}</a>
 			        </td>
-			        <td title="'total'" filter="{ 'total' : 'text'}" sortable="'total'" style="text-align: right;">
-			        	{{order.total | number }}đ 
-			        </td>
-			        <td title="'email'" filter="{ 'member.email' : 'text'}"  sortable="'member.email'">{{order.member.email}}</td>
-			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'" ng-style="ctrl.setStyle(order.status)">
-			        	{{ctrl.getOrderStatusName(order.status)}}
-			        </td>
+			        <td title="'total'" filter="{ 'total' : 'text'}" sortable="'total'" style="text-align: right;">{{order.total | number }}đ</td>
+			        <td title="'phone'" filter="{ 'shippingPhoneNumber' : 'text'}"  sortable="'shippingPhoneNumber'">{{order.shippingPhoneNumber}}</td>
+					<td title="'name'" filter="{ 'shippingName' : 'text'}"  sortable="'shippingName'">{{order.shippingName}}</td>
+			        <td title="'status'" filter="{ 'status' : 'text'}" sortable="'status'" ng-style="ctrl.setStyle(order.status)">{{ctrl.getOrderStatusName(order.status)}}</td>
 			    </tr>
 			</table>
         </div>
@@ -90,7 +86,12 @@
 							</td>
 							<td class="cart_description" style="padding-left: 40px;">
 								<h4><a href="#/productDetail/{{item.product.prodId}}">{{item.product.prodName}}</a></h4>
-								<p>Web ID: {{item.product.prodId}}</p>
+								<p>Prod ID: {{item.product.prodId}}</p>
+
+								<img ng-repeat="one in item.imageNames.split('|')" ng-show="item.imageNames"
+									 ng-src="images/eachProductImageOrder/{{one}}"
+									 style="width: 50px;vertical-align: bottom;padding-right: 5px;"/>
+
 							</td>
 							<td class="cart_price" style="text-align: right; padding-right: 80px;">
 								<p>{{item.priceAtThatTime | number:0}} đ</p>
@@ -114,8 +115,14 @@
 								<select  ng-model="ctrl.theOrder.shipCostId" 
 										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
 										 
-										 style="width: 250px;height: 40px;">
+										 style="width: 395px;height: 40px;">
 							    </select>
+								<div style="margin: 5px 0px 0px 0px;width: 400px;">
+									<textarea name="message"  placeholder="tên"
+											  rows="1" style="margin-top: 5px;height: 40px; width: 225px;margin-right: 5px;padding-top: 8px;" ng-model="ctrl.theOrder.shippingName" ng-cloak ></textarea>
+									<textarea name="message"  placeholder="Số điện thoại"
+											  rows="1" style="margin-top: 5px;height: 40px;width: 160px;padding-top: 8px;" ng-model="ctrl.theOrder.shippingPhoneNumber" ng-cloak ></textarea>
+								</div>
 							</td>
 							<td colspan="3">
 								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;text-align: right;">

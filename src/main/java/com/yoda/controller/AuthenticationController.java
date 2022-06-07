@@ -51,11 +51,13 @@ public class AuthenticationController {
 	produces = MediaType.APPLICATION_JSON_VALUE)
 	public AuthenticationResponse saveOrder(@RequestBody final Orders order,final HttpServletRequest request) throws ServletException {
 		final Claims claims = (Claims) request.getAttribute("claims");
+		Orders or = null;
 		if(((List<String>) claims.get("roles")).contains(UtilityConstant.MEMBER_ROLE)){
-			Orders or = orderService.save(order);
+			 or = orderService.save(order);
 		}
+		String id = or == null ? "save_order_fail": or.getOrderId()+"";
 		
-		return new AuthenticationResponse("order_success");
+		return new AuthenticationResponse(id);
 	}
 	
 	@SuppressWarnings("unchecked")

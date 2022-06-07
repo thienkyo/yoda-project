@@ -34,6 +34,8 @@ function OrderDO () {
 	this.shipCostFee = 0;
 	this.shipCostId = 7;
 	this.member = null;
+	this.shippingName = '';
+	this.shippingPhoneNumber ='';
 	this.orderDetails = [];
 }
 
@@ -46,6 +48,7 @@ function OrderDetailDO () {
 	this.quantity = 1;
 	this.weight = 1;
 	this.modDate = (new Date()).getTime();
+	this.imageNames = '';
 }
 
 function MemberDO () {
@@ -94,6 +97,7 @@ function ProductDO(){
 	this.weight = 0.1;
 	this.category={categoryId:1};
 	this.image = '';
+	this.extInfo = '{\n\t\"needImage\":false,\n\t\"minNumberOfImage\":0,\n\t\"maxNumberOfImage\":0\n}';
 }
 
 function CategoryDO(){

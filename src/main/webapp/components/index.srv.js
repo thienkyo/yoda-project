@@ -108,11 +108,15 @@ angular.module('app')
 }])
 .factory('cartStoreService',['store', function(store) {
 	var currentCart = [];
+	var currentOrderId = '';
 	var cartStoreService = {
 		setCurrentCart : setCurrentCart,
 		getCurrentCart : getCurrentCart,
 		getQuantity : getQuantity,
-		clearCart : clearCart
+		clearCart : clearCart,
+		setOrderId : setOrderId,
+		getOrderId : getOrderId,
+		clearOrderId : clearOrderId,
 		};
 	return cartStoreService;
 	
@@ -142,6 +146,21 @@ angular.module('app')
 		currentCart = [];
 		store.set('cart', currentCart);
 	}
+
+	function setOrderId(orderId){
+        currentOrderId = orderId;
+        store.set('orderId', orderId);
+        return currentOrderId;
+    }
+
+    function getOrderId(){
+        return store.get('orderId');
+    }
+
+    function clearOrderId(){
+        currentOrderId = '';
+        store.set('orderId', currentOrderId);
+    }
 
 }])
 .factory('shipStoreService',['store', function(store) {

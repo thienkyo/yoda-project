@@ -1,7 +1,43 @@
+<style>
+
+.thumb {
+    width: 100px;
+    height: 100px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+.bt {
+  background: #FE980F;
+  border: medium none;
+  border-radius: 0;
+  margin-left: -5px;
+  margin-top: -3px;
+  padding: 7px 17px;
+}
+</style>
 <section id="cart_items">
 		<div class="container">
 			<div class="step-one">
-				<h2 class="heading">Bước 1cc: kiểm tra giỏ hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 2: địa chỉ &nbsp;&nbsp;->&nbsp;&nbsp; Bước 3: đặt hàng (yêu cầu đăng nhập)</h2>
+				<h2 class="heading">Bước 1: kiểm tra giỏ hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 2: địa chỉ/Tên/Số đt &nbsp;&nbsp;->&nbsp;&nbsp; Bước 3: đặt hàng </h2>
 			</div>
 		
 			<div class="table-responsive cart_info">
@@ -20,21 +56,47 @@
 						<tr ng-repeat="item in ctrl.currentCart track by $index">
 							<td class="cart_product">
 								<a href="#/productDetail/{{item.prod.prodId}}"><img ng-src="images/thumbnail/{{item.prod.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
+								<form name="myForm"  ng-show="item.prod.needImage" enctype="multipart/form-data">
+
+
+									<div class="col-sm-4" style="padding-right: 0px;padding-left: 0px;">
+										<input type="file" ngf-select ng-model="ctrl.picFile[$index]" name="file"
+											   accept="image/*" ngf-max-size="2MB" multiple="multiple"
+											   ngf-model-invalid="errorFile" style="padding-top: 5px;">
+
+										<i ng-show="myForm.file.$error.maxSize">File too large
+											{{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+										<div>
+											<button ng-disabled="!ctrl.picFile[$index]"  style="margin-top: 5px;"
+													ng-click="ctrl.uploadPic(ctrl.picFile[$index],item.imageNames,item)">upload</button>
+											<span class="progress" ng-show="ctrl.picFile[$index].progress >= 0"/>
+			                                <div style="width:{{ctrl.picFile[$index].progress}}%" ng-bind="ctrl.picFile[$index].progress + '%'"></div>
+										</div>
+										<span ng-show="ctrl.picFile[$index].fileNamesResult">Upload Successful</span>
+										<span class="err" ng-show="ctrl.errorMsg">{{ctrl.errorMsg}}</span>
+									</div>
+
+
+
+								</form>
 							</td>
 							<td class="cart_description" style="padding-left: 40px;text-align: left;">
 								<h4><a href="#/productDetail/{{item.prod.prodId}}">{{item.prod.prodName}}</a></h4>
-								<p>Web ID: {{("000"+item.prod.prodId).slice(-4)}}</p>
+								<p>Prod ID: {{("000"+item.prod.prodId).slice(-4)}}</p>
+			<!--show upload image -->
+								<img ng-repeat="one in item.imageNames.split('|')" ng-show="item.imageNames"
+									 ng-src="images/eachProductImageOrder/{{one}}"
+									 style="width: 50px;vertical-align: bottom;padding-right: 5px;"/>
+
 							</td>
 							<td class="cart_price" style="text-align: right; padding-right: 80px;">
 								<p>{{item.prod.price | number:0}} đ</p>
-							</td> <!-- value="{{item.quantity}}" -->
+							</td>
 							<td class="cart_quantity" style="text-align: right;">
 								<div class="cart_quantity_button">
-									<input class="cart_quantity_input" type="number" name="quantity" 
-										ng-model="item.quantity"  
-										ng-change="ctrl.updateTotal()"
-										autocomplete="off" style="width:40px;" 
-										min="1" max="9" />
+									<input class="cart_quantity_input" type="number" name="quantity"
+										ng-model="item.quantity" ng-change="ctrl.updateTotal()"
+										autocomplete="off" style="width:40px;" min="1" max="9" />
 								</div>
 							</td>
 							<td class="cart_total" style="text-align: right;">
@@ -46,18 +108,23 @@
 						</tr>
 						<tr style="border-bottom: 0px;">
 							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
-								<textarea name="message"  placeholder="ghi địa chỉ chính xác để nhận hàng nhanh chóng." 
+								<textarea name="message"  placeholder="Điền địa chỉ chính xác để nhận hàng nhanh chóng.&#10;Và ghi chú cần thiết khi giao hàng."
 										  rows="4" style="margin-top: 0px;" ng-model="ctrl.me.address" ng-cloak ></textarea>
-								<!--   <a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a> -->
 								
 							</td>
 							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
 								<select  ng-model="ctrl.me.shipCostId"
 										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
 										 ng-change="ctrl.updateShippingFee()" 
-										 style="width: 250px;height: 40px;">
+										 style="width: 395px;height: 40px;">
 							    </select>
-							    <div class="alert alert-success" role="alert" ng-show="ctrl.me.shipCostId == 7"
+								<div style="margin: 5px 0px 0px 0px;width: 400px;">
+									<textarea name="message"  placeholder="tên"
+											  rows="1" style="margin-top: 5px;height: 40px; width: 225px;margin-right: 5px;padding-top: 8px;" ng-model="ctrl.me.fullName" ng-cloak ></textarea>
+									<textarea name="message"  placeholder="Số điện thoại"
+											  rows="1" style="margin-top: 5px;height: 40px;width: 160px;padding-top: 8px;" ng-model="ctrl.me.phone" ng-cloak ></textarea>
+								</div>
+							    <div class="alert alert-success" role="alert" ng-show="ctrl.me.shipCostId == 700"
 									 style="margin: 5px 0px 0px 0px;height: 45px;width: 250px;">
 									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 									  <span class="sr-only">success:</span>
@@ -85,7 +152,6 @@
 							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
 								<a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()" >Đặt hàng</a>
 							</td>
-							
 						</tr>
 						
 					</tbody>
@@ -96,17 +162,17 @@
 				  <span class="sr-only">Error:</span>
 					 Cần đăng nhập để đặt hàng
 				</div>
-				<div class="alert alert-danger" role="alert" ng-show="ctrl.isAddress" 
+				<div class="alert alert-danger" role="alert" ng-show="ctrl.isErrorMsg"
 					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
-				  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				  <span class="sr-only">Error:</span>
-					 {{ctrl.isAddress}}
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Error:</span>
+					{{ctrl.isErrorMsg}}
 				</div>
 				<div class="alert alert-success" role="alert" ng-show="ctrl.order_return_status"
 					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
 					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 					  <span class="sr-only">success:</span>
-				  		đặt hàng thành công
+				  		Đặt hàng thành công. Mã đơn: {{ctrl.newOrderId}}
 				</div>
 			</div>
 

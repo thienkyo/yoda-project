@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  property = "prodId")*/
 public class Products {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int prodId;
 	
@@ -47,7 +47,10 @@ public class Products {
 	
 	@Column(nullable=false, columnDefinition = "INT(4) UNSIGNED")
 	private int quantity;
-	
+
+	/**
+	 * thumbnail
+	 */
 	@Column(nullable=true, length = 200)
 	private String image;
 
@@ -63,6 +66,24 @@ public class Products {
 	
 	@Column(nullable=true, columnDefinition = "DOUBLE(2,1) default 1.0")
 	private double weight;
+
+	/**
+	 * image upload from user, yes or no
+	 */
+	@Column(nullable=false,columnDefinition = "INT(2) UNSIGNED default 0")
+	private int needImage;
+
+	/**
+	 * min number of image this product needs.
+	 */
+	@Column(nullable=true,columnDefinition = "INT(2) UNSIGNED default 0")
+	private int minNumberOfImage;
+
+	/**
+	 * max number of image this product needs.
+	 */
+	@Column(nullable=true,columnDefinition = "INT(2) UNSIGNED default 0")
+	private int maxNumberOfImage;
 	
 //	@JsonManagedReference
 	@ManyToOne
@@ -188,21 +209,44 @@ public class Products {
 	public void setCategory(Categories category) {
 		this.category = category;
 	}
-/*
-	public List<OrderDetails> getOrderDetails() {
-		return orderDetails;
+
+	public int getNeedImage() {
+		return needImage;
 	}
 
-	public void setOrderDetails(List<OrderDetails> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setNeedImage(int needImage) {
+		this.needImage = needImage;
 	}
-*/
+
+	public int getMinNumberOfImage() {
+		return minNumberOfImage;
+	}
+
+	public void setMinNumberOfImage(int minNumberOfImage) {
+		this.minNumberOfImage = minNumberOfImage;
+	}
+
+	public int getMaxNumberOfImage() {
+		return maxNumberOfImage;
+	}
+
+	public void setMaxNumberOfImage(int maxNumberOfImage) {
+		this.maxNumberOfImage = maxNumberOfImage;
+	}
+
+	/*
+                public List<OrderDetails> getOrderDetails() {
+                    return orderDetails;
+                }
+
+                public void setOrderDetails(List<OrderDetails> orderDetails) {
+                    this.orderDetails = orderDetails;
+                }
+            */
 	@Override
 	public String toString() {
 		return "Products [prodID=" + prodId + ", prodName=" + prodName + ", description=" + description
 				+ ", notification=" + notification + ", price=" + price + ", quantity=" + quantity + ", image=" + image
 				+ ", status=" + status + ", mod_date=" + modDate + ", category=" + category + "]";
 	}
- 
-	
 }

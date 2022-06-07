@@ -3,7 +3,7 @@ angular.module('app', [
 		'ngRoute',
 		'ngResource',
 		'ngCookies',
-		'networkServices',
+		'networkServices', // ajax service
 		'productModule',
 		'chieffancypants.loadingBar',
 		'homeModule',

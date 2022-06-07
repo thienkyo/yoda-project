@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class OrderDetails {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int orderDetailId;
 
@@ -48,6 +48,12 @@ public class OrderDetails {
 	@Column(nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modDate;
+
+	/**
+	 * save image name.
+	 */
+	@Column(nullable=true,length = 600)
+	private String imageNames;
 
 	
 	public OrderDetails(int orderDetailId, Products product, int priceAtThatTime,
@@ -127,6 +133,14 @@ public class OrderDetails {
 
 	public void setModDate(Date modDate) {
 		this.modDate = modDate;
+	}
+
+	public String getImageNames() {
+		return imageNames;
+	}
+
+	public void setImageNames(String imageNames) {
+		this.imageNames = imageNames;
 	}
 
 	@Override

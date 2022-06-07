@@ -22,7 +22,6 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 			if(prod.quantity > 0){
 				cartService.addToCart(prod,1);
 			}
-			
 			self.alertProdId = prod.prodId;
 		}
 

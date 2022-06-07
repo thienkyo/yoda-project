@@ -9,7 +9,7 @@ import javax.persistence.Id;
 @Entity
 public class MemberRole {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int id;
 	

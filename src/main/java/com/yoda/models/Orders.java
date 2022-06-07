@@ -30,11 +30,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class Orders {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int orderId;
 	
-	@Column(nullable=false,length = 300)
+	@Column(nullable=false,length = 1000)
 	private String shippingAddress;
 	
 	@Column(nullable=true,length = 500)
@@ -55,6 +55,12 @@ public class Orders {
 	
 	@Column(columnDefinition = "INT(3) UNSIGNED")
 	private int shipCostId;
+
+	@Column(nullable=false,length = 200)
+	private String shippingName;
+
+	@Column(nullable=true,length = 50)
+	private String shippingPhoneNumber;
 	
 //	@JsonIgnore
 	@ManyToOne
@@ -162,6 +168,22 @@ public class Orders {
 
 	public void setShipCostId(int shipCostId) {
 		this.shipCostId = shipCostId;
+	}
+
+	public String getShippingName() {
+		return shippingName;
+	}
+
+	public void setShippingName(String shippingName) {
+		this.shippingName = shippingName;
+	}
+
+	public String getShippingPhoneNumber() {
+		return shippingPhoneNumber;
+	}
+
+	public void setShippingPhoneNumber(String shippingPhoneNumber) {
+		this.shippingPhoneNumber = shippingPhoneNumber;
 	}
 
 	@Override

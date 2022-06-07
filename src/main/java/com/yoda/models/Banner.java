@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Banner {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition = "INT(8) UNSIGNED")
 	private int bannerId;
 	

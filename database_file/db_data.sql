@@ -9,17 +9,20 @@ INSERT INTO `ship_cost` (`ship_cost_id`, `distance`, `price`, `region`) VALUES
 (4, 300, 60000, 'Miền Nam'),
 (5, 600, 70000, 'Miền Trung'),
 (6, 800, 100000, 'Miền Bắc'),
-(7, 0, 0, 'COD');
+(7, 0, 0, 'COD'),
+(8, 0, 0, 'chọn vùng');
 
 INSERT INTO `members` (`address`, `city`, `country`, `district`, `email`, `full_name`, `mod_date`, `pass`, `phone`, `post_code`, `status`, `street`, `ship_cost_id`) VALUES
 ('91/5 trần chánh chiếu, phường 14, quận5, tp Hồ Chí Minh', NULL, NULL, NULL, 'thienkyo@gmail.com', 'thien le', '2017-03-09 04:06:00', 'MTIzNDU2bHR0', '0909957872', NULL, 1, NULL, 1),
-('85/15 nguyễn Ảnh Thủ, ấp Tây Lân, xã Bà Điểm, tp Hồ Chí Minh', NULL, NULL, NULL, 'member@gmail.com', 'member', '2017-04-03 23:59:40', 'MTIzNDU2bHR0', '444444444444', NULL, 1, NULL, 3);
+('85/15 nguyễn Ảnh Thủ, ấp Tây Lân, xã Bà Điểm, tp Hồ Chí Minh', NULL, NULL, NULL, 'member@gmail.com', 'member', '2017-04-03 23:59:40', 'MTIzNDU2bHR0', '444444444444', NULL, 1, NULL, 3),
+('guest', NULL, NULL, NULL, 'guest@gmail.com', 'member', '2022-05-28 23:59:40', 'MTIzNDU2bHR0', '444444444444', NULL, 1, NULL, 8);
 
 
 INSERT INTO `member_role` (`id`, `email`, `role`, `member_id`) VALUES
 (1, 'thienkyo@gmail.com', 'MEMBER', 1),
 (2, 'thienkyo@gmail.com', 'ADMIN', 1),
-(3, 'member@gmail.com', 'MEMBER', 2);
+(3, 'member@gmail.com', 'MEMBER', 2),
+(4, 'guest@gmail.com', 'MEMBER', 3);
 
 INSERT INTO `banner` (`banner_id`, `banner_name`, `description`, `image`, `link`, `mod_date`, `status`) VALUES
 (1, 'banner 1111 banner 1111 banner 1111', 'thiện thiện đường trường thiện thiện đường trường thiện thiện đường trường thiện thiện đường trường', '20170520.184230-controller.jpg', 'f/sdfe/w234', '2017-05-20 18:43:02', 1),
