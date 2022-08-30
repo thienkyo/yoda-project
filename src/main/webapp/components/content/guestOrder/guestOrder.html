@@ -1,0 +1,146 @@
+<section id="do_action">
+		<div class="container">
+			<div class="heading">
+
+			</div>
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="chose_area" style="margin-bottom: 0px;">
+						<div class="user_option">
+						</div>
+					    <textarea rows="1" cols="50" placeholder="Nhập số điện thoại để tải đơn hàng"
+								  ng-model="ctrl.phone" style="height: 40px;" ></textarea>
+						
+						<a class="btn btn-default check_out" href="" ng-click="ctrl.getOrders()" style="margin-left: 0px;">Tải</a>
+
+						<div class="alert alert-danger" role="alert" ng-show="ctrl.errorMsg"
+							 style="margin: 10px 0px 0px 0px;height: 0px;padding: 5px 0px 25px 10px;">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							<span class="sr-only">Error:</span>
+							{{ctrl.errorMsg}}
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="total_area" style="padding-left:0px;margin-bottom: 0px;">
+						
+						<ul>
+							<li class="row" style="padding: 10px 0px 10px 0px;margin-top: 0px;background: #F0F0E9; margin-right: 0px;">
+								<div class="col-xs-3">Ngày</div>
+								<div class="col-xs-3">Mã đơn</div>
+								<div class="col-xs-3">Tổng tiền</div>
+								<div class="col-xs-3">status</div>
+							</li>
+							<li class="row"
+								ng-repeat="item in ctrl.orderListPage.content" 
+								style="padding: 10px 0px 10px 0px;margin-right: 0px;">
+								<div class="col-xs-3"> {{item.modDate | date:"dd-MM-yyyy"}}</div>
+								<div class="col-xs-3"><a href="" ng-click="ctrl.showOrderDetail(item)"> A{{("000"+item.orderId).slice(-4)}}</a></div>
+								<div class="col-xs-3" style="text-align: right;padding-right: 40px;padding-left: 0px;"> {{item.total | number}} đ</div>
+								<div class="col-xs-3"> {{item.status}}</div>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="pagination-area" style="margin: 15px 0px 0px 0px;">
+						<ul class="pagination" style="padding-left: 0px;">
+							<li><a ng-click="ctrl.getTargetPage(ctrl.pagination.previousNumber)">&laquo;</a></li>
+							<li ng-repeat="item in ctrl.pagination.list"><a class="{{item.status ? 'active' : ''}}" ng-click="ctrl.getTargetPage(item.number)">{{item.number}}</a></li>
+							<li><a ng-click="ctrl.getTargetPage(ctrl.pagination.nextNumber)">&raquo;</a></li>
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+</section><!--/#do_action-->
+<section id="cart_items" ng-show="ctrl.theOrder">
+		<div class="container">
+				
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Đơn hàng : A{{("000"+ctrl.theOrder.orderId).slice(-4)}}</td>
+							<td class="description" style="text-align: left;">Item</td>
+							<td class="price" style="text-align: right;">Price</td>
+							<td class="quantity" style="text-align: right;">Quantity</td>
+							<td class="total" style="text-align: right;">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in ctrl.theOrder.orderDetails">
+							<td class="cart_product">
+								<a href="#/productDetail/{{item.product.prodId}}"><img ng-src="images/thumbnail/{{item.product.image}}" style="width: 110px;margin-right: 20px;" alt=""></a>
+							</td>
+							<td class="cart_description" style="text-align: left;">
+								<h4><a href="#/productDetail/{{item.product.prodId}}">{{item.product.prodName}}</a></h4>
+								<p>Prod ID: {{item.product.prodId}}</p>
+								<img ng-repeat="one in item.imageNames.split('|')" ng-show="item.imageNames"
+									 ng-src="images/eachProductImageOrder/{{one}}"
+									 style="width: 50px;vertical-align: bottom;padding-right: 5px;"/>
+							</td>
+							<td class="cart_price" style="text-align: right;">
+								<p>{{item.priceAtThatTime | number:0}} đ</p>
+							</td> <!-- value="{{item.quantity}}" -->
+							<td class="cart_quantity" style="text-align: right;padding-right: 30px;">
+								<p>{{item.quantity}}</p>
+							</td>
+							<td class="cart_total" style="text-align: right;">
+								<p class="cart_total_price">{{item.priceAtThatTime * item.quantity | number:0}} đ</p>
+							</td>
+							<td class="cart_delete">
+							</td>
+						</tr>
+						<tr style="border-bottom: 0px;">
+							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
+								<textarea name="message"  placeholder="địa chỉ shipping của đơn hàng" 
+										  rows="4" style="margin-top: 0px;" ng-model="ctrl.theOrder.shippingAddress" ng-cloak ></textarea>
+								<!--   <a class="btn btn-primary" href="" ng-click="ctrl.placeOrder()">Đặt hàng</a> -->
+								
+							</td>
+							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
+								<select  ng-model="ctrl.theOrder.shipCostId" 
+										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
+										 ng-change="ctrl.updateShippingFee()" 
+										 style="width: 250px;height: 40px;">
+							    </select>
+
+								<div style="margin: 5px 0px 0px 0px;width: 400px;">
+									<textarea name="message"  placeholder="tên"
+											  rows="1" style="margin-top: 5px;height: 40px; width: 225px;margin-right: 5px;padding-top: 8px;" ng-model="ctrl.theOrder.shippingName" ng-cloak ></textarea>
+									<textarea name="message"  placeholder="Số điện thoại"
+											  rows="1" style="margin-top: 5px;height: 40px;width: 160px;padding-top: 8px;" ng-model="ctrl.theOrder.shippingPhoneNumber" ng-cloak ></textarea>
+								</div>
+
+							</td>
+							<td colspan="3">
+								<table class="table table-condensed total-result" style="margin-top: 0px;margin-bottom: 40px;text-align: right;">
+									<tr>
+										<td>Cart Sub Total</td>
+										<td>{{ctrl.theOrder.subTotal | number:0}} đ</td>
+									</tr>
+									
+									<tr class="shipping-cost">
+										<td>Shipping Cost</td>
+										<td>{{ctrl.theOrder.shipCostFee | number:0}} đ</td>										
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span>{{ctrl.theOrder.total | number:0}} đ</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				
+			</div>
+
+		</div>
+</section>
+	
+	
+	

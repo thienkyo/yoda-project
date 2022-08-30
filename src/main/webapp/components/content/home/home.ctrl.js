@@ -10,7 +10,7 @@ angular.module('homeModule').controller('homeController', ['$scope','homeService
 		
 		homeService.getBanner()
 		.then(function (response) {
-			self.banners = response;
+			self.banners = response.reverse();
 		});
 		
 		homeService.gethomeArticle()

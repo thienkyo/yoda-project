@@ -26,6 +26,9 @@ public class ShipCost {
 	@Column(nullable=false, columnDefinition = "INT(8) UNSIGNED")
 	private int distance;
 
+	@Column(nullable=false, columnDefinition = "INT(2) UNSIGNED default 0")
+	private int status;
+
 	public ShipCost() {
 		super();
 	}
@@ -73,6 +76,14 @@ public class ShipCost {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Override

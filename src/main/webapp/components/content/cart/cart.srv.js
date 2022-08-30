@@ -7,6 +7,7 @@ angular.module('cartModule')
 			addToCart : addToCart,
 			placeOrder : placeOrder,
 			getShipCost : getShipCost,
+			getActiveShipCost : getActiveShipCost,
 			placeGuestOrder : placeGuestOrder
 		};
 	return cartService;
@@ -71,5 +72,12 @@ angular.module('cartModule')
 			return response.data;
 		});
    }
+
+   function getActiveShipCost(){
+   		var url = "shipcost/active";
+   		return ajaxService.get(url,null,{}).then(function(response){
+   			return response.data;
+   		});
+      }
    
  }]);

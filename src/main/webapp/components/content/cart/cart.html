@@ -37,7 +37,7 @@ form .progress {
 <section id="cart_items">
 		<div class="container">
 			<div class="step-one">
-				<h2 class="heading">Bước 1: kiểm tra giỏ hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 2: địa chỉ/Tên/Số đt &nbsp;&nbsp;->&nbsp;&nbsp; Bước 3: đặt hàng </h2>
+				<h2 class="heading">Bước 1: kiểm tra giỏ hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 2: Đặt hàng &nbsp;&nbsp;->&nbsp;&nbsp; Bước 3: shop xác nhận &nbsp;  -> &nbsp;  Bước 4: Thanh toán </h2>
 			</div>
 		
 			<div class="table-responsive cart_info">
@@ -109,26 +109,23 @@ form .progress {
 						<tr style="border-bottom: 0px;">
 							<td colspan="2" style="padding-left: 30px;padding-top: 0px;">
 								<textarea name="message"  placeholder="Điền địa chỉ chính xác để nhận hàng nhanh chóng.&#10;Và ghi chú cần thiết khi giao hàng."
-										  rows="4" style="margin-top: 0px;" ng-model="ctrl.me.address" ng-cloak ></textarea>
+										  rows="4" style="margin-top: 0px;" ng-model="ctrl.me.address" ng-cloak ng-change="ctrl.clearErrorMsg()"></textarea>
 								
 							</td>
 							<td colspan="1" style="padding-top: 23px; vertical-align: top;">
-								<select  ng-model="ctrl.me.shipCostId"
+								<select  ng-model="ctrl.order.shipCostId"
 										 ng-options="opt.shipCostId as opt.region for opt in ctrl.shipCostList"
 										 ng-change="ctrl.updateShippingFee()" 
 										 style="width: 395px;height: 40px;">
 							    </select>
 								<div style="margin: 5px 0px 0px 0px;width: 400px;">
-									<textarea name="message"  placeholder="tên"
+									<textarea name="message"  placeholder="tên"  ng-change="ctrl.clearErrorMsg()"
 											  rows="1" style="margin-top: 5px;height: 40px; width: 225px;margin-right: 5px;padding-top: 8px;" ng-model="ctrl.me.fullName" ng-cloak ></textarea>
-									<textarea name="message"  placeholder="Số điện thoại"
+									<textarea name="message"  placeholder="Số điện thoại" ng-change="ctrl.clearErrorMsg()"
 											  rows="1" style="margin-top: 5px;height: 40px;width: 160px;padding-top: 8px;" ng-model="ctrl.me.phone" ng-cloak ></textarea>
 								</div>
 							    <div class="alert alert-success" role="alert" ng-show="ctrl.me.shipCostId == 700"
 									 style="margin: 5px 0px 0px 0px;height: 45px;width: 250px;">
-									  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-									  <span class="sr-only">success:</span>
-								  		Phí ship COD sẽ được tính sau.
 								</div>
 							</td>
 							<td colspan="3">
@@ -172,7 +169,7 @@ form .progress {
 					 style="margin-top:10px;margin-left: 30px;margin-right: 20px;">
 					  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 					  <span class="sr-only">success:</span>
-				  		Đặt hàng thành công. Mã đơn: {{ctrl.newOrderId}}
+				  		Đặt hàng thành công. Mã đơn: A{{("000"+ctrl.newOrderId).slice(-4)}}
 				</div>
 			</div>
 

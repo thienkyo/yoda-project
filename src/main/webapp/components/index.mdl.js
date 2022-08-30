@@ -10,6 +10,7 @@ angular.module('app', [
 		'productDetailModule',
 		'loginModule',
 		'accountModule',
+		'guestOrderModule',
 		'cartModule',
 		'angular-storage',
 		'ngMaterial',
@@ -22,6 +23,7 @@ angular.module('app', [
 		'blogListModule',
 		'blogUpsertModule',
 		'bannerModule',
+		'shipCostModule',
 		'ui.tinymce',
 		'memberListModule'
 ]);

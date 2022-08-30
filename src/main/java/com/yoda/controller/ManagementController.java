@@ -35,6 +35,7 @@ public class ManagementController {
 	@Autowired private ArticleService articleService;
 	@Autowired private BannerService bannerService;
 	@Autowired private MemberService memberService;
+	@Autowired private ShipCostService shipCostService;
 	@Autowired private Environment env;
 	
 //////////////////////////product section///////////////////////
@@ -280,6 +281,27 @@ public class ManagementController {
 			bannerService.save(banner);
 		}
 		return new ManagementResponse("upsert_banner_success");
+	}
+
+/////////////////////////////ShipCost section/////////////////////////////
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "getShipCostForMgnt", method = RequestMethod.GET)
+	public List<ShipCost> getShipCost(final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			return (List<ShipCost>) shipCostService.findAll();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "upsertShipCost", method = RequestMethod.POST)
+	public ManagementResponse updateShipCost(@RequestBody final ShipCost shipCost, final HttpServletRequest request) throws ServletException {
+		final Claims claims = (Claims) request.getAttribute("claims");
+		if(((List<String>) claims.get("roles")).contains(UtilityConstant.ADMIN_ROLE)){
+			shipCostService.save(shipCost);
+		}
+		return new ManagementResponse("upsert_shipCost_success");
 	}
 	
 	

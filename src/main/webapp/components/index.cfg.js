@@ -39,6 +39,11 @@ angular.module('app')
 			controller: 'accountController',
 			controllerAs:'ctrl'
 		})
+		.when('/guestOrder', {
+            templateUrl: 'components/content/guestOrder/guestOrder.html',
+            controller: 'guestOrderController',
+            controllerAs:'ctrl'
+        })
 		.when('/blog', {
 			templateUrl: 'components/content/blog/blog.html',
 			controller: 'blogController',
@@ -90,7 +95,14 @@ angular.module('app')
             controller: 'bannerController',
             controllerAs:'ctrl'
         })
-         .when('/mgnt/member',{
+
+        .when('/mgnt/shipCost',{
+            templateUrl: 'components/mgnt/shipCost/shipCost.html',
+            controller: 'shipCostController',
+            controllerAs:'ctrl'
+        })
+
+        .when('/mgnt/member',{
             templateUrl: 'components/mgnt/member/list/memberList.html',
             controller: 'memberListController',
             controllerAs:'ctrl'

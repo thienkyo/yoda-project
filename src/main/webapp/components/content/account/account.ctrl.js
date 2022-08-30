@@ -36,6 +36,8 @@ angular.module('accountModule').controller('accountController', ['$scope','$loca
 			self.orderList = me.orders.reverse();
 			self.orderListPage = buildPageable(1);
 			self.pagination = paginationService.builder(self.orderListPage);
+			console.log(me.orders);
+			console.log(me.orders.reverse());
 		},function(error){
 			$location.path("#/");
 		});

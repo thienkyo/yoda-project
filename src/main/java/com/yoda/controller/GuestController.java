@@ -2,6 +2,7 @@ package com.yoda.controller;
 
 import com.yoda.UtilityConstant;
 import com.yoda.models.Orders;
+import com.yoda.models.Products;
 import com.yoda.services.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -37,6 +38,11 @@ public class GuestController {
 
         String directory = env.getProperty("yoda.uploadedFiles.eachProductImageOrder");
         return UtilityConstant.saveMultipleFile(directory,uploadFile, oldNames, phone, orderId);
+    }
+
+    @RequestMapping("getGuestOrder/{phone}")
+    public List<Orders> getOrdersByPhone(@PathVariable String phone) {
+        return orderService.findByShippingPhoneNumberOrderByOrderIdDesc(phone);
     }
 
     private static class guestResponse {

@@ -1,5 +1,6 @@
 'use strict';
 var OrderStatusArray=[
+	{name : 'init', value:19 },
 	{name : 'đã đặt', value:20 },
 	{name : 'nhận tiền', value:21 },
 	{name : 'đã chuyển hàng ', value:22 },
@@ -22,13 +23,14 @@ angular
 		.value('CategoryDO',CategoryDO)
 		.value('ArticleDO',ArticleDO)
 		.value('BannerDO',BannerDO)
+		.value('ShipCostDO',ShipCostDO)
 		.value('PaginationItemDO',PaginationItemDO)
 		.value('PaginationDO',PaginationDO);
 
 function OrderDO () {
 	this.orderId = 0;
 	this.shippingAddress = '';
-	this.status = 20;
+	this.status = 19;
 	this.discount = 0;
 	this.modDate = (new Date()).getTime();
 	this.shipCostFee = 0;
@@ -98,6 +100,9 @@ function ProductDO(){
 	this.category={categoryId:1};
 	this.image = '';
 	this.extInfo = '{\n\t\"needImage\":false,\n\t\"minNumberOfImage\":0,\n\t\"maxNumberOfImage\":0\n}';
+	this.needImage = 0;
+	this.minNumberOfImage = 0;
+	this.maxNumberOfImage = 0;
 }
 
 function CategoryDO(){
@@ -126,6 +131,14 @@ function BannerDO(){
 	this.image='';
 	this.description='';
 	this.link='';
+}
+
+function ShipCostDO(){
+	this.shipCostId = 0;
+	this.region = 'region name';
+	this.status = 0;
+	this.price=0;
+	this.distance=0
 }
 
 function PaginationItemDO() {

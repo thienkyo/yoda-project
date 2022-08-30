@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UtilityConstant {
-	final public static int AUTHENTICATION_TIMEOUT = 60;
+	final public static int AUTHENTICATION_TIMEOUT = 24; //hour
 	
 	final public static int ACTIVE_STATUS = 1;
 	final public static int INACTIVE_STATUS = 0;
@@ -43,7 +43,7 @@ public class UtilityConstant {
     	String filename="empty";
     	String filepath = "";
       try {
-    	String currentTime = new SimpleDateFormat("yyyyMMdd.HHmmss").format(new java.util.Date());  
+    	String currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new java.util.Date());
         // Get the filename and build the local file path
          filename = currentTime+"-"+uploadfile.getOriginalFilename();
          if(!oldName.isEmpty()){

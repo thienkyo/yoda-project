@@ -93,7 +93,7 @@ public class MemberController {
         		.claim("roles", rolelist)
         		.claim("name", mem.getFullName())
         		.setIssuedAt(new Date())
-        		.setExpiration(new Date(System.currentTimeMillis()+ UtilityConstant.AUTHENTICATION_TIMEOUT*60*1000))
+        		.setExpiration(new Date(System.currentTimeMillis()+ UtilityConstant.AUTHENTICATION_TIMEOUT*60*60*1000))
         		.signWith(SignatureAlgorithm.HS256, "secretkey".getBytes("UTF-8"))
         		.compact());
     }

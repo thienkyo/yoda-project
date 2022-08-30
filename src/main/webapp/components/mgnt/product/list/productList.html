@@ -28,7 +28,7 @@
 			        <td title="'id'" filter="{ prodId: 'number'}" sortable="'prodId'" style="width:60px;text-align: center;">
 			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" >{{prod.prodId}}</a>
 			        </td>
-			        <td title="'image'" sortable="'image'"  style="width:90px;">
+			        <td title="'image'" filter="{ image: 'text'}" sortable="'image'"  style="width:90px;">
 			        	<a href="#/mgnt/productUpsert/{{prod.prodId}}" ><img ng-src="images/thumbnail/{{prod.image}}" style="width:80px;height: 80px;"/></a>
 			        </td>
 			        <td title="'name'" filter="{ prodName: 'text'}" sortable="'prodName'" style="width:300px;">
@@ -36,6 +36,7 @@
 			        </td>
 			        <td title="'price'" filter="{ price : 'number'}" sortable="'price'" style="text-align: right;">{{prod.price | number:0}}</td>
 			        <td title="'quantity'" filter="{ quantity : 'number'}" sortable="'quantity'">{{prod.quantity}}</td>
+			        <td title="'modDate'"  sortable="'modDate'">{{prod.modDate | date:"dd-MM-yyyy HH:mm:ss"}}</td>
 			        <td title="'weight'" filter="{ weight : 'number'}" sortable="'weight'">{{prod.weight | number:1}}</td>
 			        <td title="'view'" sortable="" style="width:60px;"><a href="#/productDetail/{{prod.prodId}}" >view</a></td>
 			        <td title="'status'" filter="{ status : 'number'}" sortable="'status'" ng-style="ctrl.setStyle(prod.status)">{{prod.status == 0 ? 'inactive' : 'active' }}</td>

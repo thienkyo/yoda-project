@@ -20,4 +20,9 @@ public class ShipCostController {
     public List<ShipCost> getShipCost() {//@RequestParam(value = "status") 
         return (List<ShipCost>) shipCostRepo.findAll();
     }
+
+    @RequestMapping("/active")
+    public List<ShipCost> getActiveShipCost() {
+        return (List<ShipCost>) shipCostRepo.findAllByStatus(1);
+    }
 }

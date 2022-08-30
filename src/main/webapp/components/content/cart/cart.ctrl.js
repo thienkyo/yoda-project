@@ -11,6 +11,7 @@ angular.module('cartModule')
 		self.subTotal = 0;
 		self.total = 0;
 		self.order = new OrderDO;
+		self.order.shipCostId = 0;
 		self.guest = new MemberDO;//guest member
 		self.guest.memberId = 3;// guest id
 		self.orderDetail = [];
@@ -24,7 +25,7 @@ angular.module('cartModule')
 				shipCostId : 0
 		};
 		
-		cartService.getShipCost().then(function (response) {
+		cartService.getActiveShipCost().then(function (response) {
 	        self.shipCostList = response;
 	        self.shipCostList.push(tempShipCost);
 		});
@@ -32,14 +33,18 @@ angular.module('cartModule')
 //////get full user data from db		
 		accountService.getMe().then(function(me){
 			self.me = me;
-			//self.order.shipCostId = self.me.shipCostId;
 			self.order.member = me;
 			self.isShow = false;
 			self.updateTotal();
-			console.log(self.me);
+			// set shipCostId based on member address.
+			for (var i = 0; i < self.shipCostList.length; i++){
+                if(self.shipCostList[i].shipCostId === self.me.shipCostId){
+                    self.order.shipCostId = self.shipCostList[i].shipCostId;
+                    break;
+                }
+            }
 		},
 		function(error){
-			//self.isShow = true;
 			self.isShow = false;
 			self.me = self.guest;
             self.order.member = self.guest;
@@ -50,9 +55,9 @@ angular.module('cartModule')
 			for (var i = 0; i < self.currentCart.length; i++){
 				self.subTotal += self.currentCart[i].prod.price*self.currentCart[i].quantity;
 			}
-			console.log(self.currentCart);
+		//	console.log(self.currentCart);
         //    console.log('before init order');
-		//	console.log(cartStoreService.getOrderId());
+			console.log(cartStoreService.getOrderId());
 			//// init order
 			if(cartStoreService.getOrderId() == ''){
 			    var OrderDetailList = [];
@@ -68,16 +73,13 @@ angular.module('cartModule')
                 }
                 self.order.orderDetails = OrderDetailList;
                 self.order.shippingAddress = 'init order';
-                self.order.shipCostId = '1';
+                self.order.shipCostId = '8';
                 self.order.shippingName = 'init order';
                 self.order.shippingPhoneNumber = '0000000000';
 
                 cartService.placeGuestOrder(self.order).then(function (response) {
-                    //self.order_return_status = response.replyStr;
-                    //self.newOrderId = response.orderId;
                     cartStoreService.setOrderId(response.orderId);
                 });
-                console.log('after init order ');
                 console.log(self.order);
 			}
 		}
@@ -100,7 +102,7 @@ angular.module('cartModule')
 		}
 		
 		self.placeOrder = function(){
-			//self.isShow = !memberService.isLogin();
+			self.isErrorMsg = false;
 			if(self.order_one_time_trigger && self.currentCart.length > 0){
 				var OrderDetailList = [];
 				
@@ -121,14 +123,14 @@ angular.module('cartModule')
 				}
 				self.order.orderDetails = OrderDetailList;
 				self.order.shippingAddress = self.me.address;
-				self.order.shipCostId = self.me.shipCostId;
+			//	self.order.shipCostId = self.me.shipCostId;
 				self.order.shippingName = self.me.fullName;
 				self.order.shippingPhoneNumber = self.me.phone;
 				self.order.orderId = cartStoreService.getOrderId();
+				self.order.status = 20;
 				self.isShow = false;
 				self.isErrorMsg = false;
-				console.log('place order');
-				console.log(self.order);
+				//console.log(self.order);
 				//save order
 				if(self.me.address &&  self.order.shipCostId != 0 && self.me.fullName && self.me.phone){
 				    if(memberService.isLogin()){
@@ -140,11 +142,9 @@ angular.module('cartModule')
 				        cartService.placeGuestOrder(self.order).then(function (response) {
                             self.order_return_status = response.replyStr;
                             self.newOrderId = response.orderId;
-                            cartStoreService.clearOrderId();
-                            console.log(cartStoreService.getOrderId());
                         });
 				    }
-
+				    cartStoreService.clearOrderId();
 					self.order_one_time_trigger = false;
                     cartStoreService.clearCart();
                     self.currentCart = [];
@@ -159,6 +159,7 @@ angular.module('cartModule')
 		}
 		
 		self.updateShippingFee = function(){
+		    self.isErrorMsg = false;
 			var shipBaseFee = 0;
 			for (var i = 0; i < self.shipCostList.length; i++){
 				if(self.shipCostList[i].shipCostId === self.me.shipCostId){
@@ -171,14 +172,15 @@ angular.module('cartModule')
 				w += self.currentCart[i].prod.weight*self.currentCart[i].quantity;
 			}
 			self.order.shipCostFee = w*shipBaseFee;
-			self.order.shipCostFee = (self.order.shipCostFee < 20000 && self.me.shipCostId != 7) ?  25000 : self.order.shipCostFee ;
+		//	self.order.shipCostFee = (self.order.shipCostFee < 20000 && self.me.shipCostId != 7) ?  25000 : self.order.shipCostFee ;
 			self.total = self.order.shipCostFee + self.subTotal;
 		}
 
 		self.uploadPic = function(files,oldNames,cartDetail) {
 		        self.isErrorMsg = false;
-		        if(!self.me.phone){
-		            self.isErrorMsg = 'Cần nhập số điện thoại';
+		        const pattern = /^[0-9]{9,14}$/;
+		        if(!pattern.test(self.me.phone)){
+		            self.isErrorMsg = 'Cần nhập số điện thoại, ít nhất 9 ký số';
 		            return;
 		        }
 
@@ -210,6 +212,10 @@ angular.module('cartModule')
                   // Math.min is to fix IE which reports 200% sometimes
                   files.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
+        }
+
+        self.clearErrorMsg = function() {
+            self.isErrorMsg = false;
         }
 		
 }]);

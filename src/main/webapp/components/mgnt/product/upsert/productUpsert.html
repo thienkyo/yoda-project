@@ -114,11 +114,24 @@ form .progress {
 			 	notification:<input type="text"  ng-model="ctrl.product.notification"/>
 			</div>
 		</div>
+		 <!--new row-->
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-4">
+				need Image:
+				<select  ng-model="ctrl.product.needImage"
+						 ng-options="opt.value as opt.name for opt in ctrl.needImageArray"
+						 style="width: 100%;height: 40px;">
+				</select>
 
 			</div>
+			<div class="col-sm-4">
+				Min number of image: <input type="number" ng-model="ctrl.product.minNumberOfImage"/>
+			</div>
+			<div class="col-sm-4">
+				Max number of image:<input type="text"  ng-model="ctrl.product.maxNumberOfImage"/>
+			</div>
 		</div>
+		 <!-- end new row-->
 		
 		<div class="row" style="margin-bottom: 15px;">
 			<div class="col-sm-4">
@@ -126,8 +139,9 @@ form .progress {
 			</div>
 			<div class="col-sm-4">
 				<a ng-click="ctrl.upsert()" href="" class="btn btn-default check_out" style="margin: 5px 0px 0px 0px;">submit</a>
-				<a href="#/mgnt/productUpsert/0" class="btn btn-default check_out" style="margin: 5px 0px 0px 10px;">add</a>
+				<a href="#/mgnt/productUpsert/0" class="btn btn-default check_out" style="margin: 5px 0px 0px 10px;">clear</a>
 				<a href="#/mgnt/productList" class="btn btn-default check_out" style="margin: 5px 0px 0px 10px;">back</a>
+				<a ng-show="ctrl.product.prodId" href="#/productDetail/{{ctrl.product.prodId}}" class="btn btn-default check_out" style="margin: 5px 0px 0px 10px;">view</a>
 			</div>
 			<div class="col-sm-4">
 				<div class="alert alert-success" role="alert" ng-show="ctrl.responseStr" 

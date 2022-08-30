@@ -11,6 +11,11 @@ angular.module('productUpsertModule')
 		
 	var self = this;
 	self.statusList = CommonStatusArray;
+
+	self.needImageArray=[
+    	{name : 'Need', value:1 },
+    	{name : 'Not need', value:0 }
+    ];
 	
 	categoryService.getAllCategories()
 	.then(function (data) {
@@ -25,6 +30,7 @@ angular.module('productUpsertModule')
 		productUpsertService.getProductById($routeParams.prodId)
 			.then(function (data) {
 				self.product = data;
+				console.log(self.product);
 		});
 
 	}else{

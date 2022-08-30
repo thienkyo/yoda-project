@@ -17,6 +17,7 @@ public interface OrdersService extends CrudRepository<Orders, Integer>{
 	//mgnt
 		public List<Orders> findFirst20ByOrderByOrderIdDesc();
 	//	public List<Orders> findFirst50ByOrderByModDateDesc();
-	//	public List<Orders> findAllByOrderByModDateDesc();
+	//	public List<Orders> findAllByOrderByModDateDesc(); findByStatusOrderByModDateDesc
 		public List<Orders> findAllByOrderByOrderIdDesc();
+		public List<Orders> findByShippingPhoneNumberOrderByOrderIdDesc(String phone);
 }

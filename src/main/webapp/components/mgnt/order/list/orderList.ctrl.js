@@ -9,6 +9,7 @@ angular.module('orderListModule')
 	self.OrderStatusArray=OrderStatusArray;
 	self.statusStyle = { "width": "120px" };
 	self.statusNumber = {};
+	self.statusNumber.init = 0;
 	self.statusNumber.ordered = 0;
 	self.statusNumber.paid = 0;
 	self.statusNumber.shipped = 0;
@@ -104,6 +105,7 @@ angular.module('orderListModule')
 	}
 	
 	function engineerOrderList(){
+		self.statusNumber.init = 0;
 		self.statusNumber.ordered = 0;
 		self.statusNumber.paid = 0;
 		self.statusNumber.shipped = 0;
@@ -116,6 +118,10 @@ angular.module('orderListModule')
 			}
 			total += self.orderList[i].shipCostFee;
 			self.orderList[i].total = total;
+			if(self.orderList[i].status == 19){
+                self.statusNumber.init += 1;
+            }
+
 			if(self.orderList[i].status == 20){
 				self.statusNumber.ordered += 1;
 			}
